@@ -27,6 +27,8 @@ public class User {
     @Column(nullable = false)
     private String fullName;
 
+    private String photoPath;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
