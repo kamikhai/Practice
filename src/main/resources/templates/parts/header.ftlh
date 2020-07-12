@@ -17,7 +17,7 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active"><a href="/main" class="nav-link pl-0">Главная</a></li>
                 <li class="nav-item"><a href="/students" class="nav-link">Студенты</a></li>
-                <li class="nav-item"><a href="/profile" class="nav-link">Профиль</a></li>
+                <li class="nav-item"><a href="/login" class="nav-link">Профиль</a></li>
             </ul>
         </div>
     </div>

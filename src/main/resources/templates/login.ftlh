@@ -18,13 +18,14 @@
                     <h2 class="mb-4">Войти</h2>
                     <p>Если у вас нет почты и пароля, обратитесь в деканат</p>
                 </div>
-                <form action="#" class="appointment-form ftco-animate" >
+                <form class="appointment-form ftco-animate" method="post">
                     <div class="d-md-flex">
-                        <input type="email" class="form-control" placeholder="Почта">
+                        <input type="email" name="email" class="form-control" placeholder="Почта">
                     </div>
                     <div class="d-md-flex">
-                        <input type="password" class="form-control" placeholder="Пароль">
+                        <input type="password" name="password" class="form-control" placeholder="Пароль">
                     </div>
+                    <input type="hidden" name="_csrf" value="{_csrf.token}">
                     <div class="d-md-flex" style="margin-top: 20px;">
                         <div class="form-group">
                             <input type="submit" value="Войти" class="btn btn-secondary py-3 px-4">
