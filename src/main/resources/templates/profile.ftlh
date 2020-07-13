@@ -15,7 +15,7 @@
             <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
             <aside id="colorlib-aside" role="complementary" class="text-center" >
                 <h1 id="colorlib-logo"><a href="index.html"><span class="img"
-                                                                  style="background-image: url(img/student-2.jpg);"></span></a>
+                                                                  style="background-image: url(${profileInfo.photoPath});"></span></a>
                 </h1>
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
@@ -31,18 +31,24 @@
                         <div class="d-flex align-items-center ">
                             <div class="author-info text p-3 p-md-5">
                                 <div class="desc">
-                                    <h1 class="big-letter">Хайруллина Камилла Альбертовна</h1>
-                                    <h3 class="" style="color: #1eaaf1">Web-разработчик</h3>
-                                    <span class="subheading">2 курс, группа 11-802</span>
+                                    <h1 class="big-letter">${profileInfo.fullName}</h1>
+                                    <h3 class="" style="color: #1eaaf1">${profileInfo.jobProfileTitle}</h3>
+                                    <span class="subheading">группа ${profileInfo.groupNumeric}</span>
                                     <hr style="height:1px;border-width:0; width: 70%; color:#1eaaf1;background-color:gray;">
                                     <div style="margin-top: 15px">
                                         <h2>Обо мне</h2>
-                                        <p class="mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed pretium tellus. In condimentum venenatis sapien, et porttitor nibh consectetur id. Vestibulum tincidunt leo id felis volutpat, consequat posuere metus gravida. Sed blandit ante a erat cursus, at cursus libero.</p>
+                                        <p class="mb-4">${profileInfo.description}</p>
                                         <h2 >Компетенции</h2>
                                         <div class="mb-4">
-                                            <input type="submit" value="Java" class="btn btn-secondary but" style="background-color: #1eaaf1">
-                                            <input type="submit" value="Spring Boot" class="btn btn-secondary disabled but">
-                                            <input type="submit" value="Jsoup" class="btn btn-secondary disabled but ">
+                                            <#list profileInfo.competenceList>
+                                                <#items as comp>
+                                                    <input type="submit" value="${comp.description}"
+                                                        <#if comp.confirmed == false>class="btn btn-secondary disabled but"
+                                                        <#else> class="btn btn-secondary but" style="background-color: #1eaaf1"
+                                                        </#if>
+                                                    >
+                                                </#items>
+                                            </#list>
                                         </div>
                                         <h2 >Опыт работы</h2>
                                         <p class="mb-4">Нет опыта</p>
