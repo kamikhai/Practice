@@ -20,11 +20,5 @@ mvn clean'''
       }
     }
 
-    stage('Report') {
-      steps {
-        archiveArtifacts 'target/*.jar'
-      }
-    }
-
   }
 }
