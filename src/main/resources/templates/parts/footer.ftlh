@@ -41,6 +41,8 @@
 <script src="js/aos.js"></script>
 <script src="js/owl-carousel.js"></script>
 <script src="js/main.js"></script>
+<script src="js/custom.js"></script>
+
 
 
 

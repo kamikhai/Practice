@@ -31,5 +31,11 @@ public class UserServiceImpl implements UserService {
 		return Optional.empty();
 	}
 
+	@Override
+	public User save(User user) {
+		user.setPassHash(passwordEncoder.encode(user.getPassHash()));
+		return userRepository.save(user);
+	}
+
 
 }

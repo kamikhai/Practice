@@ -9,4 +9,6 @@ public interface UserService {
 	Optional<User> findByEmail(String email);
 
 	Optional<User> isValid(User user);
+
+	User save(User user);
 }
