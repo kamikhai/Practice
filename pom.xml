@@ -12,6 +12,7 @@
     <artifactId>practice</artifactId>
     <version>0.0.1</version>
     <name>practice</name>
+    <packaging>jar</packaging>
     <description>Demo project for Spring Boot</description>
 
     <properties>
