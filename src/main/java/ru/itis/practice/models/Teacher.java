@@ -23,4 +23,8 @@ public class Teacher {
 
     @ManyToMany
     private List<Group> curatedGroups;
+
+    private String position;
+
+    private String information;
 }
