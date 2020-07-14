@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="students" type="java.util.List<ru.itis.practice.dto.StudentInfoDto>" -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -77,71 +78,30 @@
 
             <div class="col-12 col-md-8 col-lg-9">
                 <div class="shop_grid_product_area">
-
                     <div class="row">
-
                         <section class="ftco-section" style="padding: 0 0 ! important">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-md-12 course d-lg-flex ftco-animate" style="margin-top: 20px; ">
-                                        <div class="img" style="background-image: url(img/student-1.jpg);"></div>
-                                        <div class="text bg-light p-4">
-                                            <h3><a href="#">Рябов Дмитрий Александрович</a></h3>
-                                            <p class="subheading">2 курс</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lacinia
-                                                lectus sit amet pretium fermentum...</p>
-                                            <input type="submit" value="Java" class="btn btn-secondary but">
-                                            <input type="submit" value="Spring Boot"
-                                                   class="btn btn-secondary disabled but">
-                                            <input type="submit" value="Jsoup" class="btn btn-secondary but">
+                                    <#list students as student>
+                                        <div id="${student.id}" class="col-md-12 course d-lg-flex ftco-animate" style="margin-top: 20px; ">
+                                            <div class="img" style="background-image: url(img/empty.jpg);"></div>
+                                            <div class="text bg-light p-4">
+                                                <h3><a href="#${student.id}">${student.fullName}</a></h3>
+                                                <p class="subheading">2̈ͥ͌͒̄ͮ͏̷̩͓̦̰̼̱̬̗̯̘̲̠͓͖̞̳͠ͅ ̶̝͍̮̠̯̻͈̱̱̯̠̬̃̊ͯͣ̅̓͌̄͋̒̾͊͂ͤ͑̉́̚̕͞к͖̥͕̥ͧͩͮͣ̔͗̅́͘͞͡у̢͎͙̬͓̙̜̭̟̥̥͔̌͗̉̏͑́̒ͣ̕рͭͪ͛̓̒̏̑͂̽͏̷͕̬̝̟̙̥͈͓̠͇̕с̵͎̭͍̟̙̦̇̿̀̋ͩ̌̀̚͞͞</p>
+                                                <p>${student.description}</p>
+                                                <#list student.competences as competency>
+                                                    <input type="submit" value="${competency}" class="btn btn-secondary but">
+                                                </#list>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-12 course d-lg-flex ftco-animate">
-                                        <div class="img" style="background-image: url(img/student-2.jpg);"></div>
-                                        <div class="text bg-light p-4">
-                                            <h3><a href="#">Хайруллина Камилла Альбертовна</a></h3>
-                                            <p class="subheading">2 курс</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lacinia
-                                                lectus sit amet pretium fermentum...</p>
-                                            <input type="submit" value="Java" class="btn btn-secondary but">
-                                            <input type="submit" value="Spring" class="btn btn-secondary disabled but">
-                                            <input type="submit" value="PostgeSQL"
-                                                   class="btn btn-secondary disabled but">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 course d-lg-flex ftco-animate">
-                                        <div class="img" style="background-image: url(img/student-3.jpg);"></div>
-                                        <div class="text bg-light p-4">
-                                            <h3><a href="#">Богомолов Даниил Сергеевич</a></h3>
-                                            <p class="subheading">2 курс</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lacinia
-                                                lectus sit amet pretium fermentum...</p>
-                                            <input type="submit" value="Java" class="btn btn-secondary but">
-                                            <input type="submit" value="Spring Boot" class="btn btn-secondary but">
-                                            <input type="submit" value="Spring Security"
-                                                   class="btn btn-secondary disabled but">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 course d-lg-flex ftco-animate">
-                                        <div class="img" style="background-image: url(img/student-4.jpg);"></div>
-                                        <div class="text bg-light p-4">
-                                            <h3><a href="#">Исаичкин Данила Алексеевич</a></h3>
-                                            <p class="subheading">2 курс</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce lacinia
-                                                lectus sit amet pretium fermentum...</p>
-                                            <input type="submit" value="Java" class="btn btn-secondary but">
-                                            <input type="submit" value="Spring Boot" class="btn btn-secondary but">
-                                            <input type="submit" value="Spring Cloud" class="btn btn-secondary but">
-                                        </div>
-                                    </div>
+                                    </#list>
                                 </div>
                             </div>
                         </section>
-
                     </div>
                 </div>
-                <!-- Pagination -->
-                <nav aria-label="navigation">
+                <!-- Pagination (not done yet) -->
+                <!--nav aria-label="navigation">
                     <ul class="pagination mt-50 mb-70">
                         <li class="page-item"><a class="page-link" href="#">1</a></li>
                         <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -149,7 +109,7 @@
                         <li class="page-item"><a class="page-link" href="#">4</a></li>
                         <li class="page-item"><a class="page-link" href="#">5</a></li>
                     </ul>
-                </nav>
+                </nav-->
             </div>
         </div>
     </div>
