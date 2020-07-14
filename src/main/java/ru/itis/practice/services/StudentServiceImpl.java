@@ -1,15 +1,11 @@
 package ru.itis.practice.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import ru.itis.practice.models.Student;
-import ru.itis.practice.repositories.StudentRepository;
-
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import ru.itis.practice.dto.ProfileInfo;
+import org.springframework.transaction.annotation.Transactional;
+import ru.itis.practice.dto.StudentInfoDto;
+import ru.itis.practice.dto.StudentProfileInfo;
 import ru.itis.practice.models.Competence;
 import ru.itis.practice.models.Student;
 import ru.itis.practice.models.User;
@@ -18,13 +14,14 @@ import ru.itis.practice.repositories.StudentRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
-    private StudentRepository studentRepository;
-    private CompetenceRepository competenceRepository;
+    private final StudentRepository studentRepository;
+    private final CompetenceRepository competenceRepository;
 
     @Override
     public Student findByEmail(String email) {
@@ -40,14 +37,22 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public ProfileInfo getProfileInfoByUser(User user) {
+    public StudentProfileInfo getProfileInfoByUser(User user) {
         Student student = findByEmail(user.getEmail());
         List<Competence> studentCompetences = competenceRepository.findAllByStudent_Id(student.getId());
-        return ProfileInfo.from(student, studentCompetences);
+        return StudentProfileInfo.from(student, studentCompetences);
     }
 
     @Override
     public Student save(Student student) {
         return studentRepository.save(student);
+    }
+
+    @Override
+    @Transactional
+    public List<StudentInfoDto> getAll() {
+        return studentRepository.findAllByOrderByUser_FullName().stream()
+                .map(StudentInfoDto::from)
+                .collect(Collectors.toList());
     }
 }

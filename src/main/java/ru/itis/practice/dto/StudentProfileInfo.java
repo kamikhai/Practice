@@ -9,14 +9,13 @@ import ru.itis.practice.models.Student;
 import ru.itis.practice.models.User;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ProfileInfo {
+public class StudentProfileInfo {
 
     private String photoPath;
 
@@ -30,9 +29,9 @@ public class ProfileInfo {
 
     private String groupNumeric;
 
-    public static ProfileInfo from(Student student, List<Competence> competences) {
+    public static StudentProfileInfo from(Student student, List<Competence> competences) {
         User user = student.getUser();
-        ProfileInfo info =  ProfileInfo.builder()
+        StudentProfileInfo info =  StudentProfileInfo.builder()
                 .photoPath(user.getPhotoPath())
                 .fullName(user.getFullName())
                 .jobProfileTitle(student.getJobProfile().getTitle())

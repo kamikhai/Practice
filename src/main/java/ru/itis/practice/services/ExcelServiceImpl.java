@@ -83,6 +83,7 @@ public class ExcelServiceImpl implements ExcelService {
                         .role(User.Role.STUDENT)
                         .email(sheet.getRow(i).getCell(1).getStringCellValue())
                         .passHash(sheet.getRow(i).getCell(2).getStringCellValue())
+                        .photoPath("img/empty_user.jpg")
                         .build());
 
                 Student s = studentService.save(Student.builder()

@@ -11,4 +11,6 @@ public interface UserService {
 	Optional<User> isValid(User user);
 
 	User save(User user);
+
+	User getUserById(Long id);
 }

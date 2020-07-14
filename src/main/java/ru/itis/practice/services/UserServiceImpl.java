@@ -1,6 +1,7 @@
 package ru.itis.practice.services;
 
 import lombok.AllArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.itis.practice.models.User;
@@ -35,6 +36,19 @@ public class UserServiceImpl implements UserService {
 	public User save(User user) {
 		user.setPassHash(passwordEncoder.encode(user.getPassHash()));
 		return userRepository.save(user);
+	}
+
+	@Override
+	public User getUserById(Long id) {
+		try {
+			Optional<User> userCandidate = userRepository.findById(id);
+			if (userCandidate.isPresent()) {
+				return userCandidate.get();
+			}
+			throw new EmptyResultDataAccessException(-1);
+		} catch (EmptyResultDataAccessException e) {
+			throw new RuntimeException("No user found!");
+		}
 	}
 
 
