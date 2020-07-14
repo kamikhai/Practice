@@ -43,8 +43,8 @@ public class RegistrationController {
 
     @PostMapping("/group_registration")
     public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file, HttpServletResponse response,
-                                                 @RequestParam String group, @RequestParam Long teacher) {
-        File answer = excelService.add(file, group, teacher);
+                                                 @RequestParam String group) {
+        File answer = excelService.add(file, group);
 
         Path f = answer.toPath();
         if (Files.exists(f)){

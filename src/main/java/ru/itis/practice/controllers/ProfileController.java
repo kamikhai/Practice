@@ -33,8 +33,8 @@ public class ProfileController {
             return "profile";
         } else if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("TEACHER"))){
             return "teacher";
-        }else {
-            return "profile";
-         }
+        } else {
+            return "admin";
+        }
     }
 }

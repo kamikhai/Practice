@@ -19,8 +19,13 @@
                 </h1>
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
+<<<<<<< HEAD
                         <li class="colorlib-active"><a href="index.html">Обо мне</a></li>
                         <li><a href="collection.html">Мои студенты</a></li>
+=======
+                        <li class="colorlib-active"><a href="/profile">Обо мне</a></li>
+                        <li><a href="/my_students">Мои студенты</a></li>
+>>>>>>> feature_admin_teacher
                     </ul>
                 </nav>
             </aside> <!-- END COLORLIB-ASIDE -->
@@ -71,8 +76,9 @@
                 </section>
             </div>
         </div>
-    </div>
-</div>
-</body>
+    </div><!-- END COLORLIB-MAIN -->
+</div><!-- END COLORLIB-PAGE -->
+
 <#include "parts/footer.ftlh">
+</body>
 </html>
