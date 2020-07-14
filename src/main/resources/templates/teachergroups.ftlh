@@ -19,7 +19,7 @@
                 </h1>
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
-                        <li ><a href="/profile">Обо мне</a></li>
+                        <li><a href="/profile">Обо мне</a></li>
                         <li class="colorlib-active"><a href="/my_students">Мои студенты</a></li>
                     </ul>
                 </nav>
@@ -34,12 +34,21 @@
                                     <h1 class="big-letter center">Мои группы</h1>
                                     <div class="col-12 col-md-12 col-lg-12">
                                         <div class="shop_grid_product_area">
-
                                             <div class="row">
-
-                                                <#include "parts/groupslist.ftlh">
-
-
+                                                <section class="ftco-section" style="padding: 0 0 ! important">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <#list groups as group>
+                                                                <div class="col-md-12 course d-lg-flex ftco-animate"
+                                                                     style="margin-top: 20px; ">
+                                                                    <div class="text bg-light p-4">
+                                                                        <h3><a href="#">${group.numeric}</a></h3>
+                                                                    </div>
+                                                                </div>
+                                                            </#list>
+                                                        </div>
+                                                    </div>
+                                                </section>
                                             </div>
                                         </div>
                                     </div>
@@ -50,8 +59,8 @@
                 </section>
             </div>
         </div>
-    </div><!-- END COLORLIB-MAIN -->
-</div><!-- END COLORLIB-PAGE -->
+    </div>
+</div>
 <#include "parts/footer.ftlh">
 </body>
 </html>

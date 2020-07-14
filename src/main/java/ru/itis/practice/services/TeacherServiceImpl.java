@@ -9,6 +9,7 @@ import ru.itis.practice.models.Teacher;
 import ru.itis.practice.models.User;
 import ru.itis.practice.repositories.TeacherRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -16,7 +17,6 @@ import java.util.Optional;
 public class TeacherServiceImpl implements TeacherService {
 
     private TeacherRepository teacherRepository;
-
 
     @Override
     public Teacher findByEmail(String email) {
@@ -33,8 +33,11 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public TeacherProfileInfo getProfileInfoByUser(User user) {
-        Teacher teacher = findByEmail(user.getEmail());
-        //TODO: Create and return ProfileInfo
-        return null;
+        return TeacherProfileInfo.from(findByEmail(user.getEmail()));
+    }
+
+    @Override
+    public List<TeacherProfileInfo> getAllTeachers() {
+        return TeacherProfileInfo.from(teacherRepository.findAll());
     }
 }

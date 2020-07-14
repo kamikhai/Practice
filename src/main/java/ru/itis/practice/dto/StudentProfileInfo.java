@@ -18,15 +18,10 @@ import java.util.List;
 public class StudentProfileInfo {
 
     private String photoPath;
-
     private String fullName;
-
     private String jobProfileTitle;
-
     private String description;
-
     private List<CompetenceProfileInfo> competenceList;
-
     private String groupNumeric;
 
     public static StudentProfileInfo from(Student student, List<Competence> competences) {

@@ -40,22 +40,15 @@
                                                 <section class="ftco-section" style="padding: 0 0 ! important">
                                                     <div class="container">
                                                         <div class="row">
-                                                            <div class="col-md-12 course d-lg-flex ftco-animate" style="margin-top: 20px; ">
-                                                                <div class="img" style="background-image: url(img/teacher-1.jpg);"></div>
-                                                                <div class="text bg-light p-4">
-                                                                    <h3><a href="#">Сидиков Марсель Рафаэлевич</a></h3>
-                                                                    <p>Ассистент, б.с., КФУ / Высшая школа информационных технологий и
-                                                                        интеллектуальных систем / Кафедра программной инженерии...</p>
+                                                            <#list teacherList as teacher>
+                                                                <div class="col-md-12 course d-lg-flex ftco-animate" style="margin-top: 20px; ">
+                                                                    <div class="img" style="background-image: url(img/teacher-2.jpg);"></div>
+                                                                    <div class="text bg-light p-4">
+                                                                        <h3><a href="#">${teacher.fullname}</a></h3>
+                                                                        <p>${teacher.position}</p>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-md-12 course d-lg-flex ftco-animate" style="margin-top: 20px; ">
-                                                                <div class="img" style="background-image: url(img/teacher-2.jpg);"></div>
-                                                                <div class="text bg-light p-4">
-                                                                    <h3><a href="#">Якупов Азат Шавкатович</a></h3>
-                                                                    <p>преподаватель, б.с. , КФУ / Высшая школа информационных технологий и интеллектуальных систем / Кафедра программной инженерии...</p>
-                                                                </div>
-                                                            </div>
-
+                                                            </#list>
                                                         </div>
                                                     </div>
                                                 </section>

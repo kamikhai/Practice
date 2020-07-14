@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 public class StudentInfoDto {
+
     private Long id;
     private String imgUrl;
     private String fullName;
