@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="tags" type="java.util.List<ru.itis.practice.models.Tag>" -->
 <#-- @ftlvariable name="students" type="java.util.List<ru.itis.practice.dto.StudentInfoDto>" -->
 <!doctype html>
 <html lang="en">
@@ -50,13 +51,11 @@
                                 <li data-toggle="collapse" data-target="#shoes" class="collapsed">
                                     <a href="#">компетенции</a>
                                     <ul class="sub-menu collapse" id="shoes">
-                                        <li><a href="#">Java</a></li>
-                                        <li><a href="#">.Net</a></li>
-                                        <li><a href="#">Kotlin</a></li>
-                                        <li><a href="#">PHP</a></li>
-                                        <li><a href="#">Python</a></li>
-                                        <li><a href="#">PostgreSQL</a></li>
-                                        <li><a href="#">MySQL</a></li>
+                                        <#list tags as tag>
+                                            <li id="tag-${tag.id}">
+                                                <a href="#tag-${tag.id}">${tag.name}</a>
+                                            </li>
+                                        </#list>
                                     </ul>
                                 </li>
                                 <li data-toggle="collapse" data-target="#accessories" class="collapsed">
@@ -83,10 +82,10 @@
                             <div class="container">
                                 <div class="row">
                                     <#list students as student>
-                                        <div id="${student.id}" class="col-md-12 course d-lg-flex ftco-animate" style="margin-top: 20px; ">
+                                        <div id="student-${student.id}" class="col-md-12 course d-lg-flex ftco-animate" style="margin-top: 20px; ">
                                             <div class="img" style="background-image: url(${student.imgUrl!"img/empty_user.jpg"});"></div>
                                             <div class="text bg-light p-4">
-                                                <h3><a href="#${student.id}">${student.fullName}</a></h3>
+                                                <h3><a href="#student-${student.id}">${student.fullName}</a></h3>
                                                 <p class="subheading">2̈ͥ͌͒̄ͮ͏̷̩͓̦̰̼̱̬̗̯̘̲̠͓͖̞̳͠ͅ ̶̝͍̮̠̯̻͈̱̱̯̠̬̃̊ͯͣ̅̓͌̄͋̒̾͊͂ͤ͑̉́̚̕͞к͖̥͕̥ͧͩͮͣ̔͗̅́͘͞͡у̢͎͙̬͓̙̜̭̟̥̥͔̌͗̉̏͑́̒ͣ̕рͭͪ͛̓̒̏̑͂̽͏̷͕̬̝̟̙̥͈͓̠͇̕с̵͎̭͍̟̙̦̇̿̀̋ͩ̌̀̚͞͞</p>
                                                 <p>${student.description}</p>
                                                 <#list student.competences as competency>
