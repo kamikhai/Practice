@@ -9355,14 +9355,14 @@ textarea.form-control {
   .appointment-form .form-control::-moz-placeholder {
     /* Firefox 19+ */
     color: rgba(255, 255, 255, 0.9); }
-  .appointment-form .form-control:-ms-input-placeholder {
+.appointment-form .form-control:-ms-input-placeholder {
     /* IE 10+ */
-    color: rgba(255, 255, 255, 0.9); }
+  color: rgba(255, 255, 255, 0.9); }
   .appointment-form .form-control:-moz-placeholder {
     /* Firefox 18- */
     color: rgba(255, 255, 255, 0.9); }
   .appointment-form .form-control:focus, .appointment-form .form-control:active {
-    border-color: #fff; }
+    border-color: #fffffb; }
 
 .appointment-form textarea.form-control {
   height: inherit !important; }

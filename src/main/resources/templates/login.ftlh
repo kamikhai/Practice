@@ -20,7 +20,7 @@
                 </div>
                 <form class="appointment-form ftco-animate" method="post">
                     <div class="d-md-flex">
-                        <input type="email" name="email" class="form-control" placeholder="Почта">
+                        <input type="email" name="email" class="form-control" placeholder="Почта" >
                     </div>
                     <div class="d-md-flex">
                         <input type="password" name="password" class="form-control" placeholder="Пароль">

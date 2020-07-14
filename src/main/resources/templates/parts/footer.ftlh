@@ -32,16 +32,16 @@
     </div>
 </footer>
 
-<script src="js/jquery.js"></script>
-<script src="js/jquery-migrate-3.0.1.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/jquery-stellar.js"></script>
-<script src="js/jquery-waypoints.js"></script>
-<script src="js/scrollax.js"></script>
-<script src="js/aos.js"></script>
-<script src="js/owl-carousel.js"></script>
-<script src="js/main.js"></script>
-<script src="js/custom.js"></script>
+<script src="/js/jquery.js"></script>
+<script src="/js/jquery-migrate-3.0.1.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/jquery-stellar.js"></script>
+<script src="/js/jquery-waypoints.js"></script>
+<script src="/js/scrollax.js"></script>
+<script src="/js/aos.js"></script>
+<script src="/js/owl-carousel.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/custom.js"></script>
 
 
 
