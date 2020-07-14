@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,4 +24,12 @@ public class Teacher {
 
     @ManyToMany
     private List<Group> curatedGroups;
+
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
+    private String position;
+
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
+    private String information;
 }
