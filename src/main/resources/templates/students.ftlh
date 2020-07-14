@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="profiles" type="java.util.List<ru.itis.practice.models.JobProfile>" -->
 <#-- @ftlvariable name="tags" type="java.util.List<ru.itis.practice.models.Tag>" -->
 <#-- @ftlvariable name="students" type="java.util.List<ru.itis.practice.dto.StudentInfoDto>" -->
 <!doctype html>
@@ -36,21 +37,22 @@
 
                         <!--  Catagories  -->
                         <div class="catagories-menu" style="margin-top: 20px">
-                            <ul id="menu-content2" class="menu-content collapse show">
+                            <ul id="menu-content2" class="menu-content">
                                 <!-- Single Item -->
-                                <li data-toggle="collapse" data-target="#clothing">
-                                    <a href="#">профиль работы</a>
-                                    <ul class="sub-menu collapse show" id="clothing">
-                                        <li><a href="#">Web-разработчик</a></li>
-                                        <li><a href="#">Аналитик</a></li>
-                                        <li><a href="#">IOS-разработчик</a></li>
-                                        <li><a href="#">Android-разработчик</a></li>
+                                <li>
+                                    <a data-toggle="collapse" href="#profiles">профиль работы</a>
+                                    <ul id="profiles" class="sub-menu collapse">
+                                        <#list profiles as profile>
+                                            <li id="profile-${profile.id}">
+                                                <a href="#profile-${profile.id}">${profile.title}</a>
+                                            </li>
+                                        </#list>
                                     </ul>
                                 </li>
                                 <!-- Single Item -->
-                                <li data-toggle="collapse" data-target="#shoes" class="collapsed">
-                                    <a href="#">компетенции</a>
-                                    <ul class="sub-menu collapse" id="shoes">
+                                <li>
+                                    <a data-toggle="collapse" href="#tags">компетенции</a>
+                                    <ul id="tags" class="sub-menu collapse">
                                         <#list tags as tag>
                                             <li id="tag-${tag.id}">
                                                 <a href="#tag-${tag.id}">${tag.name}</a>
@@ -58,15 +60,15 @@
                                         </#list>
                                     </ul>
                                 </li>
-                                <li data-toggle="collapse" data-target="#accessories" class="collapsed">
-                                    <a href="#">курс</a>
-                                    <ul class="sub-menu collapse" id="accessories">
-                                        <li><a href="#">1 (бакалавриат)</a></li>
-                                        <li><a href="#">2 (бакалавриат)</a></li>
-                                        <li><a href="#">3 (бакалавриат)</a></li>
-                                        <li><a href="#">4 (бакалавриат)</a></li>
-                                        <li><a href="#">1 (магистратура)</a></li>
-                                        <li><a href="#">2 (магистратура)</a></li>
+                                <li>
+                                    <a data-toggle="collapse" href="#course">курс</a>
+                                    <ul id="course" class="sub-menu collapse">
+                                        <li><a>1 (бакалавриат)</a></li>
+                                        <li><a>2 (бакалавриат)</a></li>
+                                        <li><a>3 (бакалавриат)</a></li>
+                                        <li><a>4 (бакалавриат)</a></li>
+                                        <li><a>1 (магистратура)</a></li>
+                                        <li><a>2 (магистратура)</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -74,7 +76,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col-12 col-md-8 col-lg-9">
                 <div class="shop_grid_product_area">
                     <div class="row">
