@@ -1,20 +1,15 @@
 package ru.itis.practice.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itis.practice.models.Student;
 import ru.itis.practice.repositories.StudentRepository;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
-import ru.itis.practice.dto.ProfileInfo;
+import ru.itis.practice.dto.StudentProfileInfo;
 import ru.itis.practice.models.Competence;
-import ru.itis.practice.models.Student;
 import ru.itis.practice.models.User;
 import ru.itis.practice.repositories.CompetenceRepository;
-import ru.itis.practice.repositories.StudentRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,10 +35,10 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public ProfileInfo getProfileInfoByUser(User user) {
+    public StudentProfileInfo getProfileInfoByUser(User user) {
         Student student = findByEmail(user.getEmail());
         List<Competence> studentCompetences = competenceRepository.findAllByStudent_Id(student.getId());
-        return ProfileInfo.from(student, studentCompetences);
+        return StudentProfileInfo.from(student, studentCompetences);
     }
 
     @Override
