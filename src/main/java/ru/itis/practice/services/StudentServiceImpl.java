@@ -8,12 +8,14 @@ import ru.itis.practice.dto.StudentInfoDto;
 import ru.itis.practice.dto.StudentProfileInfo;
 import ru.itis.practice.models.Competence;
 import ru.itis.practice.models.Student;
+import ru.itis.practice.models.Tag;
 import ru.itis.practice.models.User;
 import ru.itis.practice.repositories.CompetenceRepository;
 import ru.itis.practice.repositories.StudentRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,11 +50,22 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.save(student);
     }
 
+    private StudentInfoDto toInfoDto(Student student) {
+        Set<String> tags = competenceRepository.findAllByStudent_Id(student.getId())
+                .stream()
+                .filter(c -> c.getConfirmedBy() != null)
+                .flatMap(c -> c.getTags().stream())
+                .map(Tag::getName)
+                .collect(Collectors.toSet());
+
+        return StudentInfoDto.from(student, tags);
+    }
+
     @Override
     @Transactional
     public List<StudentInfoDto> getAll() {
         return studentRepository.findAllByOrderByUser_FullName().stream()
-                .map(StudentInfoDto::from)
+                .map(this::toInfoDto)
                 .collect(Collectors.toList());
     }
 }

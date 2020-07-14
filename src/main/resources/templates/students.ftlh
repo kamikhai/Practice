@@ -43,8 +43,8 @@
                                     <a data-toggle="collapse" href="#profiles">профиль работы</a>
                                     <ul id="profiles" class="sub-menu collapse">
                                         <#list profiles as profile>
-                                            <li id="profile-${profile.id}">
-                                                <a href="#profile-${profile.id}">${profile.title}</a>
+                                            <li>
+                                                <a href="?p=${profile.id}">${profile.title}</a>
                                             </li>
                                         </#list>
                                     </ul>
@@ -54,15 +54,15 @@
                                     <a data-toggle="collapse" href="#tags">компетенции</a>
                                     <ul id="tags" class="sub-menu collapse">
                                         <#list tags as tag>
-                                            <li id="tag-${tag.id}">
-                                                <a href="#tag-${tag.id}">${tag.name}</a>
+                                            <li>
+                                                <a href="?t=${tag.id}">${tag.name}</a>
                                             </li>
                                         </#list>
                                     </ul>
                                 </li>
                                 <li>
-                                    <a data-toggle="collapse" href="#course">курс</a>
-                                    <ul id="course" class="sub-menu collapse">
+                                    <a data-toggle="collapse" href="#courses">курс</a>
+                                    <ul id="courses" class="sub-menu collapse">
                                         <li><a>1 (бакалавриат)</a></li>
                                         <li><a>2 (бакалавриат)</a></li>
                                         <li><a>3 (бакалавриат)</a></li>
@@ -86,11 +86,11 @@
                                         <div id="student-${student.id}" class="col-md-12 course d-lg-flex ftco-animate" style="margin-top: 20px; ">
                                             <div class="img" style="background-image: url(${student.imgUrl!"img/empty_user.jpg"});"></div>
                                             <div class="text bg-light p-4">
-                                                <h3><a href="#student-${student.id}">${student.fullName}</a></h3>
+                                                <h3><a href="/profile/${student.id}">${student.fullName}</a></h3>
                                                 <p class="subheading">2̈ͥ͌͒̄ͮ͏̷̩͓̦̰̼̱̬̗̯̘̲̠͓͖̞̳͠ͅ ̶̝͍̮̠̯̻͈̱̱̯̠̬̃̊ͯͣ̅̓͌̄͋̒̾͊͂ͤ͑̉́̚̕͞к͖̥͕̥ͧͩͮͣ̔͗̅́͘͞͡у̢͎͙̬͓̙̜̭̟̥̥͔̌͗̉̏͑́̒ͣ̕рͭͪ͛̓̒̏̑͂̽͏̷͕̬̝̟̙̥͈͓̠͇̕с̵͎̭͍̟̙̦̇̿̀̋ͩ̌̀̚͞͞</p>
                                                 <p>${student.description}</p>
-                                                <#list student.competences as competency>
-                                                    <input type="submit" value="${competency}" class="btn btn-secondary but">
+                                                <#list student.tags as tag>
+                                                    <input type="submit" value="${tag}" class="btn btn-secondary but">
                                                 </#list>
                                             </div>
                                         </div>
