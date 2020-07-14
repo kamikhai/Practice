@@ -84,7 +84,7 @@
                                 <div class="row">
                                     <#list students as student>
                                         <div id="${student.id}" class="col-md-12 course d-lg-flex ftco-animate" style="margin-top: 20px; ">
-                                            <div class="img" style="background-image: url(img/empty.jpg);"></div>
+                                            <div class="img" style="background-image: url(${student.imgUrl!"img/empty_user.jpg"});"></div>
                                             <div class="text bg-light p-4">
                                                 <h3><a href="#${student.id}">${student.fullName}</a></h3>
                                                 <p class="subheading">2̈ͥ͌͒̄ͮ͏̷̩͓̦̰̼̱̬̗̯̘̲̠͓͖̞̳͠ͅ ̶̝͍̮̠̯̻͈̱̱̯̠̬̃̊ͯͣ̅̓͌̄͋̒̾͊͂ͤ͑̉́̚̕͞к͖̥͕̥ͧͩͮͣ̔͗̅́͘͞͡у̢͎͙̬͓̙̜̭̟̥̥͔̌͗̉̏͑́̒ͣ̕рͭͪ͛̓̒̏̑͂̽͏̷͕̬̝̟̙̥͈͓̠͇̕с̵͎̭͍̟̙̦̇̿̀̋ͩ̌̀̚͞͞</p>

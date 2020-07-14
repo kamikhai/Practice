@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class StudentInfoDto {
     private Long id;
+    private String imgUrl;
     private String fullName;
     private String description;
     private List<String> competences;
@@ -26,6 +27,7 @@ public class StudentInfoDto {
 
         return builder()
                 .id(student.getId())
+                .imgUrl(student.getUser().getPhotoPath())
                 .fullName(student.getUser().getFullName())
                 .description(student.getDescription())
                 .competences(competences)
