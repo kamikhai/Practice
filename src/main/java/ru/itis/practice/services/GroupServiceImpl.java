@@ -25,6 +25,6 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public List<GroupInfo> getAllGroups() {
-        return GroupInfo.from(groupRepository.findAll());
+        return GroupInfo.from(groupRepository.findByOrderByNumericDesc());
     }
 }

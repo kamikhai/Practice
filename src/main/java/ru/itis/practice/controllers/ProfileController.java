@@ -8,15 +8,11 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import ru.itis.practice.models.Competence;
 import ru.itis.practice.models.User;
 import ru.itis.practice.security.details.UserDetailsImpl;
-import ru.itis.practice.services.GroupService;
-import ru.itis.practice.services.StudentService;
-import ru.itis.practice.services.TeacherService;
-import ru.itis.practice.services.UserService;
+import ru.itis.practice.services.*;
 
 @Controller
 @AllArgsConstructor
@@ -27,11 +23,17 @@ public class ProfileController {
     private UserService userService;
     private TeacherService teacherService;
     private GroupService groupService;
+    private CompetenceService competenceService;
 
     @GetMapping("/{id}")
-    public String getCustomProfile(@PathVariable Long id, Model model) {
+    public String getCustomProfile(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         User user = userService.getUserById(id);
         if (user.getRole().equals(User.Role.STUDENT)) {
+            if (userDetails != null){
+                model.addAttribute("user", userDetails.getUser().getRole().name());
+            } else {
+                model.addAttribute("user", "ANONYMOUS");
+            }
             model.addAttribute("profileInfo", studentService.getProfileInfoByUser(user));
             return "profile";
         } else if (user.getRole().equals(User.Role.TEACHER)) {
@@ -56,5 +58,12 @@ public class ProfileController {
             model.addAttribute("groups", groupService.getAllGroups());
             return "admin";
         }
+    }
+
+    @PostMapping
+    @PreAuthorize(value = "hasAuthority('TEACHER')")
+    public String confirmCompetence(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam("student") Long student){
+        competenceService.confirm(student, teacherService.findByEmail(userDetails.getUser().getEmail()));
+        return "ok";
     }
 }

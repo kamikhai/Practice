@@ -19,8 +19,8 @@
                         <li ><a href="/profile">Группы</a></li>
                         <li class="colorlib-active"><a href="/teachers">Преподаватели</a></li>
                         <li ><a href="/registration">Регистрация</a></li>
-                        <li ><a href="#">Профили работы</a></li>
-                        <li ><a href="#">Тэги</a></li>
+                        <li ><a href="/job_profile">Профили работы</a></li>
+                        <li ><a href="/tags">Теги</a></li>
                     </ul>
                 </nav>
             </aside> <!-- END COLORLIB-ASIDE -->
@@ -42,7 +42,7 @@
                                                         <div class="row">
                                                             <#list teacherList as teacher>
                                                                 <div class="col-md-12 course d-lg-flex ftco-animate" style="margin-top: 20px; ">
-                                                                    <div class="img" style="background-image: url(img/teacher-2.jpg);"></div>
+                                                                    <div class="img" style="background-image: url(${teacher.user.photoPath});"></div>
                                                                     <div class="text bg-light p-4">
                                                                         <h3><a href="#">${teacher.fullname}</a></h3>
                                                                         <p>${teacher.position}</p>

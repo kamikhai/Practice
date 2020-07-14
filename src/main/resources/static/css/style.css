@@ -2119,12 +2119,12 @@ fieldset:disabled a.btn {
 }
 
 .but:hover, but:active{
-  cursor: default !important;
+  cursor: pointer !important;
   border: 1px solid ! important;
   border-color: #1eaaf1 ! important;
 }
 
-.disabled.but, .disabled.but:focus {
+.butd, .butd:focus {
   cursor: default !important;
   background-color: #9fc2d4 !important;
   border: 1px solid #9fc2d4 !important;

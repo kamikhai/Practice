@@ -25,21 +25,21 @@
                 </nav>
             </aside> <!-- END COLORLIB-ASIDE -->
             <div id="colorlib-main">
-                <section class="ftco-section-no-padding bg-light">
+                <section class="ftco-section-no-padding bg-light" style="height: 100%">
                     <div class="hero-wrap" style="background-color: #fff ! important">
-                        <div class="overlay"></div>
+                        <div class="overlay" ></div>
                         <div class="d-flex align-items-center ">
-                            <div class="author-info text p-3 p-md-5">
+                            <div class="author-info text p-3 p-md-5"  style="width: 100%">
                                 <div class="desc" style="text-align: center">
                                     <h1 class="big-letter center">Мои группы</h1>
                                     <div class="col-12 col-md-12 col-lg-12">
                                         <div class="shop_grid_product_area">
                                             <div class="row">
-                                                <section class="ftco-section" style="padding: 0 0 ! important">
+                                                <section class="ftco-section" style="padding: 0 0 ! important; width: 100%">
                                                     <div class="container">
                                                         <div class="row">
                                                             <#list groups as group>
-                                                                <div class="col-md-12 course d-lg-flex ftco-animate"
+                                                                <div class="col-md-6 course d-lg-flex ftco-animate"
                                                                      style="margin-top: 20px; ">
                                                                     <div class="text bg-light p-4">
                                                                         <h3><a href="#">${group.numeric}</a></h3>
