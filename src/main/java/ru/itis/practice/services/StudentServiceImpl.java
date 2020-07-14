@@ -1,25 +1,27 @@
 package ru.itis.practice.services;
 
-import org.springframework.stereotype.Service;
-import ru.itis.practice.models.Student;
-import ru.itis.practice.repositories.StudentRepository;
-
 import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.itis.practice.dto.StudentInfoDto;
 import ru.itis.practice.dto.StudentProfileInfo;
 import ru.itis.practice.models.Competence;
+import ru.itis.practice.models.Student;
 import ru.itis.practice.models.User;
 import ru.itis.practice.repositories.CompetenceRepository;
+import ru.itis.practice.repositories.StudentRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
-    private StudentRepository studentRepository;
-    private CompetenceRepository competenceRepository;
+    private final StudentRepository studentRepository;
+    private final CompetenceRepository competenceRepository;
 
     @Override
     public Student findByEmail(String email) {
@@ -44,5 +46,13 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Student save(Student student) {
         return studentRepository.save(student);
+    }
+
+    @Override
+    @Transactional
+    public List<StudentInfoDto> getAll() {
+        return studentRepository.findAllByOrderByUser_FullName().stream()
+                .map(StudentInfoDto::from)
+                .collect(Collectors.toList());
     }
 }
