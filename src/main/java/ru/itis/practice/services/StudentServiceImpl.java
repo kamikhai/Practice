@@ -51,9 +51,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     private StudentInfoDto toInfoDto(Student student) {
-        Set<String> tags = competenceRepository.findAllByStudent_Id(student.getId())
+        Set<String> tags = competenceRepository.findAllByStudent_IdAndConfirmedByIsNotNull(student.getId())
                 .stream()
-                .filter(c -> c.getConfirmedBy() != null)
                 .flatMap(c -> c.getTags().stream())
                 .map(Tag::getName)
                 .collect(Collectors.toSet());

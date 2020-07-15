@@ -8,4 +8,6 @@ import java.util.List;
 public interface CompetenceRepository extends JpaRepository<Competence, Long> {
 
     List<Competence> findAllByStudent_Id(Long id);
+
+    List<Competence> findAllByStudent_IdAndConfirmedByIsNotNull(Long id);
 }
