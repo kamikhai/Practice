@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import ru.itis.practice.models.Student;
+import ru.itis.practice.models.Tag;
 
 import java.util.List;
 import java.util.Set;
@@ -19,13 +20,13 @@ public class StudentInfoDto {
     private String description;
     private List<String> tags;
 
-    public static StudentInfoDto from(Student student, Set<String> tags) {
+    public static StudentInfoDto from(Student student, Set<Tag> tags) {
         return builder()
                 .id(student.getId())
                 .imgUrl(student.getUser().getPhotoPath())
                 .fullName(student.getUser().getFullName())
                 .description(student.getDescription())
-                .tags(tags.stream().sorted().collect(Collectors.toList()))
+                .tags(tags.stream().map(Tag::getName).sorted().collect(Collectors.toList()))
                 .build();
     }
 }

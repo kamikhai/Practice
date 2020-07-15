@@ -13,6 +13,7 @@ import ru.itis.practice.models.User;
 import ru.itis.practice.repositories.CompetenceRepository;
 import ru.itis.practice.repositories.StudentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -50,21 +51,32 @@ public class StudentServiceImpl implements StudentService {
         return studentRepository.save(student);
     }
 
-    private StudentInfoDto toInfoDto(Student student) {
-        Set<String> tags = competenceRepository.findAllByStudent_IdAndConfirmedByIsNotNull(student.getId())
-                .stream()
-                .flatMap(c -> c.getTags().stream())
-                .map(Tag::getName)
-                .collect(Collectors.toSet());
-
-        return StudentInfoDto.from(student, tags);
-    }
-
     @Override
     @Transactional
-    public List<StudentInfoDto> getAll() {
-        return studentRepository.findAllByOrderByUser_FullName().stream()
-                .map(this::toInfoDto)
-                .collect(Collectors.toList());
+    public List<StudentInfoDto> getAll(List<Long> tags, List<Long> profiles) {
+         List<Student> students = studentRepository.findAllByOrderByUser_FullName();
+         List<StudentInfoDto> result = new ArrayList<>();
+
+         for (Student student : students) {
+             Set<Tag> competenceTags = competenceRepository
+                     .findAllByStudent_IdAndConfirmedByIsNotNull(student.getId())
+                     .stream()
+                     .flatMap(c -> c.getTags().stream())
+                     .collect(Collectors.toSet());
+
+             boolean tagsOK = tags == null || tags.isEmpty() || competenceTags.stream()
+                     .map(Tag::getId)
+                     .collect(Collectors.toSet())
+                     .containsAll(tags);
+
+             boolean profOK = profiles == null || profiles.isEmpty() ||
+                     (student.getJobProfile() != null && profiles.contains(student.getJobProfile().getId()));
+
+             if (tagsOK && profOK) {
+                 result.add(StudentInfoDto.from(student, competenceTags));
+             }
+         }
+
+         return result;
     }
 }
