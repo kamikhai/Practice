@@ -11,5 +11,5 @@ public interface StudentService {
     Student findByEmail(String email);
     StudentProfileInfo getProfileInfoByUser(User user);
     Student save(Student student);
-    List<StudentInfoDto> getAll();
+    List<StudentInfoDto> getAll(List<Long> tags, List<Long> profiles);
 }
