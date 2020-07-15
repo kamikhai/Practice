@@ -5,6 +5,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.itis.practice.models.Group;
@@ -26,6 +27,8 @@ public class ExcelServiceImpl implements ExcelService {
     private GroupService groupService;
     @Autowired
     private StudentService studentService;
+    @Value("${storage.path}")
+    String path;
 
     @Override
     public File add(MultipartFile file, String group) {
@@ -38,14 +41,14 @@ public class ExcelServiceImpl implements ExcelService {
                 String rootPath = System.getProperty("catalina.home");
                 System.out.println("File original name: " + file.getOriginalFilename());
 
-                File newFile = new File("D:\\STORAGE" + File.separator + file.getName() + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss")) + ".xlsx");
+                File newFile = new File(path + File.separator + file.getName() + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss")) + ".xlsx");
 
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(newFile));
                 stream.write(fileBytes);
                 stream.close();
                 addPassword(newFile, group);
 
-                System.out.println("Файл сохранен: D:\\STORAGE" + File.separator + file.getName() + LocalDateTime.now() + ".xlsx");
+                System.out.println("Файл сохранен: " + path + File.separator + file.getName() + LocalDateTime.now() + ".xlsx");
                 return newFile;
 
             } catch (Exception e) {
