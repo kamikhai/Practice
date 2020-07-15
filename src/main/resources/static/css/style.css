@@ -10244,5 +10244,11 @@ textarea.form-control {
   text-align: center;
 }
 
+.iconupload {
+  display: none;
+}
+.img:hover .iconupload{
+  display: block;
+}
 
 
