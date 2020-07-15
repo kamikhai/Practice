@@ -36,15 +36,15 @@ public class RegistrationController {
     @PostMapping("/user_registration")
     public String register(@RequestParam String email, @RequestParam String name,
                            @RequestParam String password, @RequestParam String role) {
-        User user = User.builder().email(email).fullName(name).role(User.Role.valueOf(role)).passHash(password).build();
+        User user = User.builder().email(email).fullName(name).role(User.Role.valueOf(role)).passHash(password).photoPath("img/empty_user.jpg").build();
         userService.save(user);
         return "reg";
     }
 
     @PostMapping("/group_registration")
     public @ResponseBody String handleFileUpload(@RequestParam("file") MultipartFile file, HttpServletResponse response,
-                                                 @RequestParam String group, @RequestParam Long teacher) {
-        File answer = excelService.add(file, group, teacher);
+                                                 @RequestParam String group) {
+        File answer = excelService.add(file, group);
 
         Path f = answer.toPath();
         if (Files.exists(f)){

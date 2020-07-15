@@ -1,9 +1,3 @@
-/*!
- * Bootstrap v4.2.1 (https://getbootstrap.com/)
- * Copyright 2011-2018 The Bootstrap Authors
- * Copyright 2011-2018 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
 @import url(classy-nav.css);
 
 
@@ -2125,12 +2119,12 @@ fieldset:disabled a.btn {
 }
 
 .but:hover, but:active{
-  cursor: default !important;
+  cursor: pointer !important;
   border: 1px solid ! important;
   border-color: #1eaaf1 ! important;
 }
 
-.disabled.but, .disabled.but:focus {
+.butd, .butd:focus {
   cursor: default !important;
   background-color: #9fc2d4 !important;
   border: 1px solid #9fc2d4 !important;
@@ -9361,14 +9355,14 @@ textarea.form-control {
   .appointment-form .form-control::-moz-placeholder {
     /* Firefox 19+ */
     color: rgba(255, 255, 255, 0.9); }
-  .appointment-form .form-control:-ms-input-placeholder {
+.appointment-form .form-control:-ms-input-placeholder {
     /* IE 10+ */
-    color: rgba(255, 255, 255, 0.9); }
+  color: rgba(255, 255, 255, 0.9); }
   .appointment-form .form-control:-moz-placeholder {
     /* Firefox 18- */
     color: rgba(255, 255, 255, 0.9); }
   .appointment-form .form-control:focus, .appointment-form .form-control:active {
-    border-color: #fff; }
+    border-color: #fffffb; }
 
 .appointment-form textarea.form-control {
   height: inherit !important; }

@@ -28,7 +28,7 @@ public class ExcelServiceImpl implements ExcelService {
     private StudentService studentService;
 
     @Override
-    public File add(MultipartFile file, String group, Long teacher) {
+    public File add(MultipartFile file, String group) {
 
         if (!file.isEmpty()) {
 
@@ -43,7 +43,7 @@ public class ExcelServiceImpl implements ExcelService {
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(newFile));
                 stream.write(fileBytes);
                 stream.close();
-                addPassword(newFile, group, teacher);
+                addPassword(newFile, group);
 
                 System.out.println("Файл сохранен: D:\\STORAGE" + File.separator + file.getName() + LocalDateTime.now() + ".xlsx");
                 return newFile;
@@ -57,7 +57,7 @@ public class ExcelServiceImpl implements ExcelService {
         }
     }
 
-    private void addPassword(File newFile, String group, Long teacher) throws IOException {
+    private void addPassword(File newFile, String group) throws IOException {
 
         FileInputStream inputStream = new FileInputStream(newFile);
         XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
@@ -83,6 +83,7 @@ public class ExcelServiceImpl implements ExcelService {
                         .role(User.Role.STUDENT)
                         .email(sheet.getRow(i).getCell(1).getStringCellValue())
                         .passHash(sheet.getRow(i).getCell(2).getStringCellValue())
+                        .photoPath("img/empty_user.jpg")
                         .build());
 
                 Student s = studentService.save(Student.builder()
