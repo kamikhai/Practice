@@ -3,10 +3,11 @@ package ru.itis.practice.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import ru.itis.practice.models.Competence;
 import ru.itis.practice.models.Student;
+import ru.itis.practice.models.Tag;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -17,20 +18,15 @@ public class StudentInfoDto {
     private String imgUrl;
     private String fullName;
     private String description;
-    private List<String> competences;
+    private List<String> tags;
 
-    public static StudentInfoDto from(Student student) {
-        List<String> competences = student.getCompetences().stream()
-                .filter(c -> c.getConfirmedBy() != null)
-                .map(Competence::getDescription)
-                .collect(Collectors.toList());
-
+    public static StudentInfoDto from(Student student, Set<Tag> tags) {
         return builder()
                 .id(student.getId())
                 .imgUrl(student.getUser().getPhotoPath())
                 .fullName(student.getUser().getFullName())
                 .description(student.getDescription())
-                .competences(competences)
+                .tags(tags.stream().map(Tag::getName).sorted().collect(Collectors.toList()))
                 .build();
     }
 }

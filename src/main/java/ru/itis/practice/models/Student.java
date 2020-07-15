@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Data
@@ -27,9 +26,6 @@ public class Student {
 
     @ManyToOne
     private JobProfile jobProfile;
-
-    @OneToMany
-    private List<Competence> competences;
 
     @Lob
     @Type(type = "org.hibernate.type.TextType")
