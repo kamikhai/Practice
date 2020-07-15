@@ -42,7 +42,7 @@
                                                                 <div class="col-md-6 course d-lg-flex ftco-animate"
                                                                      style="margin-top: 20px; ">
                                                                     <div class="text bg-light p-4">
-                                                                        <h3><a href="#">${group.numeric}</a></h3>
+                                                                        <h3><a href="/students_group?g=${group.id}">${group.numeric}</a></h3>
                                                                     </div>
                                                                 </div>
                                                             </#list>
