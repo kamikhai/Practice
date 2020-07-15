@@ -79,4 +79,21 @@ public class StudentServiceImpl implements StudentService {
 
          return result;
     }
+
+    @Override
+    public List<StudentInfoDto> getAllByGroupId(Long groupId) {
+        List<Student> students = studentRepository.findAllByGroup_Id(groupId);
+        List<StudentInfoDto> result = new ArrayList<>();
+
+        for (Student student : students) {
+            Set<Tag> competenceTags = competenceRepository
+                    .findAllByStudent_IdAndConfirmedByIsNotNull(student.getId())
+                    .stream()
+                    .flatMap(c -> c.getTags().stream())
+                    .collect(Collectors.toSet());
+                result.add(StudentInfoDto.from(student, competenceTags));
+        }
+
+        return result;
+    }
 }

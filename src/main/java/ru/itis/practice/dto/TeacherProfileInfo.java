@@ -23,6 +23,7 @@ public class TeacherProfileInfo {
 	private List<GroupInfo> groups;
 	private List<String> links;
 	private User user;
+	private String photoPath;
 
 	public static TeacherProfileInfo from(Teacher teacher) {
 		return TeacherProfileInfo.builder()
@@ -32,6 +33,7 @@ public class TeacherProfileInfo {
 				.groups(GroupInfo.from(teacher.getCuratedGroups()))
 				.links(Collections.singletonList("vk.com/id0"))
 				.user(teacher.getUser())
+				.photoPath(teacher.getUser().getPhotoPath())
 				.build();
 	}
 

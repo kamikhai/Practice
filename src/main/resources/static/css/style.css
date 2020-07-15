@@ -10047,6 +10047,18 @@ textarea.form-control {
   #colorlib-main {
     width: 78%; } }
 
+#colorlib-mai {
+  width: 100%;
+  float: right;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
+@media (min-width: 992px) {
+  #colorlib-mai {
+    width: 100%; } }
+
 .file-icon {
   font-size: 25px;
   margin-right: 10px;

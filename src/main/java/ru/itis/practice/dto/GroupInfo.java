@@ -16,10 +16,12 @@ import java.util.stream.Collectors;
 public class GroupInfo {
 
 	private String numeric;
+	private Long id;
 
 	public static GroupInfo from(Group group) {
 		return GroupInfo.builder()
 				.numeric(group.getNumeric())
+				.id(group.getId())
 				.build();
 	}
 

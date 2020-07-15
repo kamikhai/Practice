@@ -12,4 +12,6 @@ public interface StudentService {
     StudentProfileInfo getProfileInfoByUser(User user);
     Student save(Student student);
     List<StudentInfoDto> getAll(List<Long> tags, List<Long> profiles);
+
+    List<StudentInfoDto> getAllByGroupId(Long groupId);
 }
