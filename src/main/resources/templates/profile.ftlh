@@ -29,8 +29,8 @@
                 </h1>
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
-                        <li class="colorlib-active"><a href="index.html">Обо мне</a></li>
-                        <li><a href="collection.html">Портфолио</a></li>
+                        <li class="colorlib-active"><a href="/profile">Обо мне</a></li>
+                        <li><a href="/portfolio">Портфолио</a></li>
                     </ul>
                 </nav>
             </aside> <!-- END COLORLIB-ASIDE -->

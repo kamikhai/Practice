@@ -10086,7 +10086,7 @@ textarea.form-control {
   height: 24px;
   display: block;
   cursor: pointer; /* для случая применения отличных от <a> тегов */
-  background: url(../images/close.png);
+  background: url(../img/close.png);
   text-indent: -4999px;
 }
 
