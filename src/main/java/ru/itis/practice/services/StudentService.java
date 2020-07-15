@@ -9,9 +9,15 @@ import java.util.List;
 
 public interface StudentService {
     Student findByEmail(String email);
+
     StudentProfileInfo getProfileInfoByUser(User user);
+
     Student save(Student student);
+
     List<StudentInfoDto> getAll(List<Long> tags, List<Long> profiles);
 
     List<StudentInfoDto> getAllByGroupId(Long groupId);
+
+    void updateDescription(Long id, String description);
+
 }

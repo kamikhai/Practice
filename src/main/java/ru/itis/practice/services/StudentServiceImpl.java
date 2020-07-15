@@ -54,30 +54,29 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public List<StudentInfoDto> getAll(List<Long> tags, List<Long> profiles) {
-         List<Student> students = studentRepository.findAllByOrderByUser_FullName();
-         List<StudentInfoDto> result = new ArrayList<>();
+        List<Student> students = studentRepository.findAllByOrderByUser_FullName();
+        List<StudentInfoDto> result = new ArrayList<>();
 
-         for (Student student : students) {
-             Set<Tag> competenceTags = competenceRepository
-                     .findAllByStudent_IdAndConfirmedByIsNotNull(student.getId())
-                     .stream()
-                     .flatMap(c -> c.getTags().stream())
-                     .collect(Collectors.toSet());
+        for (Student student : students) {
+            Set<Tag> competenceTags = competenceRepository
+                    .findAllByStudent_IdAndConfirmedByIsNotNull(student.getId())
+                    .stream()
+                    .flatMap(c -> c.getTags().stream())
+                    .collect(Collectors.toSet());
 
-             boolean tagsOK = tags == null || tags.isEmpty() || competenceTags.stream()
-                     .map(Tag::getId)
-                     .collect(Collectors.toSet())
-                     .containsAll(tags);
+            boolean tagsOK = tags == null || tags.isEmpty() || competenceTags.stream()
+                    .map(Tag::getId)
+                    .collect(Collectors.toSet())
+                    .containsAll(tags);
 
-             boolean profOK = profiles == null || profiles.isEmpty() ||
-                     (student.getJobProfile() != null && profiles.contains(student.getJobProfile().getId()));
+            boolean profOK = profiles == null || profiles.isEmpty() ||
+                    (student.getJobProfile() != null && profiles.contains(student.getJobProfile().getId()));
 
-             if (tagsOK && profOK) {
-                 result.add(StudentInfoDto.from(student, competenceTags));
-             }
-         }
-
-         return result;
+            if (tagsOK && profOK) {
+                result.add(StudentInfoDto.from(student, competenceTags));
+            }
+        }
+        return result;
     }
 
     @Override
@@ -91,9 +90,15 @@ public class StudentServiceImpl implements StudentService {
                     .stream()
                     .flatMap(c -> c.getTags().stream())
                     .collect(Collectors.toSet());
-                result.add(StudentInfoDto.from(student, competenceTags));
+            result.add(StudentInfoDto.from(student, competenceTags));
         }
 
         return result;
+    }
+
+    @Override
+    @Transactional
+    public void updateDescription(Long id, String description) {
+        studentRepository.updateDescription(id, description);
     }
 }
