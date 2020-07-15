@@ -5,6 +5,16 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script>
+        function confirm(id) {
+            $.ajax({
+                url: "/profile?student=" + id ,
+                method: "POST"
+            });
+            alert("Компетенция успешно подтверждена");
+            location.reload();
+        }
+    </script>
     <title>Document</title>
 </head>
 <body>
@@ -41,13 +51,23 @@
                                         <h2 >Компетенции</h2>
                                         <div class="mb-4">
                                             <#list profileInfo.competenceList>
+                                                <ul>
                                                 <#items as comp>
-                                                    <input type="submit" value="${comp.description}"
-                                                        <#if comp.confirmed == false>class="btn btn-secondary disabled but"
-                                                        <#else> class="btn btn-secondary but" style="background-color: #1eaaf1"
+                                                    <li><input type="button" value="${comp.description}" style="margin-bottom: 10px; margin-right: 10px"
+                                                        <#if comp.confirmed == false>class="btn btn-secondary disabled butd"
+                                                               <#if user! == 'TEACHER'> onclick = "confirm(${comp.id})"</#if>
+                                                        <#else> class="btn btn-secondary disabled but"
+                                                              onclick="window.location.href = '/profile/${comp.confirmedBy.user.id}'"
                                                         </#if>
-                                                    >
+                                                        >
+                                                        <#if comp.tags??>
+                                                            <#list comp.tags as tag>
+                                                                <span style="color: #000; margin-right: 10px">#${tag.name}</span>
+                                                            </#list>
+                                                        </#if>
+                                                    </li>
                                                 </#items>
+                                                </ul>
                                             </#list>
                                         </div>
                                         <h2 >Опыт работы</h2>

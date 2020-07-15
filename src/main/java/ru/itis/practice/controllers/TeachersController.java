@@ -9,17 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import ru.itis.practice.services.TeacherService;
 
 @Controller
-@AllArgsConstructor
 public class TeachersController {
 
+    @Autowired
     private TeacherService teacherService;
 
     @GetMapping("/teachers")
     @PreAuthorize(value = "isAuthenticated()")
-    private String getTeachers(Model model){
+    public String getTeachers(Model model){
         System.out.println(model);
         System.out.println(teacherService);
-        //TODO: НЕ ВИДИТ БИН
         model.addAttribute("teacherList", teacherService.getAllTeachers());
         return "teachers";
     }

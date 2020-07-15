@@ -19,8 +19,8 @@
                         <li ><a href="/profile">Группы</a></li>
                         <li ><a href="/teachers">Преподаватели</a></li>
                         <li class="colorlib-active"><a href="/registration">Регистрация</a></li>
-                        <li ><a href="#">Профили работы</a></li>
-                        <li ><a href="#">Тэги</a></li>
+                        <li ><a href="/job_profile">Профили работы</a></li>
+                        <li ><a href="/tags">Теги</a></li>
                     </ul>
                 </nav>
             </aside> <!-- END COLORLIB-ASIDE -->

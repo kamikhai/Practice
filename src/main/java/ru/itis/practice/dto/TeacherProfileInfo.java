@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ru.itis.practice.models.Teacher;
+import ru.itis.practice.models.User;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +22,7 @@ public class TeacherProfileInfo {
 	private String information;
 	private List<GroupInfo> groups;
 	private List<String> links;
+	private User user;
 
 	public static TeacherProfileInfo from(Teacher teacher) {
 		return TeacherProfileInfo.builder()
@@ -29,6 +31,7 @@ public class TeacherProfileInfo {
 				.position(teacher.getPosition())
 				.groups(GroupInfo.from(teacher.getCuratedGroups()))
 				.links(Collections.singletonList("vk.com/id0"))
+				.user(teacher.getUser())
 				.build();
 	}
 
