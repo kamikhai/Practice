@@ -8,8 +8,14 @@ import ru.itis.practice.models.User;
 import java.util.List;
 
 public interface StudentService {
-    Student findByEmail(String email);
-    StudentProfileInfo getProfileInfoByUser(User user);
-    Student save(Student student);
-    List<StudentInfoDto> getAll(List<Long> tags, List<Long> profiles);
+
+	Student findByEmail(String email);
+
+	StudentProfileInfo getProfileInfoByUser(User user);
+
+	Student save(Student student);
+
+	List<StudentInfoDto> getAll(List<Long> tags, List<Long> profiles);
+
+	void updateDescription(Long id, String description);
 }

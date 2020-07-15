@@ -23,60 +23,66 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
-    private final StudentRepository studentRepository;
-    private final CompetenceRepository competenceRepository;
+	private final StudentRepository studentRepository;
+	private final CompetenceRepository competenceRepository;
 
-    @Override
-    public Student findByEmail(String email) {
-        try {
-            Optional<Student> studentCandidate = studentRepository.findStudentByUser_Email(email);
-            if (studentCandidate.isPresent()) {
-                return studentCandidate.get();
-            }
-            throw new EmptyResultDataAccessException(-1);
-        } catch (EmptyResultDataAccessException e) {
-            throw new RuntimeException("No student found!");
-        }
-    }
+	@Override
+	public Student findByEmail(String email) {
+		try {
+			Optional<Student> studentCandidate = studentRepository.findStudentByUser_Email(email);
+			if (studentCandidate.isPresent()) {
+				return studentCandidate.get();
+			}
+			throw new EmptyResultDataAccessException(-1);
+		} catch (EmptyResultDataAccessException e) {
+			throw new RuntimeException("No student found!");
+		}
+	}
 
-    @Override
-    public StudentProfileInfo getProfileInfoByUser(User user) {
-        Student student = findByEmail(user.getEmail());
-        List<Competence> studentCompetences = competenceRepository.findAllByStudent_Id(student.getId());
-        return StudentProfileInfo.from(student, studentCompetences);
-    }
+	@Override
+	public StudentProfileInfo getProfileInfoByUser(User user) {
+		Student student = findByEmail(user.getEmail());
+		List<Competence> studentCompetences = competenceRepository.findAllByStudent_Id(student.getId());
+		return StudentProfileInfo.from(student, studentCompetences);
+	}
 
-    @Override
-    public Student save(Student student) {
-        return studentRepository.save(student);
-    }
+	@Override
+	public Student save(Student student) {
+		return studentRepository.save(student);
+	}
 
-    @Override
-    @Transactional
-    public List<StudentInfoDto> getAll(List<Long> tags, List<Long> profiles) {
-         List<Student> students = studentRepository.findAllByOrderByUser_FullName();
-         List<StudentInfoDto> result = new ArrayList<>();
+	@Override
+	@Transactional
+	public List<StudentInfoDto> getAll(List<Long> tags, List<Long> profiles) {
+		List<Student> students = studentRepository.findAllByOrderByUser_FullName();
+		List<StudentInfoDto> result = new ArrayList<>();
 
-         for (Student student : students) {
-             Set<Tag> competenceTags = competenceRepository
-                     .findAllByStudent_IdAndConfirmedByIsNotNull(student.getId())
-                     .stream()
-                     .flatMap(c -> c.getTags().stream())
-                     .collect(Collectors.toSet());
+		for (Student student : students) {
+			Set<Tag> competenceTags = competenceRepository
+					.findAllByStudent_IdAndConfirmedByIsNotNull(student.getId())
+					.stream()
+					.flatMap(c -> c.getTags().stream())
+					.collect(Collectors.toSet());
 
-             boolean tagsOK = tags == null || tags.isEmpty() || competenceTags.stream()
-                     .map(Tag::getId)
-                     .collect(Collectors.toSet())
-                     .containsAll(tags);
+			boolean tagsOK = tags == null || tags.isEmpty() || competenceTags.stream()
+					.map(Tag::getId)
+					.collect(Collectors.toSet())
+					.containsAll(tags);
 
-             boolean profOK = profiles == null || profiles.isEmpty() ||
-                     (student.getJobProfile() != null && profiles.contains(student.getJobProfile().getId()));
+			boolean profOK = profiles == null || profiles.isEmpty() ||
+					(student.getJobProfile() != null && profiles.contains(student.getJobProfile().getId()));
 
-             if (tagsOK && profOK) {
-                 result.add(StudentInfoDto.from(student, competenceTags));
-             }
-         }
+			if (tagsOK && profOK) {
+				result.add(StudentInfoDto.from(student, competenceTags));
+			}
+		}
 
-         return result;
-    }
+		return result;
+	}
+
+	@Override
+	@Transactional
+	public void updateDescription(Long id, String description) {
+		studentRepository.updateDescription(id, description);
+	}
 }

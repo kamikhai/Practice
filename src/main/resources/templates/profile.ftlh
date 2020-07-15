@@ -15,6 +15,16 @@
             location.reload();
         }
     </script>
+    <script>
+        function updateDescription(text) {
+			$.ajax({
+				url: "/profile/student/about?text=" + text ,
+				method: "POST"
+			});
+			alert("Информация о вас успешно обновлена");
+			location.reload();
+		}
+    </script>
     <title>Document</title>
 </head>
 <body>
@@ -77,9 +87,9 @@
                                         <p class="mb-4" id="info1">${profileInfo.description}</p>
                                         <div class="mb-4" style="display: none" id="info2">
                                             <form method="post">
-                                        <textarea name="" cols="30" rows="6" class="form-control"
+                                        <textarea name="" cols="30" rows="6" class="form-control" id="aboutForm"
                                                   style="background-color: rgba(219,235,243,0.78) !important; margin-bottom: 20px">${profileInfo.description}</textarea>
-                                                <input type="submit" class="btn btn-secondary">
+                                                <input type="submit" onclick="updateDescription($('#aboutForm').val())" class="btn btn-secondary">
                                             </form>
                                         </div>
                                         <div class="d-md-flex">
