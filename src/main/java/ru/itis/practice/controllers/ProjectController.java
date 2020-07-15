@@ -8,10 +8,10 @@ import ru.itis.practice.services.TagService;
 
 @Controller
 @AllArgsConstructor
-public class PortfolioController {
+public class ProjectController {
 
-    @GetMapping("/portfolio")
-    private String getPortfolio(ModelMap modelMap){
-        return "portfolio";
+    @GetMapping("/project")
+    private String getProject(ModelMap modelMap){
+        return "project";
     }
 }

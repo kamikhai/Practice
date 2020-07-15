@@ -82,7 +82,7 @@
                                                             <div class="col-md-12 course d-lg-flex ftco-animate"
                                                                  style="margin-top: 20px; ">
                                                                 <div class="text bg-light p-4">
-                                                                    <h3><a href="#">Хакатон</a></h3>
+                                                                    <h3><a href="/project`">Хакатон</a></h3>
                                                                     <p>Lorem ipsum dolor sit amet, consectetur
                                                                         adipiscing elit. Fusce lacinia
                                                                         lectus sit amet pretium fermentum...</p>
