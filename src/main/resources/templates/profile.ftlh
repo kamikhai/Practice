@@ -16,7 +16,7 @@
                 method:
                     "POST",
                 headers: {
-                        "Authorization": "${token}"
+                    "Authorization": "${token}"
                 },
                 complete: function (response) {
                     location.reload();
@@ -59,6 +59,8 @@
         }
 
         var first = true;
+        var i = 1;
+        var result = '';
 
         function addTag() {
             var e = document.getElementById("tags");
@@ -68,12 +70,16 @@
                 document.getElementById("tags_div").innerText = '';
                 first = false;
             }
-            document.getElementById("result").value += value + ' ';
-            $('#tags_div').first().append('<div style="color: #fff; margin-right: 5px; margin-top: 5px; background-color: #35b7f1; padding: 5px; text-align: center" class="col-md-3">#' + value + '</div >')
+            // document.getElementById("result").value += value + ' ';
+            result += value + ' ';
+            console.log(result);
+            $('#tags_div').first().append('<div onclick="delete_tag('+i+')" id="' + i + '" style="color: #fff; margin-right: 5px; margin-top: 5px; background-color: #35b7f1; padding: 5px; text-align: center" class="col-md-3">#' + value + '</div >')
             $('#tags').prop('selectedIndex', 0);
+            i++;
         }
 
         function sendAjaxForm() {
+            document.getElementById("result").value += result;
             $.ajax({
                 url: "/profile",
                 type: "POST",
@@ -86,6 +92,18 @@
                 error: function (response) {
                 }
             });
+        }
+
+        function delete_tag(i) {
+            var str = document.getElementById(i).innerText.substr(1);
+            console.log(str);
+            result = result.replace(str + ' ', '');
+            document.getElementById(i).remove();
+            if ( $('#tags_div').is(':empty')){
+                $('#tags_div').first().append('<span style="color: #fff; margin-right: 10px">Здесь будут расположены выбранные вами теги</span>\n' +
+                    '                            <span style="color: #fff; margin-right: 10px">Нажмите на тег, если хотите его удалить</span>')
+                first = true;
+            }
         }
     </script>
 </head>
@@ -117,6 +135,7 @@
                         <div class="row justify-content-center" id="tags_div"
                              style="margin-top: 30px; margin-bottom: 10px; padding-top: 10px; padding-bottom: 10px; ">
                             <span style="color: #fff; margin-right: 10px">Здесь будут расположены выбранные вами теги</span>
+                            <span style="color: #fff; margin-right: 10px">Нажмите на тег, если хотите его удалить</span>
                         </div>
                     </div>
                     <div class="d-md-flex" style="margin-top: 20px;">
@@ -203,14 +222,9 @@
                                             <form method="post">
                                         <textarea name="" cols="30" rows="6" class="form-control" id="aboutForm"
                                                   style="background-color: rgba(219,235,243,0.78) !important; margin-bottom: 20px">${profileInfo.description}</textarea>
-                                                <<<<<<< HEAD
-                                                <input type="submit" onclick="updateDescription($('#aboutForm').val())"
-                                                       class="btn btn-secondary">
-                                                =======
                                                 <input type="button" value="Обновить"
                                                        onclick="updateDescription($('#aboutForm').val())"
                                                        class="btn btn-secondary">
-                                                >>>>>>> feature_admin_page
                                             </form>
                                         </div>
                                         <div class="d-md-flex">

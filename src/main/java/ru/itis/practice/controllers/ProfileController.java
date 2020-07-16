@@ -13,6 +13,9 @@ import ru.itis.practice.models.User;
 import ru.itis.practice.security.details.UserDetailsImpl;
 import ru.itis.practice.services.*;
 
+import java.util.Arrays;
+import java.util.TreeSet;
+
 @Controller
 @AllArgsConstructor
 @RequestMapping("/profile")
@@ -56,6 +59,7 @@ public class ProfileController {
     @PreAuthorize(value = "isAuthenticated()")
     public String getSelf(@AuthenticationPrincipal UserDetailsImpl userDetails,
                           Model model) {
+        model.addAttribute("id", userDetails.getUser().getId());
         model.addAttribute("tags", tagService.getAll());
         model.addAttribute("token", tokenService.getToken(userDetails.getUser()));
         if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("STUDENT"))) {
@@ -74,6 +78,8 @@ public class ProfileController {
     @PreAuthorize(value = "hasAuthority('STUDENT')")
     public String confirmCompetence(@RequestParam("result") String result) {
         System.out.println(result);
+        // чтоб убрались повторяющиеся (да, как это предотвратить на фронте, не придумала)
+        TreeSet<String> tags = new TreeSet<>(Arrays.asList(result.split(" ")));
         return "ok";
     }
 
