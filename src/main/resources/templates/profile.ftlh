@@ -96,7 +96,7 @@
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
                         <li class="colorlib-active"><a href="/profile">Обо мне</a></li>
-                        <li><a href="/portfolio">Портфолио</a></li>
+                        <li><a href="/portfolio/${id}">Портфолио</a></li>
                     </ul>
                 </nav>
             </aside> <!-- END COLORLIB-ASIDE -->

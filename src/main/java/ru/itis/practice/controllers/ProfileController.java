@@ -28,6 +28,7 @@ public class ProfileController {
 	public String getCustomProfile(@PathVariable Long id, Model model,
 								   @AuthenticationPrincipal UserDetailsImpl userDetails) {
 		User user = userService.getUserById(id);
+		model.addAttribute("id", id);
 		if (user.getRole().equals(User.Role.STUDENT)) {
 			if (userDetails != null) {
 				model.addAttribute("user", userDetails.getUser().getRole().name());
@@ -48,6 +49,7 @@ public class ProfileController {
 	@PreAuthorize(value = "isAuthenticated()")
 	public String getSelf(@AuthenticationPrincipal UserDetailsImpl userDetails,
 						  Model model) {
+	    model.addAttribute("id", userDetails.getUser().getId());
 		if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("STUDENT"))) {
 			model.addAttribute("profileInfo", studentService.getProfileInfoByUser(userDetails.getUser()));
 			return "profile";

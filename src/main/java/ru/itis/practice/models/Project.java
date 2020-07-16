@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+import org.hibernate.type.TextType;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,8 +23,11 @@ public class Project {
     @ManyToOne(optional = false)
     private Student student;
 
-    @Lob
     @Column(nullable = false)
+    private String title;
+
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String description;
 
     @ManyToMany
