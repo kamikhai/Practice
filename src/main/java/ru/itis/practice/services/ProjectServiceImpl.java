@@ -17,6 +17,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     private ProjectRepository projectRepository;
     private static final String IMAGE_PATH_REGEX = "(http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png|jpeg|svg)";
+    public static final String YOUTUBE_PATH_REGEX = "((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube\\.com|youtu.be))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?.*$";
+
 
     @Override
     public List<PortfolioProjectInfo> getProjectsByStudentId(Long id) {
@@ -29,8 +31,8 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     private Project parseProjectDescription(Project project) {
+        project.setDescription(addYoutubePlayer(project.getDescription(), ""));
         project.setDescription(addImagesTags(project.getDescription()));
-        //TODO: parse youtube player
         return project;
     }
 
@@ -40,5 +42,21 @@ public class ProjectServiceImpl implements ProjectService {
             return matcher.replaceAll("<img src=\"" + matcher.group() + "\"/>");
         else
             return string;
+    }
+
+    private String addYoutubePlayer(String string, String result) {
+        Matcher matcher = Pattern.compile(YOUTUBE_PATH_REGEX).matcher(string);
+        if (matcher.find()) {
+            String nextPart = string.substring(string.indexOf(matcher.group(5)) + matcher.group(5).length());
+            String replacement = matcher.replaceAll(generateIFrame(matcher.group(5)));
+            return addYoutubePlayer(nextPart, result.concat(replacement));
+        } else {
+            if (string.equals("")) return result;
+            else return result.concat(string);
+        }
+    }
+
+    private String generateIFrame(String id) {
+        return "<br><iframe width=\"100%\" height=\"420\" src=\"https://www.youtube.com/embed/" + id + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>";
     }
 }
