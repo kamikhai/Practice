@@ -57,6 +57,6 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     private String generateIFrame(String id) {
-        return "<br><iframe width=\"100%\" height=\"420\" src=\"https://www.youtube.com/embed/" + id + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>";
+        return "<br><iframe width=\"100%\" height=\"446\" src=\"https://www.youtube.com/embed/" + id + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>";
     }
 }
