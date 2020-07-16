@@ -23,11 +23,13 @@ public class ProfileController {
 	private TeacherService teacherService;
 	private GroupService groupService;
 	private CompetenceService competenceService;
+	private TokenService tokenService;
 
 	@GetMapping("/{id}")
 	public String getCustomProfile(@PathVariable Long id, Model model,
 								   @AuthenticationPrincipal UserDetailsImpl userDetails) {
 		User user = userService.getUserById(id);
+		model.addAttribute("token", tokenService.getToken(userDetails.getUser()));
 		if (user.getRole().equals(User.Role.STUDENT)) {
 			if (userDetails != null) {
 				model.addAttribute("user", userDetails.getUser().getRole().name());
@@ -48,6 +50,7 @@ public class ProfileController {
 	@PreAuthorize(value = "isAuthenticated()")
 	public String getSelf(@AuthenticationPrincipal UserDetailsImpl userDetails,
 						  Model model) {
+		model.addAttribute("token", tokenService.getToken(userDetails.getUser()));
 		if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("STUDENT"))) {
 			model.addAttribute("profileInfo", studentService.getProfileInfoByUser(userDetails.getUser()));
 			return "profile";
@@ -65,14 +68,6 @@ public class ProfileController {
 	public String confirmCompetence(@AuthenticationPrincipal UserDetailsImpl userDetails,
 									@RequestParam("student") Long student) {
 		competenceService.confirm(student, teacherService.findByEmail(userDetails.getUser().getEmail()));
-		return "ok";
-	}
-
-	@PostMapping("/student/about")
-	@PreAuthorize(value = "hasAuthority('STUDENT')")
-	public String changeAboutMe(@AuthenticationPrincipal UserDetailsImpl userDetails,
-								@RequestParam("text") String text) {
-		studentService.updateDescription(userDetails.getUserId(), text);
 		return "ok";
 	}
 

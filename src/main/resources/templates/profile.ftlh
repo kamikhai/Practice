@@ -15,17 +15,30 @@
             location.reload();
         }
     </script>
+    <title>Document</title>
     <script>
         function updateDescription(text) {
-			$.ajax({
-				url: "/profile/student/about?text=" + text ,
-				method: "POST"
-			});
-			alert("Информация о вас успешно обновлена");
-			location.reload();
-		}
+            $.ajax({
+                url: "/api/student/about?text=" + text,
+                method: "POST",
+                headers: {
+                    "Authorization": "${token}"
+                },
+                dataType: "json",
+                contentType: "application/json",
+                complete: function (response) {
+                    document.getElementById('info1').style.display='block';
+                    document.getElementById('info2').style.display='none';
+                    document.getElementById('info1').innerText=text;
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+
     </script>
-    <title>Document</title>
 </head>
 <body>
 <div id="envelope" class="envelope">
@@ -63,7 +76,7 @@
                 <form action="#" class="appointment-form ftco-animate">
                     <div class="example-2" style="margin-top: 20px">
                         <div class="d-md-flex">
-                            <input type="file" name="file" id="file" class="input-file">
+                            <input type="file" name="file" id="file" class="input-file" accept="image/jpeg,image/png">
                             <label for="file" class="btn btn-tertiary js-labelFile">
                                 <i class="icon fa fa-check"></i>
                                 <span class="js-fileName">Загрузить файл</span>
@@ -123,7 +136,9 @@
                                             <form method="post">
                                         <textarea name="" cols="30" rows="6" class="form-control" id="aboutForm"
                                                   style="background-color: rgba(219,235,243,0.78) !important; margin-bottom: 20px">${profileInfo.description}</textarea>
-                                                <input type="submit" onclick="updateDescription($('#aboutForm').val())" class="btn btn-secondary">
+                                                <input type="button" value="Обновить"
+                                                       onclick="updateDescription($('#aboutForm').val())"
+                                                       class="btn btn-secondary">
                                             </form>
                                         </div>
                                         <div class="d-md-flex">
@@ -165,7 +180,7 @@
                                             <form method="post">
                                         <textarea name="" cols="30" rows="4" class="form-control"
                                                   style="background-color: rgba(219,235,243,0.78) !important; margin-bottom: 20px">Нет опыта</textarea>
-                                                <input type="submit" class="btn btn-secondary">
+                                                <input type="button" class="btn btn-secondary">
                                             </form>
                                         </div>
                                         <div class="d-md-flex">
@@ -183,7 +198,7 @@
                                             <form method="post">
                                                 <input type="text" class="form-control" value="https://vk.com/khai_kam"
                                                        style="margin-bottom: 20px; background-color: rgba(219,235,243,0.78) !important;">
-                                                <input type="submit" class="btn btn-secondary">
+                                                <input type="button" class="btn btn-secondary">
                                             </form>
                                         </div>
                                     </div>
