@@ -2,8 +2,10 @@ package ru.itis.practice.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.itis.practice.dto.PortfolioUserInfo;
 import ru.itis.practice.dto.StudentInfoDto;
 import ru.itis.practice.dto.StudentProfileInfo;
 import ru.itis.practice.models.Competence;
@@ -12,6 +14,7 @@ import ru.itis.practice.models.Tag;
 import ru.itis.practice.models.User;
 import ru.itis.practice.repositories.CompetenceRepository;
 import ru.itis.practice.repositories.StudentRepository;
+import ru.itis.practice.security.details.UserDetailsImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,4 +104,14 @@ public class StudentServiceImpl implements StudentService {
 	public void updateDescription(Long id, String description) {
 		studentRepository.updateDescription(id, description);
 	}
+
+    @Override
+    public PortfolioUserInfo getPortfolioInfo(Long id, UserDetailsImpl possibleUser) {
+        Optional<Student> studentCandidate = studentRepository.findById(id);
+        if (studentCandidate.isPresent()) {
+            Boolean isLoggedUser = possibleUser != null && possibleUser.getUser().getId().equals(id);
+            return PortfolioUserInfo.from(studentCandidate.get(), isLoggedUser);
+        }
+        throw new RuntimeException("No student found!");
+    }
 }

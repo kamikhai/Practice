@@ -45,12 +45,12 @@
             <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
             <aside id="colorlib-aside" role="complementary" class="text-center">
                 <h1 id="colorlib-logo"><a href="index.html"><span class="img"
-                                                                  style="background-image: url(/img/student-2.jpg);"></span></a>
+                                                                  style="background-image: url(${userInfo.photoPath});"></span></a>
                 </h1>
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
                         <li><a href="/profile">Обо мне</a></li>
-                        <li class="colorlib-active"><a href="/portfolio">Портфолио</a></li>
+                        <li class="colorlib-active"><a href="/portfolio/${userInfo.id}">Портфолио</a></li>
                     </ul>
                 </nav>
             </aside> <!-- END COLORLIB-ASIDE -->
@@ -62,7 +62,7 @@
                             <div class="author-info text p-3 p-md-5">
                                 <div class="desc">
                                     <div style="text-align: center">
-                                        <h1 class="big-letter center">Все группы</h1>
+                                        <h1 class="big-letter center">${userInfo.group}</h1>
                                     </div>
                                     <div class="col-12 col-md-12 col-lg-12">
                                         <div class="shop_grid_product_area">
@@ -72,13 +72,15 @@
                                                 <section class="ftco-section" style="padding: 0 0 ! important">
                                                     <div class="container">
                                                         <div class="row">
-                                                            <div style="text-align: center; width: 100%">
-                                                                <input type="submit" value="Добавить"
-                                                                       class="btn btn-secondary py-3 px-4 show-btn"
-                                                                       href="javascript:void(0)"
-                                                                       onclick="document.getElementById('envelope').style.display='block';document.getElementById('fade').style.display='block'"
-                                                                       style="margin-top: 20px; margin-bottom: 20px; width: 90%">
-                                                            </div>
+                                                            <#if userInfo.isOwnProfile == true>
+                                                                <div style="text-align: center; width: 100%">
+                                                                    <input type="submit" value="Добавить"
+                                                                           class="btn btn-secondary py-3 px-4 show-btn"
+                                                                           href="javascript:void(0)"
+                                                                           onclick="document.getElementById('envelope').style.display='block';document.getElementById('fade').style.display='block'"
+                                                                           style="margin-top: 20px; margin-bottom: 20px; width: 90%">
+                                                                </div>
+                                                            </#if>
                                                             <#list projects>
                                                                 <#items as proj>
                                                                     <div class="col-md-12 course d-lg-flex ftco-animate">
