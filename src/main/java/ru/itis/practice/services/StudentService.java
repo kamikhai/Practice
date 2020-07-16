@@ -19,4 +19,6 @@ public interface StudentService {
     List<StudentInfoDto> getAllByGroupId(Long groupId);
 
     void updateDescription(Long id, String description);
+
+
 }

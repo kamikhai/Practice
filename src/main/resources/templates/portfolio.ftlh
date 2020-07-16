@@ -79,46 +79,16 @@
                                                                        onclick="document.getElementById('envelope').style.display='block';document.getElementById('fade').style.display='block'"
                                                                        style="margin-top: 20px; margin-bottom: 20px; width: 90%">
                                                             </div>
-                                                            <div class="col-md-12 course d-lg-flex ftco-animate"
-                                                                 style="margin-top: 20px; ">
-                                                                <div class="text bg-light p-4">
-                                                                    <h3><a href="/project`">Хакатон</a></h3>
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur
-                                                                        adipiscing elit. Fusce lacinia
-                                                                        lectus sit amet pretium fermentum...</p>
-                                                                    <span class="icon-file-photo-o file-icon"></span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12 course d-lg-flex ftco-animate">
-                                                                <div class="text bg-light p-4">
-                                                                    <h3><a href="#">Сайт ProSALE</a></h3>
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur
-                                                                        adipiscing elit. Fusce lacinia
-                                                                        lectus sit amet pretium fermentum...</p>
-                                                                    <span class="icon-link file-icon"></span>
-                                                                    <span class="icon-file-video-o file-icon"></span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12 course d-lg-flex ftco-animate">
-                                                                <div class="text bg-light p-4">
-                                                                    <h3><a href="#">Стажировка где-нибудь</a></h3>
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur
-                                                                        adipiscing elit. Fusce lacinia
-                                                                        lectus sit amet pretium fermentum...</p>
-                                                                    <span class="icon-file-photo-o file-icon"></span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12 course d-lg-flex ftco-animate">
-                                                                <div class="text bg-light p-4">
-                                                                    <h3><a href="#">Ещё что-нибудь</a></h3>
-                                                                    <p>Lorem ipsum dolor sit amet, consectetur
-                                                                        adipiscing elit. Fusce lacinia
-                                                                        lectus sit amet pretium fermentum...</p>
-                                                                    <span class="icon-file-photo-o file-icon"></span>
-                                                                    <span class="icon-link file-icon"></span>
-                                                                    <span class="icon-file-video-o file-icon"></span>
-                                                                </div>
-                                                            </div>
+                                                            <#list projects>
+                                                                <#items as proj>
+                                                                    <div class="col-md-12 course d-lg-flex ftco-animate">
+                                                                        <div class="text bg-light p-4">
+                                                                            <h3><a href="/project/${proj.projectId}">${proj.title}</a></h3>
+                                                                            <p>${proj.description?no_esc}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </#items>
+                                                            </#list>
                                                         </div>
                                                     </div>
                                                 </section>
