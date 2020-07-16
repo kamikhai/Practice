@@ -9,23 +9,85 @@
         function confirm(id) {
             $.ajax({
                 url: "/profile?student=" + id,
-                method: "POST"
-            });
-            alert("Компетенция успешно подтверждена");
-            location.reload();
+                method:
+                    "POST"
+                url:
+                    "/api/student/competence?student=" + id,
+                method:
+                    "POST",
+                headers: {
+                        "Authorization": "${token}"
+                },
+                complete: function (response) {
+                    location.reload();
+                }
+            })
+            ;
         }
     </script>
     <script>
         function updateDescription(text) {
-			$.ajax({
-				url: "/profile/student/about?text=" + text ,
-				method: "POST"
-			});
-			alert("Информация о вас успешно обновлена");
-			location.reload();
-		}
+            $.ajax({
+                url: "/profile/student/about?text=" + text,
+                method: "POST"
+            });
+            alert("Информация о вас успешно обновлена");
+            location.reload();
+        }
     </script>
     <title>Document</title>
+    <script>
+        function updateDescription(text) {
+            $.ajax({
+                url: "/api/student/about?text=" + text,
+                method: "POST",
+                headers: {
+                    "Authorization": "${token}"
+                },
+                dataType: "json",
+                contentType: "application/json",
+                complete: function (response) {
+                    document.getElementById('info1').style.display = 'block';
+                    document.getElementById('info2').style.display = 'none';
+                    document.getElementById('info1').innerText = text;
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+
+        }
+
+        var first = true;
+
+        function addTag() {
+            var e = document.getElementById("tags");
+            var value = e.options[e.selectedIndex].value;
+            console.log(result);
+            if (first) {
+                document.getElementById("tags_div").innerText = '';
+                first = false;
+            }
+            document.getElementById("result").value += value + ' ';
+            $('#tags_div').first().append('<div style="color: #fff; margin-right: 5px; margin-top: 5px; background-color: #35b7f1; padding: 5px; text-align: center" class="col-md-3">#' + value + '</div >')
+            $('#tags').prop('selectedIndex', 0);
+        }
+
+        function sendAjaxForm() {
+            $.ajax({
+                url: "/profile",
+                type: "POST",
+                dataType: "html",
+                data: $("#new_competence").serialize(),
+                complete: function (response) {
+                    alert("Компетенция успешно добавлена");
+                    location.reload();
+                },
+                error: function (response) {
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 <div id="envelope" class="envelope">
@@ -37,13 +99,30 @@
                 <div class="heading-section heading-section-white ftco-animate mb-5">
                     <h2 class="mb-4">Добавить компетенцию</h2>
                 </div>
-                <form action="#" class="appointment-form ftco-animate">
+                <form method="post" action="/profile" class="appointment-form ftco-animate" id="new_competence">
                     <div class="d-md-flex">
-                        <input type="text" class="form-control" placeholder="Введите текст">
+                        <input name="123" type="text" class="form-control" placeholder="Введите текст">
+                    </div>
+
+                    <div class="d-md-flex">
+                        <select name="tag" id="tags" class="form-control" onchange="addTag()">
+                            <option value="" style="color: #1eaaf1" selected disabled>Выберите тег</option>
+                            <#list tags as tag>
+                                <option value="${tag.name}" style="color: #1eaaf1">${tag.name}</option>
+                            </#list>
+                        </select>
+                    </div>
+                    <input id="result" hidden name="result">
+                    <div class=" justify-content-center">
+                        <div class="row justify-content-center" id="tags_div"
+                             style="margin-top: 30px; margin-bottom: 10px; padding-top: 10px; padding-bottom: 10px; ">
+                            <span style="color: #fff; margin-right: 10px">Здесь будут расположены выбранные вами теги</span>
+                        </div>
                     </div>
                     <div class="d-md-flex" style="margin-top: 20px;">
                         <div class="form-group">
-                            <input type="submit" value="Добавить" class="btn btn-secondary py-3 px-4">
+                            <input type="button" onclick="sendAjaxForm()" value="Добавить"
+                                   class="btn btn-secondary py-3 px-4">
                         </div>
                     </div>
                 </form>
@@ -63,7 +142,7 @@
                 <form action="#" class="appointment-form ftco-animate">
                     <div class="example-2" style="margin-top: 20px">
                         <div class="d-md-flex">
-                            <input type="file" name="file" id="file" class="input-file">
+                            <input type="file" name="file" id="file" class="input-file" accept="image/jpeg,image/png">
                             <label for="file" class="btn btn-tertiary js-labelFile">
                                 <i class="icon fa fa-check"></i>
                                 <span class="js-fileName">Загрузить файл</span>
@@ -72,7 +151,8 @@
                     </div>
                     <div class="d-md-flex" style="margin-top: 20px;">
                         <div class="form-group">
-                            <input type="submit" value="Добавить" class="btn btn-secondary py-3 px-4">
+                            <input type="button" onclick="sendForm()" value="Добавить"
+                                   class="btn btn-secondary py-3 px-4">
                         </div>
                     </div>
                 </form>
@@ -123,7 +203,14 @@
                                             <form method="post">
                                         <textarea name="" cols="30" rows="6" class="form-control" id="aboutForm"
                                                   style="background-color: rgba(219,235,243,0.78) !important; margin-bottom: 20px">${profileInfo.description}</textarea>
-                                                <input type="submit" onclick="updateDescription($('#aboutForm').val())" class="btn btn-secondary">
+                                                <<<<<<< HEAD
+                                                <input type="submit" onclick="updateDescription($('#aboutForm').val())"
+                                                       class="btn btn-secondary">
+                                                =======
+                                                <input type="button" value="Обновить"
+                                                       onclick="updateDescription($('#aboutForm').val())"
+                                                       class="btn btn-secondary">
+                                                >>>>>>> feature_admin_page
                                             </form>
                                         </div>
                                         <div class="d-md-flex">
@@ -165,7 +252,7 @@
                                             <form method="post">
                                         <textarea name="" cols="30" rows="4" class="form-control"
                                                   style="background-color: rgba(219,235,243,0.78) !important; margin-bottom: 20px">Нет опыта</textarea>
-                                                <input type="submit" class="btn btn-secondary">
+                                                <input type="button" class="btn btn-secondary">
                                             </form>
                                         </div>
                                         <div class="d-md-flex">
@@ -183,7 +270,7 @@
                                             <form method="post">
                                                 <input type="text" class="form-control" value="https://vk.com/khai_kam"
                                                        style="margin-bottom: 20px; background-color: rgba(219,235,243,0.78) !important;">
-                                                <input type="submit" class="btn btn-secondary">
+                                                <input type="button" class="btn btn-secondary">
                                             </form>
                                         </div>
                                     </div>
