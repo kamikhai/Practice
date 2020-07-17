@@ -11,6 +11,7 @@ import ru.itis.practice.models.User;
 import ru.itis.practice.repositories.ProjectRepository;
 import ru.itis.practice.repositories.StudentRepository;
 import ru.itis.practice.repositories.TagRepository;
+import ru.itis.practice.security.details.UserDetailsImpl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -62,6 +63,25 @@ public class ProjectServiceImpl implements ProjectService {
                 .student(studentRepository.findStudentByUser_Email(user.getEmail()).orElseThrow(RuntimeException::new))
                 .build();
         projectRepository.save(project);
+    }
+
+    @Override
+    @Transactional
+    public void remove(Long projectId, Long ownerId, User accessor) {
+        if (ownerId.equals(accessor.getId()))
+            projectRepository.deleteById(projectId);
+        else
+            throw new RuntimeException("Illegal access");
+    }
+
+    @Override
+    public boolean isOwner(Long projectId, UserDetailsImpl possibleOwner) {
+        if (possibleOwner != null) {
+            Optional<Project> projectCandidate = projectRepository.findById(projectId);
+            if (projectCandidate.isPresent())
+                return projectCandidate.get().getStudent().getId().equals(possibleOwner.getUserId());
+        }
+        return false;
     }
 
 

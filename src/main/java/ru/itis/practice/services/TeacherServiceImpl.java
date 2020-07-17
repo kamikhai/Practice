@@ -47,6 +47,7 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherRepository.save(teacher);
     }
 
+<<<<<<< HEAD
 	@Override
 	public void updateLink(Long userId, String text) {
         Optional<Teacher> teacherCandidate = teacherRepository.findById(userId);
@@ -75,5 +76,10 @@ public class TeacherServiceImpl implements TeacherService {
             teacher.setInformation(text);
             teacherRepository.save(teacher);
         }
+=======
+    @Override
+    public Optional<Teacher> findById(Long id) {
+        return teacherRepository.findById(id);
+>>>>>>> 7b3384afdab8d0ac362e93800cb4b9e7bcabd271
     }
 }

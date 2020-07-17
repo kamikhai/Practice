@@ -92,8 +92,59 @@
 		});
 	}
 
+    function sendAjaxForm() {
+        var e = document.getElementById("group");
+        var value = e.options[e.selectedIndex].value;
+        console.log(value);
+        var data = {group: value}
+        $.ajax({
+            url: "/api/admin/teacher/${profileInfo.id}",
+            type: "POST",
+            data: JSON.stringify(data),
+            headers: {
+                "Authorization": "${token}"
+            },
+            contentType: "application/json",
+            dataType: "json",
+            complete: function (response) {
+                alert("Группа успешно добавлена");
+                location.reload();
+            },
+            error: function (response) {
+            }
+        });
+    }
 </script>
 <body>
+<div id="envelope" class="envelope">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 py-5 px-md-5 bg-primary" style="margin-top: 25px; ">
+                <a class="close-btn" style="margin-left: 97%" href="javascript:void(0)"
+                   onclick="document.getElementById('envelope').style.display='none';document.getElementById('fade').style.display='none'">Закрыть</a>
+                <div class="heading-section heading-section-white ftco-animate mb-5">
+                    <h2 class="mb-4">Добавить группу</h2>
+                </div>
+                <form method="post" action="/profile" class="appointment-form ftco-animate" id="new_competence">
+                    <div class="d-md-flex">
+                        <select name="group" id="group" class="form-control">
+                            <option value="" style="color: #1eaaf1" selected disabled>Выберите группу</option>
+                            <#list groups as group>
+                                <option value="${group.id}" style="color: #1eaaf1">${group.numeric}</option>
+                            </#list>
+                        </select>
+                    </div>
+                    <div class="d-md-flex" style="margin-top: 20px;">
+                        <div class="form-group">
+                            <input type="button" onclick="sendAjaxForm()" value="Добавить"
+                                   class="btn btn-secondary py-3 px-4">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="envelope2" class="envelope">
     <div class="container">
         <div class="row justify-content-center">
@@ -192,7 +243,14 @@
                                                 <input type="submit" class="btn btn-secondary" onclick="updateInformation($('#informationForm').val())">
                                             </form>
                                         </div>
-                                        <h2>Ответственный за группы</h2>
+                                        <div class="d-md-flex">
+                                            <h2>Ответственный за группы</h2>
+                                            <#if isAdmin == true>
+                                                <a href="javascript:void(0)"
+                                                   onclick="document.getElementById('envelope').style.display='block';document.getElementById('fade').style.display='block'"><span
+                                                            class="icon-pencil" style="margin-left: 5px"></span></a>
+                                            </#if>
+                                        </div>
                                         <ul class="ftco-social mt-3">
                                             <#list profileInfo.groups as group>
                                                 <li class="ftco-animate"><a href="#">${group.numeric}</a></li>

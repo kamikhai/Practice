@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script>
+<<<<<<< HEAD
 		function confirm(id) {
 			$.ajax({
 				url: "/profile?student=" + id,
@@ -26,6 +27,25 @@
 			;
 		}
     </script>
+=======
+        function confirm(id) {
+            $.ajax({
+                url:
+                    "/api/student/competence?student=" + id,
+                method: "POST",
+                headers: {
+                    "Authorization": "${token}"
+                },
+                complete: function (response) {
+                    alert("Компетенция успешно подтверждена")
+                    location.reload();
+                }
+            })
+            ;
+        }
+    </script>
+    <title>Document</title>
+>>>>>>> 7b3384afdab8d0ac362e93800cb4b9e7bcabd271
     <script>
 		function updateDescription(text) {
 			$.ajax({

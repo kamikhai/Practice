@@ -10,11 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.itis.practice.dto.TeacherProfileInfo;
 import ru.itis.practice.models.Student;
+import ru.itis.practice.models.User;
 import ru.itis.practice.security.details.UserDetailsImpl;
-import ru.itis.practice.services.GroupService;
-import ru.itis.practice.services.StudentService;
-import ru.itis.practice.services.TeacherService;
-import ru.itis.practice.services.UserService;
+import ru.itis.practice.services.*;
 
 @Controller
 @AllArgsConstructor
@@ -24,6 +22,7 @@ public class TeacherGroupsController {
     private StudentService studentService;
     private GroupService groupService;
     private UserService userService;
+    private TokenService tokenService;
 
     @GetMapping("/my_students/{id}")
     private String getStudents(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model,@PathVariable Long id){
@@ -35,9 +34,17 @@ public class TeacherGroupsController {
 
     @GetMapping("/students_group")
     private String getStudents(@RequestParam(value = "g", required = false) Long groupId,
-                               ModelMap map){
+                               ModelMap map, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        if (userDetails != null){
+            map.put("admin", userDetails.getUser().getRole().equals(User.Role.ADMIN) ? true : false);
+            map.put("token", tokenService.getToken(userDetails.getUser()));
+
+        } else {
+            map.put("admin", false);
+            map.put("token", "");
+        }
         map.put("students", studentService.getAllByGroupId(groupId));
-        map.put("group", groupService.findById(groupId).get().getNumeric());
+        map.put("group", groupService.findById(groupId).get());
         return "group";
     }
 }

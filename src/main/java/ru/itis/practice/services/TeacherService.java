@@ -5,6 +5,7 @@ import ru.itis.practice.models.Teacher;
 import ru.itis.practice.models.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TeacherService {
 
@@ -14,10 +15,14 @@ public interface TeacherService {
 
     Teacher save(Teacher teacher);
 
+<<<<<<< HEAD
 	void updateLink(Long userId, String text);
 
 	void updatePosition(Long userId, String text);
 
 	void updateInformation(Long userId, String text);
 
+=======
+    Optional<Teacher> findById(Long id);
+>>>>>>> 7b3384afdab8d0ac362e93800cb4b9e7bcabd271
 }

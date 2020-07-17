@@ -33,4 +33,9 @@ public class GroupServiceImpl implements GroupService {
     public Optional<Group> findById(Long id) {
         return groupRepository.findById(id);
     }
+
+    @Override
+    public void delete(Group group) {
+        groupRepository.delete(group);
+    }
 }
