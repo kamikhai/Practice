@@ -2,13 +2,20 @@ package ru.itis.practice.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.itis.practice.dto.NewProjectDto;
 import ru.itis.practice.dto.PortfolioProjectInfo;
 import ru.itis.practice.dto.ProjectPageInfo;
 import ru.itis.practice.models.Project;
+import ru.itis.practice.models.User;
 import ru.itis.practice.repositories.ProjectRepository;
+import ru.itis.practice.repositories.StudentRepository;
+import ru.itis.practice.repositories.TagRepository;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -18,11 +25,13 @@ import java.util.stream.Collectors;
 public class ProjectServiceImpl implements ProjectService {
 
     private ProjectRepository projectRepository;
+    private StudentRepository studentRepository;
+    private TagRepository tagRepository;
     public static final String IMAGE_PATH_REGEX = "(http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png|jpeg|svg)";
     public static final String YOUTUBE_PATH_REGEX = "((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube\\.com|youtu.be))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?.*$";
     public static final String COMMON_URL_REGEX = "(http|ftp|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-])?";
     public static final Pattern IMAGE_PATTERN = Pattern.compile(IMAGE_PATH_REGEX);
-    public static final Pattern YOUTUBE_PATTERN = Pattern.compile(YOUTUBE_PATH_REGEX);
+    public static final Pattern YOUTUBE_PATTERN = Pattern.compile(YOUTUBE_PATH_REGEX, Pattern.DOTALL);
 
     @Override
     public List<PortfolioProjectInfo> getProjectsByStudentId(Long id) {
@@ -43,6 +52,18 @@ public class ProjectServiceImpl implements ProjectService {
         throw new RuntimeException("No project found!");
     }
 
+    @Override
+    @Transactional
+    public void save(NewProjectDto dto, User user) {
+        Project project = Project.builder()
+                .description(dto.getDescription())
+                .title(dto.getTitle())
+                .tags(Arrays.stream(dto.getResult().split(" ")).distinct().map(tagRepository::findByName).collect(Collectors.toList()))
+                .student(studentRepository.findStudentByUser_Email(user.getEmail()).orElseThrow(RuntimeException::new))
+                .build();
+        projectRepository.save(project);
+    }
+
 
     private Project parseProjectDescription(Project project) {
         project.setDescription(addYoutubePlayer(project.getDescription(), ""));
@@ -52,15 +73,15 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     private String addImagesTags(String string) {
-        Matcher matcher = Pattern.compile(IMAGE_PATH_REGEX).matcher(string);
+        Matcher matcher = IMAGE_PATTERN.matcher(string);
         if (matcher.find())
-            return matcher.replaceAll("<img src=\"" + matcher.group() + "\"/>");
+            return matcher.replaceAll("<br><img src=\"" + matcher.group() + "\"/><br>");
         else
             return string;
     }
 
     private String addYoutubePlayer(String string, String result) {
-        Matcher matcher = Pattern.compile(YOUTUBE_PATH_REGEX).matcher(string);
+        Matcher matcher = YOUTUBE_PATTERN.matcher(string);
         if (matcher.find()) {
             String nextPart = string.substring(string.indexOf(matcher.group(5)) + matcher.group(5).length());
             String replacement = matcher.replaceAll(generateIFrame(matcher.group(5)));
@@ -72,7 +93,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     private String addOtherLinks(String string) {
-        Matcher matcher = Pattern.compile(COMMON_URL_REGEX).matcher(string);
+        Matcher matcher = Pattern.compile(COMMON_URL_REGEX, Pattern.DOTALL).matcher(string);
         StringBuilder result = new StringBuilder();
         int lastAppendedIndex = 0;
         while (matcher.find()) {

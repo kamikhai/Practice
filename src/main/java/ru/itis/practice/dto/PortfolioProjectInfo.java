@@ -5,6 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.itis.practice.models.Project;
+import ru.itis.practice.models.Tag;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -12,19 +16,15 @@ import ru.itis.practice.models.Project;
 @Builder
 public class PortfolioProjectInfo {
 
-    private String userPhotoPath;
-    private String group;
     private Long projectId;
     private String title;
-    private String description;
+    private List<Tag> tags;
 
     public static PortfolioProjectInfo from(Project project) {
         return PortfolioProjectInfo.builder()
-                .userPhotoPath(project.getStudent().getUser().getPhotoPath())
-                .group(project.getStudent().getGroup().getNumeric())
                 .projectId(project.getId())
                 .title(project.getTitle())
-                .description(project.getDescription())
+                .tags(project.getTags())
                 .build();
     }
 }
