@@ -9,11 +9,12 @@
     <script>
         function deleteProject() {
             $.ajax({
-                url: "/project/${id}",
-                method: "POST"
-            });
+                    url: "/project/${info.projectId}",
+                    method: "POST",
+                    data: {"userId": ${info.userId}},
+                });
             alert("Запись успешно удалена");
-            location = "/portfolio/${userId}";
+            location = "/portfolio/${info.userId}";
         }
     </script>
 </head>
@@ -74,8 +75,9 @@
                                 <div class="desc">
                                     <div class="d-md-flex">
                                         <h1 class="big-letter">${info.title}</h1>
-<#--                                        TODO: отправлять js-ом запрос на удаление-->
-                                        <a onclick="deleteProject()"><span class="icon-delete"></span></a>
+                                        <#if isAccessible == true>
+                                            <a onclick="deleteProject()"><span class="icon-delete"></span></a>
+                                        </#if>
                                     </div>
                                     <hr style="height:1px;border-width:0; width: 70%; color:#1eaaf1;background-color:gray;">
                                     <div style="margin-top: 15px">
