@@ -12,4 +12,6 @@ public interface GroupService {
     List<GroupInfo> getAllGroups();
     Optional<Group> findById(Long id);
     void delete(Group group);
+
+    Optional<Group> findByNumeric(String s);
 }

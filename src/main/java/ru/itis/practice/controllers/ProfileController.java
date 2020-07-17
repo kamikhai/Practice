@@ -95,14 +95,13 @@ public class ProfileController {
 
     @PostMapping("/competence")
     @PreAuthorize(value = "hasAuthority('STUDENT')")
-    public String addCompetence(@AuthenticationPrincipal UserDetailsImpl userDetails,
+    public ResponseEntity addCompetence(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                 @RequestParam("result") String result,
                                 @RequestParam("competenceName") String competenceName) {
         System.out.println(result);
-        // чтоб убрались повторяющиеся (да, как это предотвратить на фронте, не придумала)
         Set<String> tags = new TreeSet<>(Arrays.asList(result.split(" ")));
         competenceService.save(competenceName, tags, userDetails.getUserId());
-        return "ok";
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/photo")

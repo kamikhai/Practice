@@ -8,14 +8,12 @@ import java.util.Optional;
 public interface TagService {
 
     List<Tag> getAll();
-<<<<<<< HEAD
+
     Tag getByName(String name);
-=======
 
     Tag save(Tag tag);
 
     Optional<Tag> findById(Long id);
 
     void delete(Tag tag);
->>>>>>> 7b3384afdab8d0ac362e93800cb4b9e7bcabd271
 }

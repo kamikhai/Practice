@@ -47,21 +47,20 @@ public class TeacherServiceImpl implements TeacherService {
         return teacherRepository.save(teacher);
     }
 
-<<<<<<< HEAD
-	@Override
-	public void updateLink(Long userId, String text) {
+    @Override
+    public void updateLink(Long userId, String text) {
         Optional<Teacher> teacherCandidate = teacherRepository.findById(userId);
-        if(teacherCandidate.isPresent()) {
+        if (teacherCandidate.isPresent()) {
             Teacher teacher = teacherCandidate.get();
             teacher.setLink(text);
             teacherRepository.save(teacher);
         }
-	}
+    }
 
     @Override
     public void updatePosition(Long userId, String text) {
         Optional<Teacher> teacherCandidate = teacherRepository.findById(userId);
-        if(teacherCandidate.isPresent()) {
+        if (teacherCandidate.isPresent()) {
             Teacher teacher = teacherCandidate.get();
             teacher.setPosition(text);
             teacherRepository.save(teacher);
@@ -71,15 +70,15 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void updateInformation(Long userId, String text) {
         Optional<Teacher> teacherCandidate = teacherRepository.findById(userId);
-        if(teacherCandidate.isPresent()) {
+        if (teacherCandidate.isPresent()) {
             Teacher teacher = teacherCandidate.get();
             teacher.setInformation(text);
             teacherRepository.save(teacher);
         }
-=======
+    }
+
     @Override
     public Optional<Teacher> findById(Long id) {
         return teacherRepository.findById(id);
->>>>>>> 7b3384afdab8d0ac362e93800cb4b9e7bcabd271
     }
 }

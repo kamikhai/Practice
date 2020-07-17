@@ -19,12 +19,11 @@ public class TagServiceImpl implements TagService {
         return tagRepository.findAllByOrderByName();
     }
 
-<<<<<<< HEAD
-	@Override
-	public Tag getByName(String name) {
-    	return tagRepository.findByName(name);
-	}
-=======
+    @Override
+    public Tag getByName(String name) {
+        return tagRepository.findByName(name);
+    }
+
     @Override
     public Tag save(Tag tag) {
         return tagRepository.save(tag);
@@ -39,5 +38,4 @@ public class TagServiceImpl implements TagService {
     public void delete(Tag tag) {
         tagRepository.delete(tag);
     }
->>>>>>> 7b3384afdab8d0ac362e93800cb4b9e7bcabd271
 }

@@ -1,9 +1,7 @@
 package ru.itis.practice.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -21,7 +19,7 @@ public class Teacher {
     @MapsId
     private User user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Group> curatedGroups;
 
     private String position;

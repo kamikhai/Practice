@@ -84,7 +84,7 @@
 			complete: function (response) {
 				document.getElementById('link1').style.display = 'block';
 				document.getElementById('link2').style.display = 'none';
-				document.getElementById('link1').innerText = text;
+				document.getElementById('link1').href = text;
 			},
 			error: function (response) {
 				alert(response.responseText);
@@ -224,7 +224,7 @@
                                             <form method="post">
                                         <textarea name="" cols="30" rows="6" class="form-control" id="positionForm"
                                                   style="background-color: rgba(219,235,243,0.78) !important; margin-bottom: 20px">${profileInfo.position}</textarea>
-                                                <input type="submit" class="btn btn-secondary" onclick="updatePosition($('#positionForm').val())">
+                                                <input type="button" value="Обновить" class="btn btn-secondary" onclick="updatePosition($('#positionForm').val())">
                                             </form>
                                         </div>
                                         <div class="d-md-flex">
@@ -240,7 +240,7 @@
                                             <form method="post">
                                         <textarea name="" cols="30" rows="6" class="form-control" id="informationForm"
                                                   style="background-color: rgba(219,235,243,0.78) !important; margin-bottom: 20px">${profileInfo.information}</textarea>
-                                                <input type="submit" class="btn btn-secondary" onclick="updateInformation($('#informationForm').val())">
+                                                <input type="button" value="Обновить" class="btn btn-secondary" onclick="updateInformation($('#informationForm').val())">
                                             </form>
                                         </div>
                                         <div class="d-md-flex">
@@ -274,7 +274,7 @@
                                                 <input type="text" class="form-control"
                                                        value="${profileInfo.link}"
                                                        style="margin-bottom: 20px; background-color: rgba(219,235,243,0.78) !important;" id="linkForm">
-                                                <input type="submit" class="btn btn-secondary" onclick="updateLink($('#linkForm').val())">
+                                                <input type="button" value="Обновить" class="btn btn-secondary" onclick="updateLink($('#linkForm').val())">
                                             </form>
                                         </div>
                                     </div>

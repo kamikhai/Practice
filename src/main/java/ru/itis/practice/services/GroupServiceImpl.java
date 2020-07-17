@@ -17,11 +17,11 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public Group saveIfNotExist(Group group) {
-        Group g = groupRepository.findByNumeric(group.getNumeric());
-        if (g == null){
+        Optional<Group> g = groupRepository.findByNumeric(group.getNumeric());
+        if (!g.isPresent()){
             return groupRepository.save(group);
         }
-        return g;
+        return g.get();
     }
 
     @Override
@@ -37,5 +37,10 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public void delete(Group group) {
         groupRepository.delete(group);
+    }
+
+    @Override
+    public Optional<Group> findByNumeric(String s) {
+        return groupRepository.findByNumeric(s);
     }
 }

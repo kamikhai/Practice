@@ -2,12 +2,14 @@ package ru.itis.practice.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.itis.practice.models.Competence;
 import ru.itis.practice.models.Tag;
 import ru.itis.practice.models.Teacher;
 import ru.itis.practice.repositories.CompetenceRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -19,12 +21,11 @@ public class CompetenceServiceImpl implements CompetenceService {
     private TagService tagService;
     private StudentService studentService;
 
+    @Transactional
     @Override
     public Competence confirm(Long compId, Teacher teacher) {
         Competence competence = competenceRepository.getOne(compId);
-        System.out.println(competence);
         competence.setConfirmedBy(teacher);
-        System.out.println(competence);
         return competenceRepository.save(competence);
     }
 
@@ -37,4 +38,9 @@ public class CompetenceServiceImpl implements CompetenceService {
 				.student(studentService.getById(studentId))
 				.build());
 	}
+
+    @Override
+    public Optional<Competence> findById(Long l) {
+        return competenceRepository.findById(l);
+    }
 }

@@ -7,27 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script>
-<<<<<<< HEAD
-		function confirm(id) {
-			$.ajax({
-				url: "/profile?student=" + id,
-				method:
-					"POST",
-				url:
-					"/api/student/competence?student=" + id,
-				method:
-					"POST",
-				headers: {
-					"Authorization": "${token}"
-				},
-				complete: function (response) {
-					location.reload();
-				}
-			})
-			;
-		}
-    </script>
-=======
         function confirm(id) {
             $.ajax({
                 url:
@@ -45,7 +24,6 @@
         }
     </script>
     <title>Document</title>
->>>>>>> 7b3384afdab8d0ac362e93800cb4b9e7bcabd271
     <script>
 		function updateDescription(text) {
 			$.ajax({
@@ -99,7 +77,7 @@
 				complete: function (response) {
 					document.getElementById('link1').style.display = 'block';
 					document.getElementById('link2').style.display = 'none';
-					document.getElementById('link1').innerText = text;
+					document.getElementById('link').href = text;
 				},
 				error: function (response) {
 					alert(response.responseText);
@@ -132,13 +110,9 @@
 			$.ajax({
 				url: "/profile/competence",
 				type: "POST",
-				headers: {
-					"Authorization": "${token}"
-				},
 				dataType: "html",
 				data: $("#new_competence").serialize(),
 				complete: function (response) {
-					alert(data);
 					alert("Компетенция успешно добавлена");
 					location.reload();
 				},
@@ -368,15 +342,15 @@
                                             </#if>
                                         </div>
                                         <ul class="ftco-social mt-3" id="link1">
-                                            <li class="ftco-animate"><a href="${profileInfo.link}"><span
+                                            <li class="ftco-animate"><a id="link" href="${profileInfo.link}"><span
                                                             class="icon-chrome"></span></a>
                                             </li>
                                         </ul>
                                         <div class="mb-4" style="display: none" id="link2">
                                             <form method="post">
-                                                <input type="text" class="form-control" id="linkForm"
-                                                          style="margin-bottom: 20px; background-color: rgba(219,235,243,0.78) !important;">${profileInfo.link}</input>
-                                                <input type="button" onclick="updateLink($('#linkForm').val())" class="btn btn-secondary">
+                                                <input type="text" class="form-control" id="linkForm" value="${profileInfo.link}"
+                                                          style="margin-bottom: 20px; background-color: rgba(219,235,243,0.78) !important;">
+                                                <input type="button" value="Обновить" onclick="updateLink($('#linkForm').val())" class="btn btn-secondary">
                                             </form>
                                         </div>
                                     </div>
