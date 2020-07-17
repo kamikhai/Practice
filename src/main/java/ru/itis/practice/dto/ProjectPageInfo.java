@@ -15,7 +15,9 @@ import java.util.List;
 @Builder
 public class ProjectPageInfo {
 
+    private Long projectId;
     private Long userId;
+    private Long isAccessible;
     private String photoPath;
     private String title;
     private String description;
@@ -23,6 +25,7 @@ public class ProjectPageInfo {
 
     public static ProjectPageInfo from(Project project) {
         return ProjectPageInfo.builder()
+                .projectId(project.getId())
                 .userId(project.getStudent().getId())
                 .photoPath(project.getStudent().getUser().getPhotoPath())
                 .title(project.getTitle())
