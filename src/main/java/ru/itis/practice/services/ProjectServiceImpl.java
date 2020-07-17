@@ -3,10 +3,12 @@ package ru.itis.practice.services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.itis.practice.dto.PortfolioProjectInfo;
+import ru.itis.practice.dto.ProjectPageInfo;
 import ru.itis.practice.models.Project;
 import ru.itis.practice.repositories.ProjectRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -16,9 +18,11 @@ import java.util.stream.Collectors;
 public class ProjectServiceImpl implements ProjectService {
 
     private ProjectRepository projectRepository;
-    private static final String IMAGE_PATH_REGEX = "(http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png|jpeg|svg)";
+    public static final String IMAGE_PATH_REGEX = "(http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png|jpeg|svg)";
     public static final String YOUTUBE_PATH_REGEX = "((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube\\.com|youtu.be))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?.*$";
-
+    public static final String COMMON_URL_REGEX = "(http|ftp|https):\\/\\/([\\w_-]+(?:(?:\\.[\\w_-]+)+))([\\w.,@?^=%&:\\/~+#-]*[\\w@?^=%&\\/~+#-])?";
+    public static final Pattern IMAGE_PATTERN = Pattern.compile(IMAGE_PATH_REGEX);
+    public static final Pattern YOUTUBE_PATTERN = Pattern.compile(YOUTUBE_PATH_REGEX);
 
     @Override
     public List<PortfolioProjectInfo> getProjectsByStudentId(Long id) {
@@ -29,10 +33,21 @@ public class ProjectServiceImpl implements ProjectService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public ProjectPageInfo getProjectById(Long id) {
+        Optional<Project> projectCandidate = projectRepository.findById(id);
+        if  (projectCandidate.isPresent()) {
+            Project project = parseProjectDescription(projectCandidate.get());
+            return ProjectPageInfo.from(project);
+        }
+        throw new RuntimeException("No project found!");
+    }
+
 
     private Project parseProjectDescription(Project project) {
         project.setDescription(addYoutubePlayer(project.getDescription(), ""));
         project.setDescription(addImagesTags(project.getDescription()));
+        project.setDescription(addOtherLinks(project.getDescription()));
         return project;
     }
 
@@ -54,6 +69,25 @@ public class ProjectServiceImpl implements ProjectService {
             if (string.equals("")) return result;
             else return result.concat(string);
         }
+    }
+
+    private String addOtherLinks(String string) {
+        Matcher matcher = Pattern.compile(COMMON_URL_REGEX).matcher(string);
+        StringBuilder result = new StringBuilder();
+        int lastAppendedIndex = 0;
+        while (matcher.find()) {
+            String next = matcher.group();
+            int first = matcher.start();
+            int last = matcher.end();
+            result.append(string, lastAppendedIndex, first);
+            if (IMAGE_PATTERN.matcher(next).matches() || YOUTUBE_PATTERN.matcher(next).matches())
+                result.append(next);
+            else
+                result.append("<a href=\"").append(next).append("\">").append(next).append("</a>");
+            lastAppendedIndex = last;
+        }
+        if (lastAppendedIndex != string.length()) result.append(string.substring(lastAppendedIndex));
+        return result.toString();
     }
 
     private String generateIFrame(String id) {

@@ -2,7 +2,6 @@ package ru.itis.practice.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itis.practice.dto.PortfolioUserInfo;
@@ -67,12 +66,12 @@ public class StudentServiceImpl implements StudentService {
                     .flatMap(c -> c.getTags().stream())
                     .collect(Collectors.toSet());
 
-            boolean tagsOK = tags == null || tags.isEmpty() || competenceTags.stream()
+            boolean tagsOK = tags.isEmpty() || competenceTags.stream()
                     .map(Tag::getId)
                     .collect(Collectors.toSet())
                     .containsAll(tags);
 
-            boolean profOK = profiles == null || profiles.isEmpty() ||
+            boolean profOK = profiles.isEmpty() ||
                     (student.getJobProfile() != null && profiles.contains(student.getJobProfile().getId()));
 
             if (tagsOK && profOK) {
