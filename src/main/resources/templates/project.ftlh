@@ -6,6 +6,16 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script>
+        function deleteProject() {
+            $.ajax({
+                url: "/project/${id}",
+                method: "POST"
+            });
+            alert("Запись успешно удалена");
+            location = "/portfolio/${userId}";
+        }
+    </script>
 </head>
 <body>
 
@@ -65,7 +75,7 @@
                                     <div class="d-md-flex">
                                         <h1 class="big-letter">${info.title}</h1>
 <#--                                        TODO: отправлять js-ом запрос на удаление-->
-                                        <a><span class="icon-delete"></span></a>
+                                        <a onclick="deleteProject()"><span class="icon-delete"></span></a>
                                     </div>
                                     <hr style="height:1px;border-width:0; width: 70%; color:#1eaaf1;background-color:gray;">
                                     <div style="margin-top: 15px">

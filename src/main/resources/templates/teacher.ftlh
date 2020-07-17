@@ -70,16 +70,22 @@
             <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
             <aside id="colorlib-aside" role="complementary" class="text-center">
                 <h1 id="colorlib-logo"><span class="img"
-                                             style="background-image: url(${profileInfo.photoPath});"><div
-                                class="iconupload" style="width: 100%; text-align: right"><a href="javascript:void(0)"
-                                                                                             onclick="document.getElementById('envelope2').style.display='block';document.getElementById('fade').style.display='block'"><span
-                                        class="icon-file_upload"
-                                        style="color: white; margin-right: 5px"></span></a></div></span>
+                                             style="background-image: url(${profileInfo.photoPath});">
+                                                                    <#if isOwnProfile == true>
+                                                                        <div
+                                                                                class="iconupload"
+                                                                                style="width: 100%; text-align: right"><a
+                                                                                    href="javascript:void(0)"
+                                                                                    onclick="document.getElementById('envelope2').style.display='block';document.getElementById('fade').style.display='block'"><span
+                                                                                        class="icon-file_upload"
+                                                                                        style="color: white; margin-right: 5px"></span></a></div>
+                                                                    </#if>
+                    </span>
                 </h1>
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
                         <li class="colorlib-active"><a href="/profile">Обо мне</a></li>
-                        <li><a href="/my_students">Мои студенты</a></li>
+                        <li><a href="/my_students/${id}">Мои студенты</a></li>
                     </ul>
                 </nav>
             </aside>
@@ -89,15 +95,17 @@
                         <div class="d-flex align-items-center ">
                             <div class="author-info text p-3 p-md-5"
                                  style="background-color: rgba(30,170,241,0.3); color: rgba(0,0,0,0.3); width: 100%">
-                            <div class="desc">
+                                <div class="desc">
                                     <h1 class="big-letter">${profileInfo.fullname}</h1>
                                     <hr style="height:1px;border-width:0; width: 70%; color:#1eaaf1;background-color:gray;">
                                     <div style="margin-top: 15px">
                                         <div class="d-md-flex">
                                             <h2>Должность</h2>
-                                            <a href="javascript:void(0)"
-                                               onclick="document.getElementById('position2').style.display='block';document.getElementById('position1').style.display='none'"><span
-                                                        class="icon-pencil" style="margin-left: 5px"></span></a>
+                                            <#if isOwnProfile == true>
+                                                <a href="javascript:void(0)"
+                                                   onclick="document.getElementById('position2').style.display='block';document.getElementById('position1').style.display='none'"><span
+                                                            class="icon-pencil" style="margin-left: 5px"></span></a>
+                                            </#if>
                                         </div>
                                         <p class="mb-4" id="position1">${profileInfo.position}</p>
                                         <div class="mb-4" style="display: none" id="position2">
@@ -109,9 +117,11 @@
                                         </div>
                                         <div class="d-md-flex">
                                             <h2>Дополнительная информация</h2>
-                                            <a href="javascript:void(0)"
-                                               onclick="document.getElementById('info2').style.display='block';document.getElementById('info1').style.display='none'"><span
-                                                        class="icon-pencil" style="margin-left: 5px"></span></a>
+                                            <#if isOwnProfile == true>
+                                                <a href="javascript:void(0)"
+                                                   onclick="document.getElementById('info2').style.display='block';document.getElementById('info1').style.display='none'"><span
+                                                            class="icon-pencil" style="margin-left: 5px"></span></a>
+                                            </#if>
                                         </div>
                                         <p id="info1">${profileInfo.information}</p>
                                         <div class="mb-4" style="display: none" id="info2">
@@ -129,9 +139,11 @@
                                         </ul>
                                         <div class="d-md-flex">
                                             <h2>Свяжитесь со мной</h2>
-                                            <a href="javascript:void(0)"
-                                               onclick="document.getElementById('link2').style.display='block';document.getElementById('link1').style.display='none'"><span
-                                                        class="icon-pencil" style="margin-left: 5px"></span></a>
+                                            <#if isOwnProfile == true>
+                                                <a href="javascript:void(0)"
+                                                   onclick="document.getElementById('link2').style.display='block';document.getElementById('link1').style.display='none'"><span
+                                                            class="icon-pencil" style="margin-left: 5px"></span></a>
+                                            </#if>
                                         </div>
                                         <ul class="ftco-social mt-1" id="link1">
                                             <li class="ftco-animate"><a href="https://vk.com/marsel.sidikov"><span
@@ -140,7 +152,8 @@
                                         </ul>
                                         <div class="mb-4" style="display: none" id="link2">
                                             <form method="post">
-                                                <input type="text" class="form-control" value="https://vk.com/marsel.sidikov"
+                                                <input type="text" class="form-control"
+                                                       value="https://vk.com/marsel.sidikov"
                                                        style="margin-bottom: 20px; background-color: rgba(219,235,243,0.78) !important;">
                                                 <input type="submit" class="btn btn-secondary">
                                             </form>

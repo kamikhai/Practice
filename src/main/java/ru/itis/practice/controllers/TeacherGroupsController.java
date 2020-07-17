@@ -6,12 +6,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.itis.practice.dto.TeacherProfileInfo;
 import ru.itis.practice.models.Student;
 import ru.itis.practice.security.details.UserDetailsImpl;
 import ru.itis.practice.services.GroupService;
 import ru.itis.practice.services.StudentService;
 import ru.itis.practice.services.TeacherService;
+import ru.itis.practice.services.UserService;
 
 @Controller
 @AllArgsConstructor
@@ -20,10 +23,13 @@ public class TeacherGroupsController {
     private TeacherService teacherService;
     private StudentService studentService;
     private GroupService groupService;
+    private UserService userService;
 
-    @GetMapping("/my_students")
-    private String getStudents(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model){
-            model.addAttribute("groups", teacherService.getProfileInfoByUser(userDetails.getUser()).getGroups());
+    @GetMapping("/my_students/{id}")
+    private String getStudents(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model,@PathVariable Long id){
+        TeacherProfileInfo teacherProfileInfo = teacherService.getProfileInfoByUser(userService.getUserById(id));
+            model.addAttribute("groups", teacherProfileInfo.getGroups());
+            model.addAttribute("photo", teacherProfileInfo.getPhotoPath());
             return "teachergroups";
     }
 
