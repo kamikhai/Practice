@@ -7,6 +7,31 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
+<script>
+    function addPhoto() {
+        var formData = new FormData();
+        var files = ($('#file'))[0]['files'];
+        [].forEach.call(files, function (file, i, files) {
+            formData.append("file", file);
+        });
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/profile/photo",
+            data: formData,
+            processData: false,
+            contentType: false
+        })
+            .done(function (response) {
+                alert(response);
+                location.reload();
+            })
+            .fail(function () {
+                alert('Error')
+            });
+    }
+
+</script>
 <body>
 <div id="envelope2" class="envelope">
     <div class="container">
@@ -17,19 +42,20 @@
                 <div class="heading-section heading-section-white ftco-animate mb-5">
                     <h2 class="mb-4">Изменить фото</h2>
                 </div>
-                <form action="#" class="appointment-form ftco-animate">
+                <form method="post" class="appointment-form ftco-animate">
                     <div class="example-2" style="margin-top: 20px">
                         <div class="d-md-flex">
-                            <input type="file" name="file" id="file" class="input-file" accept="image/jpeg,image/png">
+                            <input type="file" name="file" id="file" class="input-file" accept=".jpeg, .jpg">
                             <label for="file" class="btn btn-tertiary js-labelFile">
                                 <i class="icon fa fa-check"></i>
-                                <span class="js-fileName">Загрузить файл</span>
+                                <span class="js-fileName">Загрузить новое фото</span>
                             </label>
                         </div>
                     </div>
                     <div class="d-md-flex" style="margin-top: 20px;">
                         <div class="form-group">
-                            <input type="submit" value="Добавить" class="btn btn-secondary py-3 px-4">
+                            <input type="button" onclick="addPhoto()" value="Добавить"
+                                   class="btn btn-secondary py-3 px-4">
                         </div>
                     </div>
                 </form>
