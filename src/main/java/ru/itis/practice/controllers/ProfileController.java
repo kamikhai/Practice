@@ -20,6 +20,7 @@ import ru.itis.practice.security.details.UserDetailsImpl;
 import ru.itis.practice.services.*;
 
 import java.util.Arrays;
+import java.util.Set;
 import java.util.TreeSet;
 
 @Controller
@@ -84,18 +85,22 @@ public class ProfileController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/competence")
     @PreAuthorize(value = "hasAuthority('STUDENT')")
-    public String confirmCompetence(@RequestParam("result") String result) {
+    public String addCompetence(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                @RequestParam("result") String result,
+                                @RequestParam("competenceName") String competenceName) {
         System.out.println(result);
         // чтоб убрались повторяющиеся (да, как это предотвратить на фронте, не придумала)
-        TreeSet<String> tags = new TreeSet<>(Arrays.asList(result.split(" ")));
+        Set<String> tags = new TreeSet<>(Arrays.asList(result.split(" ")));
+        competenceService.save(competenceName, tags, userDetails.getUserId());
         return "ok";
     }
 
     @PostMapping("/photo")
     @PreAuthorize(value = "isAuthenticated()")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile,
+                                             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         System.out.println(123);
         imageService.save(multipartFile, userDetails.getUserId());
         return ResponseEntity.ok().body("Ваше фото успешно загружено");

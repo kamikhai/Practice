@@ -8,28 +8,89 @@
     <title>Document</title>
 </head>
 <script>
-    function addPhoto() {
-        var formData = new FormData();
-        var files = ($('#file'))[0]['files'];
-        [].forEach.call(files, function (file, i, files) {
-            formData.append("file", file);
-        });
-        $.ajax({
-            type: "POST",
-            enctype: 'multipart/form-data',
-            url: "/profile/photo",
-            data: formData,
-            processData: false,
-            contentType: false
-        })
-            .done(function (response) {
-                alert(response);
-                location.reload();
-            })
-            .fail(function () {
-                alert('Error')
-            });
-    }
+	function addPhoto() {
+		var formData = new FormData();
+		var files = ($('#file'))[0]['files'];
+		[].forEach.call(files, function (file, i, files) {
+			formData.append("file", file);
+		});
+		$.ajax({
+			type: "POST",
+			enctype: 'multipart/form-data',
+			url: "/profile/photo",
+			data: formData,
+			processData: false,
+			contentType: false
+		})
+			.done(function (response) {
+				alert(response);
+				location.reload();
+			})
+			.fail(function () {
+				alert('Error')
+			});
+	}
+
+	function updatePosition(text) {
+		$.ajax({
+			url: "/api/teacher/position?text=" + text,
+			method: "POST",
+			headers: {
+				"Authorization": "${token}"
+			},
+			dataType: "json",
+			contentType: "application/json",
+			complete: function (response) {
+				document.getElementById('position1').style.display = 'block';
+				document.getElementById('position2').style.display = 'none';
+				document.getElementById('position1').innerText = text;
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
+
+	function updateInformation(text) {
+		$.ajax({
+			url: "/api/teacher/information?text=" + text,
+			method: "POST",
+			headers: {
+				"Authorization": "${token}"
+			},
+			dataType: "json",
+			contentType: "application/json",
+			complete: function (response) {
+				document.getElementById('info1').style.display = 'block';
+				document.getElementById('info2').style.display = 'none';
+				document.getElementById('info1').innerText = text;
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
+
+
+	function updateLink(text) {
+		$.ajax({
+			url: "/api/teacher/link?text=" + text,
+			method: "POST",
+			headers: {
+				"Authorization": "${token}"
+			},
+			dataType: "json",
+			contentType: "application/json",
+			complete: function (response) {
+				document.getElementById('link1').style.display = 'block';
+				document.getElementById('link2').style.display = 'none';
+				document.getElementById('link1').innerText = text;
+			},
+			error: function (response) {
+				alert(response.responseText);
+			}
+		});
+	}
 
 </script>
 <body>
@@ -110,9 +171,9 @@
                                         <p class="mb-4" id="position1">${profileInfo.position}</p>
                                         <div class="mb-4" style="display: none" id="position2">
                                             <form method="post">
-                                        <textarea name="" cols="30" rows="6" class="form-control"
+                                        <textarea name="" cols="30" rows="6" class="form-control" id="positionForm"
                                                   style="background-color: rgba(219,235,243,0.78) !important; margin-bottom: 20px">${profileInfo.position}</textarea>
-                                                <input type="submit" class="btn btn-secondary">
+                                                <input type="submit" class="btn btn-secondary" onclick="updatePosition($('#positionForm').val())">
                                             </form>
                                         </div>
                                         <div class="d-md-flex">
@@ -126,9 +187,9 @@
                                         <p id="info1">${profileInfo.information}</p>
                                         <div class="mb-4" style="display: none" id="info2">
                                             <form method="post">
-                                        <textarea name="" cols="30" rows="6" class="form-control"
+                                        <textarea name="" cols="30" rows="6" class="form-control" id="informationForm"
                                                   style="background-color: rgba(219,235,243,0.78) !important; margin-bottom: 20px">${profileInfo.information}</textarea>
-                                                <input type="submit" class="btn btn-secondary">
+                                                <input type="submit" class="btn btn-secondary" onclick="updateInformation($('#informationForm').val())">
                                             </form>
                                         </div>
                                         <h2>Ответственный за группы</h2>
@@ -146,16 +207,16 @@
                                             </#if>
                                         </div>
                                         <ul class="ftco-social mt-1" id="link1">
-                                            <li class="ftco-animate"><a href="https://vk.com/marsel.sidikov"><span
+                                            <li class="ftco-animate"><a href="${profileInfo.link}"><span
                                                             class="icon-chrome"></span></a>
                                             </li>
                                         </ul>
                                         <div class="mb-4" style="display: none" id="link2">
                                             <form method="post">
                                                 <input type="text" class="form-control"
-                                                       value="https://vk.com/marsel.sidikov"
-                                                       style="margin-bottom: 20px; background-color: rgba(219,235,243,0.78) !important;">
-                                                <input type="submit" class="btn btn-secondary">
+                                                       value="${profileInfo.link}"
+                                                       style="margin-bottom: 20px; background-color: rgba(219,235,243,0.78) !important;" id="linkForm">
+                                                <input type="submit" class="btn btn-secondary" onclick="updateLink($('#linkForm').val())">
                                             </form>
                                         </div>
                                     </div>

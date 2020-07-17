@@ -5,129 +5,162 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script>
-        function confirm(id) {
-            $.ajax({
-                url: "/profile?student=" + id,
-                method:
-                    "POST"
-                url:
-                    "/api/student/competence?student=" + id,
-                method:
-                    "POST",
-                headers: {
-                    "Authorization": "${token}"
-                },
-                complete: function (response) {
-                    location.reload();
-                }
-            })
-            ;
-        }
-    </script>
-    <script>
-        function updateDescription(text) {
-            $.ajax({
-                url: "/profile/student/about?text=" + text,
-                method: "POST"
-            });
-            alert("Информация о вас успешно обновлена");
-            location.reload();
-        }
-    </script>
     <title>Document</title>
     <script>
-        function updateDescription(text) {
-            $.ajax({
-                url: "/api/student/about?text=" + text,
-                method: "POST",
-                headers: {
-                    "Authorization": "${token}"
-                },
-                dataType: "json",
-                contentType: "application/json",
-                complete: function (response) {
-                    document.getElementById('info1').style.display = 'block';
-                    document.getElementById('info2').style.display = 'none';
-                    document.getElementById('info1').innerText = text;
-                },
-                error: function (response) {
-                    alert(response.responseText);
-                }
-            });
+		function confirm(id) {
+			$.ajax({
+				url: "/profile?student=" + id,
+				method:
+					"POST",
+				url:
+					"/api/student/competence?student=" + id,
+				method:
+					"POST",
+				headers: {
+					"Authorization": "${token}"
+				},
+				complete: function (response) {
+					location.reload();
+				}
+			})
+			;
+		}
+    </script>
+    <script>
+		function updateDescription(text) {
+			$.ajax({
+				url: "/api/student/about?text=" + text,
+				method: "POST",
+				headers: {
+					"Authorization": "${token}"
+				},
+				dataType: "json",
+				contentType: "application/json",
+				complete: function (response) {
+					document.getElementById('info1').style.display = 'block';
+					document.getElementById('info2').style.display = 'none';
+					document.getElementById('info1').innerText = text;
+				},
+				error: function (response) {
+					alert(response.responseText);
+				}
+			});
+		}
 
-        }
+		function updateWorkExperience(text) {
+			$.ajax({
+				url: "/api/student/experience?text=" + text,
+				method: "POST",
+				headers: {
+					"Authorization": "${token}"
+				},
+				dataType: "json",
+				contentType: "application/json",
+				complete: function (response) {
+					document.getElementById('experience1').style.display = 'block';
+					document.getElementById('experience2').style.display = 'none';
+					document.getElementById('experience1').innerText = text;
+				},
+				error: function (response) {
+					alert(response.responseText);
+				}
+			});
+		}
 
-        var first = true;
-        var i = 1;
-        var result = '';
+		function updateLink(text) {
+			$.ajax({
+				url: "/api/student/link?text=" + text,
+				method: "POST",
+				headers: {
+					"Authorization": "${token}"
+				},
+				dataType: "json",
+				contentType: "application/json",
+				complete: function (response) {
+					document.getElementById('link1').style.display = 'block';
+					document.getElementById('link2').style.display = 'none';
+					document.getElementById('link1').innerText = text;
+				},
+				error: function (response) {
+					alert(response.responseText);
+				}
+			});
+		}
 
-        function addTag() {
-            var e = document.getElementById("tags");
-            var value = e.options[e.selectedIndex].value;
-            console.log(result);
-            if (first) {
-                document.getElementById("tags_div").innerText = '';
-                first = false;
-            }
-            // document.getElementById("result").value += value + ' ';
-            result += value + ' ';
-            console.log(result);
-            $('#tags_div').first().append('<div onclick="delete_tag(' + i + ')" id="' + i + '" style="color: #fff; margin-right: 5px; margin-top: 5px; background-color: #35b7f1; padding: 5px; text-align: center" class="col-md-3">#' + value + '</div >')
-            $('#tags').prop('selectedIndex', 0);
-            i++;
-        }
+		var first = true;
+		var i = 1;
+		var result = '';
 
-        function sendAjaxForm() {
-            document.getElementById("result").value += result;
-            $.ajax({
-                url: "/profile",
-                type: "POST",
-                dataType: "html",
-                data: $("#new_competence").serialize(),
-                complete: function (response) {
-                    alert("Компетенция успешно добавлена");
-                    location.reload();
-                },
-                error: function (response) {
-                }
-            });
-        }
+		function addTag() {
+			var e = document.getElementById("tags");
+			var value = e.options[e.selectedIndex].value;
+			console.log(result);
+			if (first) {
+				document.getElementById("tags_div").innerText = '';
+				first = false;
+			}
+			// document.getElementById("result").value += value + ' ';
+			result += value + ' ';
+			console.log(result);
+			$('#tags_div').first().append('<div onclick="delete_tag(' + i + ')" id="' + i + '" style="color: #fff; margin-right: 5px; margin-top: 5px; background-color: #35b7f1; padding: 5px; text-align: center" class="col-md-3">#' + value + '</div >')
+			$('#tags').prop('selectedIndex', 0);
+			i++;
+		}
 
-        function delete_tag(i) {
-            var str = document.getElementById(i).innerText.substr(1);
-            console.log(str);
-            result = result.replace(str + ' ', '');
-            document.getElementById(i).remove();
-            if ($('#tags_div').is(':empty')) {
-                $('#tags_div').first().append('<span style="color: #fff; margin-right: 10px">Здесь будут расположены выбранные вами теги</span>\n' +
-                    '                            <span style="color: #fff; margin-right: 10px">Нажмите на тег, если хотите его удалить</span>')
-                first = true;
-            }
-        }
+		function sendAjaxForm() {
+			document.getElementById("result").value += result;
+			$.ajax({
+				url: "/profile/competence",
+				type: "POST",
+				headers: {
+					"Authorization": "${token}"
+				},
+				dataType: "html",
+				data: $("#new_competence").serialize(),
+				complete: function (response) {
+					alert(data);
+					alert("Компетенция успешно добавлена");
+					location.reload();
+				},
+				error: function (response) {
+				}
+			});
+		}
 
-        function addPhoto() {
-            var formData = new FormData();
-            var files = ($('#file'))[0]['files'];
-            [].forEach.call(files, function (file, i, files) {
-                formData.append("file", file);
-            });
-            $.ajax({
-                type: "POST",
-                enctype: 'multipart/form-data',
-                url: "/profile/photo",
-                data: formData,
-                processData: false,
-                contentType: false
-            })
-                .done(function (response) {
-                    alert(response);
-                    location.reload();
-                })
-                .fail(function () {
-                    alert('Error')
-                });
-        }
+		function delete_tag(i) {
+			var str = document.getElementById(i).innerText.substr(1);
+			console.log(str);
+			result = result.replace(str + ' ', '');
+			document.getElementById(i).remove();
+			if ($('#tags_div').is(':empty')) {
+				$('#tags_div').first().append('<span style="color: #fff; margin-right: 10px">Здесь будут расположены выбранные вами теги</span>\n' +
+					'                            <span style="color: #fff; margin-right: 10px">Нажмите на тег, если хотите его удалить</span>')
+				first = true;
+			}
+		}
+
+		function addPhoto() {
+			var formData = new FormData();
+			var files = ($('#file'))[0]['files'];
+			[].forEach.call(files, function (file, i, files) {
+				formData.append("file", file);
+			});
+			$.ajax({
+				type: "POST",
+				enctype: 'multipart/form-data',
+				url: "/profile/photo",
+				data: formData,
+				processData: false,
+				contentType: false
+			})
+				.done(function (response) {
+					alert(response);
+					location.reload();
+				})
+				.fail(function () {
+					alert('Error')
+				});
+		}
 
     </script>
 </head>
@@ -141,9 +174,9 @@
                 <div class="heading-section heading-section-white ftco-animate mb-5">
                     <h2 class="mb-4">Добавить компетенцию</h2>
                 </div>
-                <form method="post" action="/profile" class="appointment-form ftco-animate" id="new_competence">
+                <form method="post" action="/profile/competence" class="appointment-form ftco-animate" id="new_competence">
                     <div class="d-md-flex">
-                        <input name="123" type="text" class="form-control" placeholder="Введите текст">
+                        <input name="competenceName" type="text" class="form-control" placeholder="Введите текст">
                     </div>
 
                     <div class="d-md-flex">
@@ -298,12 +331,12 @@
                                                             class="icon-pencil" style="margin-left: 5px"></span></a>
                                             </#if>
                                         </div>
-                                        <p class="mb-4" id="experience1">Нет опыта</p>
+                                        <p class="mb-4" id="experience1">${profileInfo.workExperience}</p>
                                         <div class="mb-4" style="display: none" id="experience2">
                                             <form method="post">
-                                        <textarea name="" cols="30" rows="4" class="form-control"
-                                                  style="background-color: rgba(219,235,243,0.78) !important; margin-bottom: 20px">Нет опыта</textarea>
-                                                <input type="button" class="btn btn-secondary">
+                                        <textarea name="" cols="30" rows="4" class="form-control" id="workExperienceForm"
+                                                  style="background-color: rgba(219,235,243,0.78) !important; margin-bottom: 20px">${profileInfo.workExperience}</textarea>
+                                                <input type="button" value="Обновить" onclick="updateWorkExperience($('#workExperienceForm').val())" class="btn btn-secondary">
                                             </form>
                                         </div>
                                         <div class="d-md-flex">
@@ -315,15 +348,15 @@
                                             </#if>
                                         </div>
                                         <ul class="ftco-social mt-3" id="link1">
-                                            <li class="ftco-animate"><a href="https://vk.com/khai_kam"><span
+                                            <li class="ftco-animate"><a href="${profileInfo.link}"><span
                                                             class="icon-chrome"></span></a>
                                             </li>
                                         </ul>
                                         <div class="mb-4" style="display: none" id="link2">
                                             <form method="post">
-                                                <input type="text" class="form-control" value="https://vk.com/khai_kam"
-                                                       style="margin-bottom: 20px; background-color: rgba(219,235,243,0.78) !important;">
-                                                <input type="button" class="btn btn-secondary">
+                                                <input type="text" class="form-control" id="linkForm"
+                                                          style="margin-bottom: 20px; background-color: rgba(219,235,243,0.78) !important;">${profileInfo.link}</input>
+                                                <input type="button" onclick="updateLink($('#linkForm').val())" class="btn btn-secondary">
                                             </form>
                                         </div>
                                     </div>
@@ -334,27 +367,27 @@
                 </section>
             </div>
         </div>
-    </div><!-- END COLORLIB-MAIN -->
-</div><!-- END COLORLIB-PAGE -->
+    </div>
+</div>
 <#include "parts/footer.ftlh">
 <script>
-    (function() {
+	(function () {
 
-        'use strict';
+		'use strict';
 
-        $('.input-file').each(function() {
-            var $input = $(this),
-                $label = $input.next('.js-labelFile'),
-                labelVal = $label.html();
+		$('.input-file').each(function () {
+			var $input = $(this),
+				$label = $input.next('.js-labelFile'),
+				labelVal = $label.html();
 
-            $input.on('change', function(element) {
-                var fileName = '';
-                if (element.target.value) fileName = element.target.value.split('\\').pop();
-                fileName ? $label.addClass('has-file').find('.js-fileName').html(fileName) : $label.removeClass('has-file').html(labelVal);
-            });
-        });
+			$input.on('change', function (element) {
+				var fileName = '';
+				if (element.target.value) fileName = element.target.value.split('\\').pop();
+				fileName ? $label.addClass('has-file').find('.js-fileName').html(fileName) : $label.removeClass('has-file').html(labelVal);
+			});
+		});
 
-    })();
+	})();
 </script>
 <div id="fade" class="black-overlay"></div>
 

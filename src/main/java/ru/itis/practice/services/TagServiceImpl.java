@@ -17,4 +17,9 @@ public class TagServiceImpl implements TagService {
     public List<Tag> getAll() {
         return tagRepository.findAllByOrderByName();
     }
+
+	@Override
+	public Tag getByName(String name) {
+    	return tagRepository.findByName(name);
+	}
 }

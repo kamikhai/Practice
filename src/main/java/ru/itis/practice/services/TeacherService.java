@@ -13,4 +13,11 @@ public interface TeacherService {
     List<TeacherProfileInfo> getAllTeachers();
 
     Teacher save(Teacher teacher);
+
+	void updateLink(Long userId, String text);
+
+	void updatePosition(Long userId, String text);
+
+	void updateInformation(Long userId, String text);
+
 }

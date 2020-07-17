@@ -31,4 +31,10 @@ public class Student {
     @Type(type = "org.hibernate.type.TextType")
     @Column(nullable = false)
     private String description;
+
+    @Column(columnDefinition = "varchar(255) default 'Нет опыта'")
+    private String workExperience;
+
+    @Column(columnDefinition = "varchar(255) default 'https://vk.com/id0'")
+    private String link;
 }

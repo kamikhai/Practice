@@ -116,4 +116,29 @@ public class StudentServiceImpl implements StudentService {
         }
         throw new RuntimeException("No student found!");
     }
+
+    @Override
+    public Student getById(Long id) {
+        return studentRepository.findById(id).get();
+    }
+
+    @Override
+    public void updateExperience(Long id, String text) {
+        Optional<Student> studentCandidate = studentRepository.findById(id);
+        if(studentCandidate.isPresent()) {
+            Student student = studentCandidate.get();
+            student.setWorkExperience(text);
+            studentRepository.save(student);
+        }
+    }
+
+    @Override
+    public void updateLink(Long id, String text) {
+        Optional<Student> studentCandidate = studentRepository.findById(id);
+        if(studentCandidate.isPresent()) {
+            Student student = studentCandidate.get();
+            student.setLink(text);
+            studentRepository.save(student);
+        }
+    }
 }

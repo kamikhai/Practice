@@ -27,4 +27,7 @@ public class Teacher {
     private String position;
 
     private String information;
+
+    @Column(columnDefinition = "varchar(255) default 'https://vk.com/id0'")
+    private String link;
 }
