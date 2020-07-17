@@ -1,18 +1,26 @@
 package ru.itis.practice.controllers;
 
 
-
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ru.itis.practice.models.Competence;
 import ru.itis.practice.models.User;
 import ru.itis.practice.security.details.UserDetailsImpl;
 import ru.itis.practice.services.*;
+
+import java.util.Arrays;
+import java.util.TreeSet;
 
 @Controller
 @AllArgsConstructor
@@ -24,12 +32,24 @@ public class ProfileController {
     private TeacherService teacherService;
     private GroupService groupService;
     private CompetenceService competenceService;
+    private TagService tagService;
+    private TokenService tokenService;
+    private ImageService imageService;
+
 
     @GetMapping("/{id}")
-    public String getCustomProfile(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public String getCustomProfile(@PathVariable Long id, Model model,
+                                   @AuthenticationPrincipal UserDetailsImpl userDetails) {
         User user = userService.getUserById(id);
+        model.addAttribute("isOwnProfile", false);
+        model.addAttribute("tags", tagService.getAll());
+        if (userDetails != null) {
+            model.addAttribute("token", tokenService.getToken(userDetails.getUser()));
+        } else {
+            model.addAttribute("token", "");
+        }
         if (user.getRole().equals(User.Role.STUDENT)) {
-            if (userDetails != null){
+            if (userDetails != null) {
                 model.addAttribute("user", userDetails.getUser().getRole().name());
             } else {
                 model.addAttribute("user", "ANONYMOUS");
@@ -48,10 +68,14 @@ public class ProfileController {
     @PreAuthorize(value = "isAuthenticated()")
     public String getSelf(@AuthenticationPrincipal UserDetailsImpl userDetails,
                           Model model) {
-        if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("STUDENT"))){
+        model.addAttribute("id", userDetails.getUser().getId());
+        model.addAttribute("tags", tagService.getAll());
+        model.addAttribute("token", tokenService.getToken(userDetails.getUser()));
+        model.addAttribute("isOwnProfile", true);
+        if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("STUDENT"))) {
             model.addAttribute("profileInfo", studentService.getProfileInfoByUser(userDetails.getUser()));
             return "profile";
-        } else if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("TEACHER"))){
+        } else if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("TEACHER"))) {
             model.addAttribute("profileInfo", teacherService.getProfileInfoByUser(userDetails.getUser()));
             return "teacher";
         } else {
@@ -61,9 +85,26 @@ public class ProfileController {
     }
 
     @PostMapping
-    @PreAuthorize(value = "hasAuthority('TEACHER')")
-    public String confirmCompetence(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestParam("student") Long student){
-        competenceService.confirm(student, teacherService.findByEmail(userDetails.getUser().getEmail()));
+    @PreAuthorize(value = "hasAuthority('STUDENT')")
+    public String confirmCompetence(@RequestParam("result") String result) {
+        System.out.println(result);
+        // чтоб убрались повторяющиеся (да, как это предотвратить на фронте, не придумала)
+        TreeSet<String> tags = new TreeSet<>(Arrays.asList(result.split(" ")));
         return "ok";
+    }
+
+    @PostMapping("/photo")
+    @PreAuthorize(value = "isAuthenticated()")
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        System.out.println(123);
+        imageService.save(multipartFile, userDetails.getUserId());
+        return ResponseEntity.ok().body("Ваше фото успешно загружено");
+    }
+
+
+    @PreAuthorize("permitAll()")
+    @GetMapping("/photo/{file-name:.+}")
+    public ResponseEntity<Resource> read(@PathVariable("file-name") String fileName) {
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageService.get(fileName));
     }
 }

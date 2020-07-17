@@ -11,4 +11,6 @@ public interface TeacherService {
     Teacher findByEmail(String email);
     TeacherProfileInfo getProfileInfoByUser(User user);
     List<TeacherProfileInfo> getAllTeachers();
+
+    Teacher save(Teacher teacher);
 }

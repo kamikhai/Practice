@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.itis.practice.dto.PortfolioUserInfo;
 import ru.itis.practice.dto.StudentInfoDto;
 import ru.itis.practice.dto.StudentProfileInfo;
 import ru.itis.practice.models.Competence;
@@ -12,6 +13,7 @@ import ru.itis.practice.models.Tag;
 import ru.itis.practice.models.User;
 import ru.itis.practice.repositories.CompetenceRepository;
 import ru.itis.practice.repositories.StudentRepository;
+import ru.itis.practice.security.details.UserDetailsImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,29 +56,64 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public List<StudentInfoDto> getAll(List<Long> tags, List<Long> profiles) {
-         List<Student> students = studentRepository.findAllByOrderByUser_FullName();
-         List<StudentInfoDto> result = new ArrayList<>();
+        List<Student> students = studentRepository.findAllByOrderByUser_FullName();
+        List<StudentInfoDto> result = new ArrayList<>();
 
-         for (Student student : students) {
-             Set<Tag> competenceTags = competenceRepository
-                     .findAllByStudent_IdAndConfirmedByIsNotNull(student.getId())
-                     .stream()
-                     .flatMap(c -> c.getTags().stream())
-                     .collect(Collectors.toSet());
+        for (Student student : students) {
+            Set<Tag> competenceTags = competenceRepository
+                    .findAllByStudent_IdAndConfirmedByIsNotNull(student.getId())
+                    .stream()
+                    .flatMap(c -> c.getTags().stream())
+                    .collect(Collectors.toSet());
 
-             boolean tagsOK = tags == null || tags.isEmpty() || competenceTags.stream()
-                     .map(Tag::getId)
-                     .collect(Collectors.toSet())
-                     .containsAll(tags);
+            boolean tagsOK = tags.isEmpty() || competenceTags.stream()
+                    .map(Tag::getId)
+                    .collect(Collectors.toSet())
+                    .containsAll(tags);
 
-             boolean profOK = profiles == null || profiles.isEmpty() ||
-                     (student.getJobProfile() != null && profiles.contains(student.getJobProfile().getId()));
+            boolean profOK = profiles.isEmpty() ||
+                    (student.getJobProfile() != null && profiles.contains(student.getJobProfile().getId()));
 
-             if (tagsOK && profOK) {
-                 result.add(StudentInfoDto.from(student, competenceTags));
-             }
-         }
+            if (tagsOK && profOK) {
+                result.add(StudentInfoDto.from(student, competenceTags));
+            }
+        }
+        return result;
+    }
 
-         return result;
+
+    @Override
+    public List<StudentInfoDto> getAllByGroupId(Long groupId) {
+        List<Student> students = studentRepository.findAllByGroup_Id(groupId);
+        List<StudentInfoDto> result = new ArrayList<>();
+
+        for (Student student : students) {
+            Set<Tag> competenceTags = competenceRepository
+                    .findAllByStudent_IdAndConfirmedByIsNotNull(student.getId())
+                    .stream()
+                    .flatMap(c -> c.getTags().stream())
+                    .collect(Collectors.toSet());
+            result.add(StudentInfoDto.from(student, competenceTags));
+        }
+
+        return result;
+
+
+    }
+
+	@Override
+	@Transactional
+	public void updateDescription(Long id, String description) {
+		studentRepository.updateDescription(id, description);
+	}
+
+    @Override
+    public PortfolioUserInfo getPortfolioInfo(Long id, UserDetailsImpl possibleUser) {
+        Optional<Student> studentCandidate = studentRepository.findById(id);
+        if (studentCandidate.isPresent()) {
+            Boolean isLoggedUser = possibleUser != null && possibleUser.getUser().getId().equals(id);
+            return PortfolioUserInfo.from(studentCandidate.get(), isLoggedUser);
+        }
+        throw new RuntimeException("No student found!");
     }
 }

@@ -7,6 +7,7 @@ import ru.itis.practice.models.Group;
 import ru.itis.practice.repositories.GroupRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -26,5 +27,10 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public List<GroupInfo> getAllGroups() {
         return GroupInfo.from(groupRepository.findByOrderByNumericDesc());
+    }
+
+    @Override
+    public Optional<Group> findById(Long id) {
+        return groupRepository.findById(id);
     }
 }

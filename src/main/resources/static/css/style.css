@@ -10047,6 +10047,18 @@ textarea.form-control {
   #colorlib-main {
     width: 78%; } }
 
+#colorlib-mai {
+  width: 100%;
+  float: right;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
+  -ms-transition: all 0.5s ease;
+  transition: all 0.5s ease; }
+@media (min-width: 992px) {
+  #colorlib-mai {
+    width: 100%; } }
+
 .file-icon {
   font-size: 25px;
   margin-right: 10px;
@@ -10086,7 +10098,7 @@ textarea.form-control {
   height: 24px;
   display: block;
   cursor: pointer; /* для случая применения отличных от <a> тегов */
-  background: url(../images/close.png);
+  background: url(../img/close.png);
   text-indent: -4999px;
 }
 
@@ -10171,5 +10183,93 @@ textarea.form-control {
   color: #fff !important
 }
 
+.slider {
+  position: relative;
+  overflow: hidden;
+}
 
+.slider__wrapper {
+  display: flex;
+  transition: transform 0.6s ease;
+}
+
+.slider__item {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.slider__control {
+  position: absolute;
+  top: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  color: #fff;
+  text-align: center;
+  opacity: 0.5;
+  height: 50px;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, .5);
+}
+
+.slider__control_show {
+  display: flex;
+}
+
+.slider__control:hover,
+.slider__control:focus {
+  color: #fff;
+  text-decoration: none;
+  outline: 0;
+  opacity: .9;
+}
+
+.slider__control_left {
+  left: 0;
+}
+
+.slider__control_right {
+  right: 0;
+}
+
+.slider__control::before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: transparent no-repeat center center;
+  background-size: 100% 100%;
+}
+
+.slider__control_left::before {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+}
+
+.slider__control_right::before {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+}
+
+.slider__item>div {
+  line-height: 250px;
+  font-size: 100px;
+  text-align: center;
+}
+
+.iconupload {
+  display: none;
+}
+.img:hover .iconupload{
+  display: block;
+}
+
+@import "https://fonts.googleapis.com/css?family=Varela+Round";
+.example-3{box-sizing:border-box}
+.example-3{position:relative;font:1em/1.6 "Varela Round",Arial,sans-serif;color:#999;font-weight:400;max-width:25em;padding:1em;}
+.example-3 h2{font-weight:400}
+.example-3 .filupp > input[type="file"]{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.example-3 .filupp{position:relative;background:#242424;display:block;padding:1em;font-size:1em;width:100%;height:3.5em;color:#fff;cursor:pointer;box-shadow:0 1px 3px #0b0b0b}
+.example-3 .filupp:before{content:"";position:absolute;top:1.5em;right:.75em;width:2em;height:1.25em;border:3px solid #dd4040;border-top:0;text-align:center}
+.example-3 .filupp:after{content:"\f178";font-family: FontAwesome;-webkit-transform:rotate(-90deg);-moz-transform:rotate(-90deg);-ms-transform:rotate(-90deg);-o-transform:rotate(-90deg);transform:rotate(-90deg);position:absolute;top:.65em;right:.45em;font-size:2em;color:#dd4040;line-height:0}
+.example-3 .filupp-file-name{width:75%;display:inline-block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal}
 

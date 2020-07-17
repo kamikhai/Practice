@@ -9,6 +9,7 @@ import ru.itis.practice.services.JobProfileService;
 import ru.itis.practice.services.StudentService;
 import ru.itis.practice.services.TagService;
 
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -25,9 +26,18 @@ public class StudentsController {
             @RequestParam(name = "t", required = false) List<Long> tags,
             @RequestParam(name = "p", required = false) List<Long> profiles
     ) {
+        if (tags == null)
+            tags = Collections.emptyList();
+
+        if (profiles == null)
+            profiles = Collections.emptyList();
+
         map.put("students", studentService.getAll(tags, profiles));
         map.put("tags", tagService.getAll());
         map.put("profiles", jobProfileService.getAll());
+
+        map.put("selected_tags", tags);
+        map.put("selected_prof", profiles);
 
         return "students";
     }
