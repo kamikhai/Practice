@@ -11,6 +11,86 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script>
+        const selected = {
+            tags: [<#list selected_tags as id>${id},</#list>],
+            profiles: [<#list selected_prof as id>${id},</#list>],
+        };
+
+        function doFilter() {
+            let query = "?";
+
+            for (let i = 0; i < selected.profiles.length; i++) {
+                query += "p=" + selected.profiles[i] + "&";
+            }
+            for (let i = 0; i < selected.tags.length; i++) {
+                query += "t=" + selected.tags[i] + "&";
+            }
+
+            window.location.search = query;
+        }
+
+        const data = {
+            tags: [<#list tags as tag>{
+                id: ${tag.id},
+                name: "${tag.name}",
+            },</#list>],
+            profiles: [<#list profiles as profile>{
+                id: ${profile.id},
+                name: "${profile.title}",
+            },</#list>],
+        }
+
+        function removeItem(id, list) {
+            const index = list.indexOf(id);
+            if (index > -1) {
+                list.splice(index, 1);
+                displaySelected();
+            }
+        }
+
+        function removeTag(id) {
+            removeItem(id, selected.tags);
+        }
+
+        function removeProfile(id) {
+            removeItem(id, selected.profiles);
+        }
+
+        function display(element, selected, data, f) {
+            element.innerHTML = "";
+
+            for (let i = 0; i < selected.length; i++) {
+                const item = data.find(e => e.id === selected[i]);
+                if (typeof item === "object") {
+                    element.innerHTML += "<li><a href='javascript:" + f.name + "(" + item.id + ")'>" + item.name + "</a></li>"
+                }
+            }
+        }
+
+        function displaySelected() {
+            display(document.getElementById("selected-profiles"), selected.profiles, data.profiles, removeProfile);
+            display(document.getElementById("selected-tags"), selected.tags, data.tags, removeTag);
+        }
+
+        function addItem(id, selected, data) {
+            if (!selected.includes(id)) {
+                const item = data.find(element => element.id === id);
+                if (typeof item === "object") {
+                    selected.push(id);
+                    displaySelected();
+                }
+            }
+        }
+
+        function addTag(id) {
+            addItem(id, selected.tags, data.tags);
+        }
+
+        function addProfile(id) {
+            addItem(id, selected.profiles, data.profiles);
+        }
+    </script>
 </head>
 <body>
 <#include "parts/header.ftlh">
@@ -29,102 +109,25 @@
         <div class="row">
             <div class="col-12 col-md-4 col-lg-3">
                 <div class="shop_sidebar_area" style="margin-top: 20px">
-
-                    <script>
-                        const selected = {
-                            tags: [<#list selected_tags as id>${id},</#list>],
-                            profiles: [<#list selected_prof as id>${id},</#list>],
-                        };
-
-                        function doFilter() {
-                            let query = "?";
-
-                            for (let i = 0; i < selected.profiles.length; i++) {
-                                query += "p=" + selected.profiles[i] + "&";
-                            }
-                            for (let i = 0; i < selected.tags.length; i++) {
-                                query += "t=" + selected.tags[i] + "&";
-                            }
-
-                            window.location.search = query;
-                        }
-
-                        const data = {
-                            tags: [<#list tags as tag>{
-                                id: ${tag.id},
-                                name: "${tag.name}",
-                            },</#list>],
-                            profiles: [<#list profiles as profile>{
-                                id: ${profile.id},
-                                name: "${profile.title}",
-                            },</#list>],
-                        }
-
-                        function removeItem(id, list) {
-                            const index = list.indexOf(id);
-                            if (index > -1) {
-                                list.splice(index, 1);
-                                displaySelected();
-                            }
-                        }
-
-                        function removeTag(id) {
-                            removeItem(id, selected.tags);
-                        }
-
-                        function removeProfile(id) {
-                            removeItem(id, selected.profiles);
-                        }
-
-                        function display(element, selected, data, f) {
-                            element.innerHTML = "";
-
-                            for (let i = 0; i < selected.length; i++) {
-                                const item = data.find(e => e.id === selected[i]);
-                                if (typeof item === "object") {
-                                    element.innerHTML += "<li><a href='javascript:" + f.name + "(" + item.id + ")'>" + item.name + "</a></li>"
-                                }
-                            }
-                        }
-
-                        function displaySelected() {
-                            display(document.getElementById("selected-profiles"), selected.profiles, data.profiles, removeProfile);
-                            display(document.getElementById("selected-tags"), selected.tags, data.tags, removeTag);
-                        }
-
-                        function addItem(id, selected, data) {
-                            if (!selected.includes(id)) {
-                                const item = data.find(element => element.id === id);
-                                if (typeof item === "object") {
-                                    selected.push(id);
-                                    displaySelected();
-                                }
-                            }
-                        }
-
-                        function addTag(id) {
-                            addItem(id, selected.tags, data.tags);
-                        }
-
-                        function addProfile(id) {
-                            addItem(id, selected.profiles, data.profiles);
-                        }
-                    </script>
-
                     <div class="widget catagory mb-50">
                         <h4 class="widget-title mb-30">Выбранные фильтры</h4>
-                        <div class="catagories-menu">
-                            <h6>Профили работы</h6>
-                            <ul id="selected-profiles" class="sub-menu" style="margin-bottom: 0"></ul>
+                        <div class="catagories-menu" style="margin-top: 20px !important; margin-bottom: 20px !important;">
+                            <h6 style="color: #1eaaf1 !important;">Профиль работы</h6>
+                            <ul id="selected-profiles" class="sub-menu" style="margin-bottom: 0">
+                                <li>Фильтр не выбран</li>
+                            </ul>
                         </div>
-                        <div class="catagories-menu">
-                            <h6>Тэги</h6>
-                            <ul id="selected-tags" class="sub-menu" style="margin-bottom: 0"></ul>
+                        <div class="catagories-menu" style="margin-top: 20px !important; margin-bottom: 20px !important;">
+                            <h6 style="color: #1eaaf1 !important;">Тэги</h6>
+                            <ul id="selected-tags" class="sub-menu" style="margin-bottom: 0">
+                                <li>Фильтр не выбран</li>
+                            </ul>
                         </div>
-                        <button class="btn btn-primary btn-sm" onclick="doFilter()">Применить фильтр</button>
+                        <button class="btn btn-primary btn-sm" style="margin-bottom: 15px" onclick="doFilter()">Применить фильтр</button>
+                        <hr style="height:1px;border-width:0; width: 70%; color:#1eaaf1;background-color:gray;">
 
                         <div>
-                            <h6 class="widget-title mb-30">Добавить фильтры</h6>
+                            <h4 class="widget-title mb-30">Добавить фильтры</h4>
                             <div class="catagories-menu" style="margin-top: 20px">
                                 <ul id="menu-content2" class="menu-content">
                                     <li>
@@ -154,6 +157,9 @@
                                 </ul>
                             </div>
                         </div>
+
+
+
                     </div>
                 </div>
             </div>
