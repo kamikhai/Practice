@@ -73,7 +73,7 @@
             // document.getElementById("result").value += value + ' ';
             result += value + ' ';
             console.log(result);
-            $('#tags_div').first().append('<div onclick="delete_tag('+i+')" id="' + i + '" style="color: #fff; margin-right: 5px; margin-top: 5px; background-color: #35b7f1; padding: 5px; text-align: center" class="col-md-3">#' + value + '</div >')
+            $('#tags_div').first().append('<div onclick="delete_tag(' + i + ')" id="' + i + '" style="color: #fff; margin-right: 5px; margin-top: 5px; background-color: #35b7f1; padding: 5px; text-align: center" class="col-md-3">#' + value + '</div >')
             $('#tags').prop('selectedIndex', 0);
             i++;
         }
@@ -99,12 +99,36 @@
             console.log(str);
             result = result.replace(str + ' ', '');
             document.getElementById(i).remove();
-            if ( $('#tags_div').is(':empty')){
+            if ($('#tags_div').is(':empty')) {
                 $('#tags_div').first().append('<span style="color: #fff; margin-right: 10px">Здесь будут расположены выбранные вами теги</span>\n' +
                     '                            <span style="color: #fff; margin-right: 10px">Нажмите на тег, если хотите его удалить</span>')
                 first = true;
             }
         }
+
+        function addPhoto() {
+            var formData = new FormData();
+            var files = ($('#file'))[0]['files'];
+            [].forEach.call(files, function (file, i, files) {
+                formData.append("file", file);
+            });
+            $.ajax({
+                type: "POST",
+                enctype: 'multipart/form-data',
+                url: "/profile/photo",
+                data: formData,
+                processData: false,
+                contentType: false
+            })
+                .done(function (response) {
+                    alert(response);
+                    location.reload();
+                })
+                .fail(function () {
+                    alert('Error')
+                });
+        }
+
     </script>
 </head>
 <body>
@@ -158,19 +182,19 @@
                 <div class="heading-section heading-section-white ftco-animate mb-5">
                     <h2 class="mb-4">Изменить фото</h2>
                 </div>
-                <form action="#" class="appointment-form ftco-animate">
+                <form method="post" class="appointment-form ftco-animate">
                     <div class="example-2" style="margin-top: 20px">
                         <div class="d-md-flex">
-                            <input type="file" name="file" id="file" class="input-file" accept="image/jpeg,image/png">
+                            <input type="file" name="file" id="file" class="input-file" accept=".jpeg, .jpg">
                             <label for="file" class="btn btn-tertiary js-labelFile">
                                 <i class="icon fa fa-check"></i>
-                                <span class="js-fileName">Загрузить файл</span>
+                                <span class="js-fileName">Загрузить новое фото</span>
                             </label>
                         </div>
                     </div>
                     <div class="d-md-flex" style="margin-top: 20px;">
                         <div class="form-group">
-                            <input type="button" onclick="sendForm()" value="Добавить"
+                            <input type="button" onclick="addPhoto()" value="Добавить"
                                    class="btn btn-secondary py-3 px-4">
                         </div>
                     </div>
@@ -186,11 +210,18 @@
             <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
             <aside id="colorlib-aside" role="complementary" class="text-center">
                 <h1 id="colorlib-logo"><span class="img"
-                                             style="background-image: url(${profileInfo.photoPath});"><div
-                                class="iconupload" style="width: 100%; text-align: right"><a href="javascript:void(0)"
-                                                                                             onclick="document.getElementById('envelope2').style.display='block';document.getElementById('fade').style.display='block'"><span
-                                        class="icon-file_upload"
-                                        style="color: white; margin-right: 5px"></span></a></div></span>
+                                             style="background-image: url(${profileInfo.photoPath});">
+                                                                    <#if isOwnProfile == true>
+
+                                                                        <div
+                                                                                class="iconupload"
+                                                                                style="width: 100%; text-align: right"><a
+                                                                                    href="javascript:void(0)"
+                                                                                    onclick="document.getElementById('envelope2').style.display='block';document.getElementById('fade').style.display='block'"><span
+                                                                                        class="icon-file_upload"
+                                                                                        style="color: white; margin-right: 5px"></span></a></div>
+                                                                    </#if>
+                    </span>
                 </h1>
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
@@ -213,9 +244,11 @@
                                     <div style="margin-top: 15px">
                                         <div class="d-md-flex">
                                             <h2>Обо мне</h2>
-                                            <a href="javascript:void(0)"
-                                               onclick="document.getElementById('info2').style.display='block';document.getElementById('info1').style.display='none'"><span
-                                                        class="icon-pencil" style="margin-left: 5px"></span></a>
+                                            <#if isOwnProfile == true>
+                                                <a href="javascript:void(0)"
+                                                   onclick="document.getElementById('info2').style.display='block';document.getElementById('info1').style.display='none'">
+                                                    <span class="icon-pencil" style="margin-left: 5px"></span></a>
+                                            </#if>
                                         </div>
                                         <p class="mb-4" id="info1">${profileInfo.description}</p>
                                         <div class="mb-4" style="display: none" id="info2">
@@ -229,9 +262,11 @@
                                         </div>
                                         <div class="d-md-flex">
                                             <h2>Компетенции</h2>
-                                            <a href="javascript:void(0)"
-                                               onclick="document.getElementById('envelope').style.display='block';document.getElementById('fade').style.display='block'"><span
-                                                        class="icon-pencil" style="margin-left: 5px"></span></a>
+                                            <#if isOwnProfile == true>
+                                                <a href="javascript:void(0)"
+                                                   onclick="document.getElementById('envelope').style.display='block';document.getElementById('fade').style.display='block'"><span
+                                                            class="icon-pencil" style="margin-left: 5px"></span></a>
+                                            </#if>
                                         </div>
                                         <div class="mb-4">
                                             <#list profileInfo.competenceList>
@@ -257,9 +292,11 @@
                                         </div>
                                         <div class="d-md-flex">
                                             <h2>Опыт работы</h2>
-                                            <a href="javascript:void(0)"
-                                               onclick="document.getElementById('experience2').style.display='block';document.getElementById('experience1').style.display='none'"><span
-                                                        class="icon-pencil" style="margin-left: 5px"></span></a>
+                                            <#if isOwnProfile == true>
+                                                <a href="javascript:void(0)"
+                                                   onclick="document.getElementById('experience2').style.display='block';document.getElementById('experience1').style.display='none'"><span
+                                                            class="icon-pencil" style="margin-left: 5px"></span></a>
+                                            </#if>
                                         </div>
                                         <p class="mb-4" id="experience1">Нет опыта</p>
                                         <div class="mb-4" style="display: none" id="experience2">
@@ -271,9 +308,11 @@
                                         </div>
                                         <div class="d-md-flex">
                                             <h2>Свяжитесь со мной</h2>
-                                            <a href="javascript:void(0)"
-                                               onclick="document.getElementById('link2').style.display='block';document.getElementById('link1').style.display='none'"><span
-                                                        class="icon-pencil" style="margin-left: 5px"></span></a>
+                                            <#if isOwnProfile == true>
+                                                <a href="javascript:void(0)"
+                                                   onclick="document.getElementById('link2').style.display='block';document.getElementById('link1').style.display='none'"><span
+                                                            class="icon-pencil" style="margin-left: 5px"></span></a>
+                                            </#if>
                                         </div>
                                         <ul class="ftco-social mt-3" id="link1">
                                             <li class="ftco-animate"><a href="https://vk.com/khai_kam"><span
@@ -298,6 +337,25 @@
     </div><!-- END COLORLIB-MAIN -->
 </div><!-- END COLORLIB-PAGE -->
 <#include "parts/footer.ftlh">
+<script>
+    (function() {
+
+        'use strict';
+
+        $('.input-file').each(function() {
+            var $input = $(this),
+                $label = $input.next('.js-labelFile'),
+                labelVal = $label.html();
+
+            $input.on('change', function(element) {
+                var fileName = '';
+                if (element.target.value) fileName = element.target.value.split('\\').pop();
+                fileName ? $label.addClass('has-file').find('.js-fileName').html(fileName) : $label.removeClass('has-file').html(labelVal);
+            });
+        });
+
+    })();
+</script>
 <div id="fade" class="black-overlay"></div>
 
 </body>

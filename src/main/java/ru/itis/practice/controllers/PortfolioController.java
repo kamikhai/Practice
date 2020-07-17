@@ -1,8 +1,11 @@
 package ru.itis.practice.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -10,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import ru.itis.practice.security.details.UserDetailsImpl;
+import ru.itis.practice.services.ImageService;
 import ru.itis.practice.services.ProjectService;
 import ru.itis.practice.services.StudentService;
 import ru.itis.practice.services.TagService;
@@ -48,4 +53,6 @@ public class PortfolioController {
         TreeSet<String> tags = new TreeSet<>(Arrays.asList(result.split(" ")));
         return "ok";
     }
+
+
 }

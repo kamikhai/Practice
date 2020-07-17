@@ -12,5 +12,7 @@ public interface UserService {
 
 	User save(User user);
 
-	User getUserById(Long id);
+    User update(User user);
+
+    User getUserById(Long id);
 }
