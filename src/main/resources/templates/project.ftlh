@@ -55,7 +55,7 @@
                 </nav>
             </aside> <!-- END COLORLIB-ASIDE -->
             <div id="colorlib-main">
-                <section class="ftco-section-no-padding bg-light">
+                <section class="ftco-section-no-padding bg-light" style="height: 100%">
                     <div class="hero-wrap" style="background-color: #fff ! important">
 <#--                        <div class="overlay" style="z-index: 1"></div>-->
                         <div class="d-flex align-items-center ">
