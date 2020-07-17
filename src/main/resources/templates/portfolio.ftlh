@@ -124,7 +124,7 @@
                     <div class="hero-wrap" style="background-color: #fff ! important">
                         <div class="overlay"></div>
                         <div class="d-flex align-items-center ">
-                            <div class="author-info text p-3 p-md-5">
+                            <div class="author-info text p-3 p-md-5" style="width: 100%">
                                 <div class="desc">
                                     <div style="text-align: center">
                                         <h1 class="big-letter center">Мои портфолио</h1>
@@ -134,7 +134,7 @@
 
                                             <div class="row">
 
-                                                <section class="ftco-section" style="padding: 0 0 ! important">
+                                                <section class="ftco-section" style="padding: 0 0 ! important; width: 100%">
                                                     <div class="container">
                                                         <div class="row">
                                                             <#if userInfo.isOwnProfile == true>
