@@ -33,10 +33,9 @@ public class PortfolioController {
     public String getPortfolio(@PathVariable Long id,
                                 Model model,
                                 @AuthenticationPrincipal UserDetailsImpl userDetails){
-        model.addAttribute("id", id);
-        model.addAttribute("tags", tagService.getAll());
-        model.addAttribute("userInfo", studentService.getPortfolioInfo(id, userDetails));
         model.addAttribute("projects", projectService.getProjectsByStudentId(id));
+        model.addAttribute("userInfo", studentService.getPortfolioInfo(id, userDetails));
+        model.addAttribute("tags", tagService.getAll());
         return "portfolio";
     }
 

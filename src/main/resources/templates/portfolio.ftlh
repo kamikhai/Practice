@@ -152,7 +152,13 @@
                                                                     <div class="col-md-12 course d-lg-flex ftco-animate">
                                                                         <div class="text bg-light p-4">
                                                                             <h3><a href="/project/${proj.projectId}">${proj.title}</a></h3>
-                                                                            <p>${proj.description?no_esc}</p>
+                                                                                <#list proj.tags>
+                                                                                    <div class="mb-4">
+                                                                                        <#items as tag>
+                                                                                            <span style="color: #000; margin-right: 10px">#${tag.name}</span>
+                                                                                        </#items>
+                                                                                    </div>
+                                                                                </#list>
                                                                         </div>
                                                                     </div>
                                                                 </#items>
