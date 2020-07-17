@@ -3,10 +3,12 @@ package ru.itis.practice.services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.itis.practice.dto.PortfolioProjectInfo;
+import ru.itis.practice.dto.ProjectPageInfo;
 import ru.itis.practice.models.Project;
 import ru.itis.practice.repositories.ProjectRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -29,6 +31,16 @@ public class ProjectServiceImpl implements ProjectService {
                 .map(this::parseProjectDescription)
                 .map(PortfolioProjectInfo::from)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ProjectPageInfo getProjectById(Long id) {
+        Optional<Project> projectCandidate = projectRepository.findById(id);
+        if  (projectCandidate.isPresent()) {
+            Project project = parseProjectDescription(projectCandidate.get());
+            return ProjectPageInfo.from(project);
+        }
+        throw new RuntimeException("No project found!");
     }
 
 
