@@ -1,3 +1,5 @@
+<#-- @ftlvariable name="selected_tags" type="java.util.List<java.lang.Long>" -->
+<#-- @ftlvariable name="selected_prof" type="java.util.List<java.lang.Long>" -->
 <#-- @ftlvariable name="profiles" type="java.util.List<ru.itis.practice.models.JobProfile>" -->
 <#-- @ftlvariable name="tags" type="java.util.List<ru.itis.practice.models.Tag>" -->
 <#-- @ftlvariable name="students" type="java.util.List<ru.itis.practice.dto.StudentInfoDto>" -->
@@ -30,6 +32,13 @@
             <div class="col-12 col-md-4 col-lg-3">
                 <div class="shop_sidebar_area" style="margin-top: 20px">
 
+                    <script>
+                        const selected = {
+                            tags: [<#list selected_tags as id>${id},</#list>],
+                            profiles: [<#list selected_prof as id>${id},</#list>],
+                        };
+                    </script>
+
                     <!-- ##### Single Widget ##### -->
                     <div class="widget catagory mb-50">
                         <!-- Widget Title -->
@@ -51,7 +60,7 @@
                                 </li>
                                 <!-- Single Item -->
                                 <li>
-                                    <a data-toggle="collapse" href="#tags">компетенции</a>
+                                    <a data-toggle="collapse" href="#tags">тэги</a>
                                     <ul id="tags" class="sub-menu collapse">
                                         <#list tags as tag>
                                             <li>
@@ -60,7 +69,7 @@
                                         </#list>
                                     </ul>
                                 </li>
-                                <li>
+                                <!--li>
                                     <a data-toggle="collapse" href="#courses">курс</a>
                                     <ul id="courses" class="sub-menu collapse">
                                         <li><a>1 (бакалавриат)</a></li>
@@ -70,7 +79,7 @@
                                         <li><a>1 (магистратура)</a></li>
                                         <li><a>2 (магистратура)</a></li>
                                     </ul>
-                                </li>
+                                </li-->
                             </ul>
                         </div>
                     </div>
@@ -191,7 +200,7 @@
                                                 </script>
                                                 <p>${student.description}</p>
                                                 <#list student.tags as tag>
-                                                    <input type="submit" value="${tag}" class="btn btn-secondary but">
+                                                    <span class="badge badge-pill badge-primary badge-tag" style="padding: 5px 7px;">${tag}</span>
                                                 </#list>
                                             </div>
                                         </div>
