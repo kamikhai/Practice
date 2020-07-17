@@ -115,7 +115,7 @@
                 </h1>
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
-                        <li><a href="/profile">Обо мне</a></li>
+                        <li><a href="/profile/${userInfo.id}">Обо мне</a></li>
                         <li class="colorlib-active"><a href="/portfolio/${userInfo.id}">Портфолио</a></li>
                     </ul>
                 </nav>
