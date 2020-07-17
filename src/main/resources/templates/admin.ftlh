@@ -17,10 +17,10 @@
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
                         <li class="colorlib-active"><a href="/profile">Группы</a></li>
-                        <li ><a href="/teachers">Преподаватели</a></li>
-                        <li ><a href="/registration">Регистрация</a></li>
-                        <li ><a href="/job_profile">Профили работы</a></li>
-                        <li ><a href="/tags">Теги</a></li>
+                        <li><a href="/teachers">Преподаватели</a></li>
+                        <li><a href="/registration">Регистрация</a></li>
+                        <li><a href="/job_profile">Профили работы</a></li>
+                        <li><a href="/tags">Теги</a></li>
                     </ul>
                 </nav>
             </aside> <!-- END COLORLIB-ASIDE -->
@@ -31,7 +31,8 @@
                         <div class="d-flex align-items-center ">
                             <div class="author-info text p-3 p-md-5">
                                 <div class="desc" style="text-align: center">
-                                    <h1 class="big-letter center">Все группы</h1>
+                                        <h1 class="big-letter center">Все группы</h1>
+
                                     <div class="col-12 col-md-12 col-lg-12">
                                         <div class="shop_grid_product_area">
 
@@ -40,9 +41,12 @@
                                                     <div class="container">
                                                         <div class="row">
                                                             <#list groups as group>
-                                                                <div class="col-md-3 course d-lg-flex ftco-animate" style="margin-top: 20px; ">
+                                                                <div class="col-md-3 course d-lg-flex ftco-animate"
+                                                                     style="margin-top: 20px; ">
                                                                     <div class="text bg-light p-4">
-                                                                        <h3><a href="#">${group.numeric}</a></h3>
+                                                                        <h3>
+                                                                            <a href="/students_group?g=${group.id}">${group.numeric}</a>
+                                                                        </h3>
                                                                     </div>
                                                                 </div>
                                                             </#list>

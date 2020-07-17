@@ -43,6 +43,7 @@ public class ProfileController {
         User user = userService.getUserById(id);
         model.addAttribute("isOwnProfile", false);
         model.addAttribute("tags", tagService.getAll());
+        model.addAttribute("groups", groupService.getAllGroups());
         if (userDetails != null) {
             model.addAttribute("token", tokenService.getToken(userDetails.getUser()));
         } else {
@@ -57,10 +58,15 @@ public class ProfileController {
             model.addAttribute("profileInfo", studentService.getProfileInfoByUser(user));
             return "profile";
         } else if (user.getRole().equals(User.Role.TEACHER)) {
+            if (userDetails != null) {
+                model.addAttribute("isAdmin", userDetails.getUser().getRole().equals(User.Role.ADMIN) ? true : false);
+            } else {
+                model.addAttribute("isAdmin", false);
+            }
             model.addAttribute("profileInfo", teacherService.getProfileInfoByUser(user));
             return "teacher";
         } else {
-            return "admin";
+            return "error";
         }
     }
 
@@ -72,10 +78,12 @@ public class ProfileController {
         model.addAttribute("tags", tagService.getAll());
         model.addAttribute("token", tokenService.getToken(userDetails.getUser()));
         model.addAttribute("isOwnProfile", true);
+        model.addAttribute("groups", groupService.getAllGroups());
         if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("STUDENT"))) {
             model.addAttribute("profileInfo", studentService.getProfileInfoByUser(userDetails.getUser()));
             return "profile";
         } else if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("TEACHER"))) {
+            model.addAttribute("isAdmin", false);
             model.addAttribute("profileInfo", teacherService.getProfileInfoByUser(userDetails.getUser()));
             return "teacher";
         } else {

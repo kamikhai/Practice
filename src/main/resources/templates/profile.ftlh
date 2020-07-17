@@ -8,31 +8,18 @@
     <script>
         function confirm(id) {
             $.ajax({
-                url: "/profile?student=" + id,
-                method:
-                    "POST"
                 url:
                     "/api/student/competence?student=" + id,
-                method:
-                    "POST",
+                method: "POST",
                 headers: {
                     "Authorization": "${token}"
                 },
                 complete: function (response) {
+                    alert("Компетенция успешно подтверждена")
                     location.reload();
                 }
             })
             ;
-        }
-    </script>
-    <script>
-        function updateDescription(text) {
-            $.ajax({
-                url: "/profile/student/about?text=" + text,
-                method: "POST"
-            });
-            alert("Информация о вас успешно обновлена");
-            location.reload();
         }
     </script>
     <title>Document</title>

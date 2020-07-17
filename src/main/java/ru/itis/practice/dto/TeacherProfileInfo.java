@@ -24,6 +24,7 @@ public class TeacherProfileInfo {
 	private List<String> links;
 	private User user;
 	private String photoPath;
+	private Long id;
 
 	public static TeacherProfileInfo from(Teacher teacher) {
 		return TeacherProfileInfo.builder()
@@ -34,6 +35,7 @@ public class TeacherProfileInfo {
 				.links(Collections.singletonList("vk.com/id0"))
 				.user(teacher.getUser())
 				.photoPath(teacher.getUser().getPhotoPath())
+				.id(teacher.getUser().getId())
 				.build();
 	}
 

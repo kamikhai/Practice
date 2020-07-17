@@ -5,6 +5,7 @@ import ru.itis.practice.models.Teacher;
 import ru.itis.practice.models.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TeacherService {
 
@@ -13,4 +14,6 @@ public interface TeacherService {
     List<TeacherProfileInfo> getAllTeachers();
 
     Teacher save(Teacher teacher);
+
+    Optional<Teacher> findById(Long id);
 }

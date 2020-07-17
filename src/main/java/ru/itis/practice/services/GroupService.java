@@ -11,4 +11,5 @@ public interface GroupService {
     Group saveIfNotExist(Group group);
     List<GroupInfo> getAllGroups();
     Optional<Group> findById(Long id);
+    void delete(Group group);
 }

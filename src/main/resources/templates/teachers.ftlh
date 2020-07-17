@@ -44,7 +44,7 @@
                                                                 <div class="col-md-12 course d-lg-flex ftco-animate" style="margin-top: 20px; ">
                                                                     <div class="img" style="background-image: url(${teacher.user.photoPath});"></div>
                                                                     <div class="text bg-light p-4">
-                                                                        <h3><a href="#">${teacher.fullname}</a></h3>
+                                                                        <h3><a href="/profile/${teacher.id}">${teacher.fullname}</a></h3>
                                                                         <p>${teacher.position}</p>
                                                                     </div>
                                                                 </div>
