@@ -9,16 +9,16 @@
     <script>
         function deleteProject() {
             $.ajax({
-                    url: "/project/${info.projectId}",
-                    method: "POST",
-                    data: {"userId": ${info.userId}},
-                });
+                url: "/project/${info.projectId}",
+                method: "POST",
+                data: {"userId": ${info.userId}},
+            });
             alert("Запись успешно удалена");
             location = "/portfolio/${info.userId}";
         }
     </script>
 </head>
-<body>
+<body onload="unescape()">
 
 <div id="envelope" class="envelope">
     <div class="container">

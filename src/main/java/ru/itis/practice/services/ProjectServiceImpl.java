@@ -86,10 +86,31 @@ public class ProjectServiceImpl implements ProjectService {
 
 
     private Project parseProjectDescription(Project project) {
+        project.setDescription(escapeCharacters(project.getDescription()));
         project.setDescription(addYoutubePlayer(project.getDescription(), ""));
         project.setDescription(addImagesTags(project.getDescription()));
         project.setDescription(addOtherLinks(project.getDescription()));
         return project;
+    }
+
+    private String escapeCharacters(String string) {
+        StringBuilder result = new StringBuilder();
+        for (char character : string.toCharArray()) {
+            switch (character) {
+                case '<':
+                    result.append("&lt;");
+                    break;
+                case '>':
+                    result.append("&gt;");
+                    break;
+                case '\"':
+                    result.append("&quot;");
+                    break;
+                default:
+                    result.append(character);
+            }
+        }
+        return result.toString();
     }
 
     private String addImagesTags(String string) {
