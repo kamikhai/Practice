@@ -42,7 +42,7 @@ public class ProfileController {
     public String getCustomProfile(@PathVariable Long id, Model model,
                                    @AuthenticationPrincipal UserDetailsImpl userDetails) {
         User user = userService.getUserById(id);
-        model.addAttribute("isOwnProfile", false);
+        model.addAttribute("isOwnProfile", userDetails != null && userDetails.getUserId().equals(id));
         model.addAttribute("tags", tagService.getAll());
         model.addAttribute("groups", groupService.getAllGroups());
         if (userDetails != null) {
