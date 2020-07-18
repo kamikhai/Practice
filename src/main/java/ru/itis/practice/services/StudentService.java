@@ -1,6 +1,5 @@
 package ru.itis.practice.services;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import ru.itis.practice.dto.PortfolioUserInfo;
 import ru.itis.practice.dto.StudentInfoDto;
 import ru.itis.practice.dto.StudentProfileInfo;
@@ -11,18 +10,24 @@ import ru.itis.practice.security.details.UserDetailsImpl;
 import java.util.List;
 
 public interface StudentService {
-    Student findByEmail(String email);
 
-    StudentProfileInfo getProfileInfoByUser(User user);
+	Student findByEmail(String email);
 
-    Student save(Student student);
+	StudentProfileInfo getProfileInfoByUser(User user);
 
-    List<StudentInfoDto> getAll(List<Long> tags, List<Long> profiles);
+	Student save(Student student);
 
-    List<StudentInfoDto> getAllByGroupId(Long groupId);
+	List<StudentInfoDto> getAll(List<Long> tags, List<Long> profiles);
 
-    void updateDescription(Long id, String description);
+	List<StudentInfoDto> getAllByGroupId(Long groupId);
 
-    PortfolioUserInfo getPortfolioInfo(Long id, UserDetailsImpl possibleUser);
+	void updateDescription(Long id, String description);
 
+	PortfolioUserInfo getPortfolioInfo(Long id, UserDetailsImpl possibleUser);
+
+	Student getById(Long id);
+
+	void updateExperience(Long id, String text);
+
+	void updateLink(Long id, String text);
 }

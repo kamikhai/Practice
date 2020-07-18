@@ -23,6 +23,8 @@ public class StudentProfileInfo {
     private String description;
     private List<CompetenceProfileInfo> competenceList;
     private String groupNumeric;
+    private String workExperience;
+    private String link;
 
     public static StudentProfileInfo from(Student student, List<Competence> competences) {
         User user = student.getUser();
@@ -33,6 +35,8 @@ public class StudentProfileInfo {
                 .description(student.getDescription())
                 .competenceList(new ArrayList<>())
                 .groupNumeric(student.getGroup().getNumeric())
+                .workExperience(student.getWorkExperience())
+                .link(student.getLink())
                 .build();
         if (competences != null) competences.stream().map(CompetenceProfileInfo::from).forEach(el -> info.competenceList.add(el));
         return info;

@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Project {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(optional = false)

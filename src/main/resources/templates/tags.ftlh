@@ -6,8 +6,67 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script>
+        function sendAjaxForm() {
+            $.ajax({
+                url: "/api/admin/tags",
+                type: "POST",
+                dataType: "html",
+                headers: {
+                    "Authorization": "${token}"
+                },
+                data: $("#new_tag").serialize(),
+                complete: function (response) {
+                    alert("Тег успешно добавлен");
+                    location.reload();
+                },
+                error: function (response) {
+                }
+            });
+        }
+
+        function deleteTag(id) {
+            $.ajax({
+                url: "/api/admin/tags/"+id,
+                type: "DELETE",
+                headers: {
+                    "Authorization": "${token}"
+                },
+                complete: function (response) {
+                    alert("Тег успешно удален");
+                    location.reload();
+                },
+                error: function (response) {
+                }
+            });
+        }
+    </script>
 </head>
 <body>
+<div id="envelope" class="envelope">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 py-5 px-md-5 bg-primary" style="margin-top: 25px; ">
+                <a class="close-btn" style="margin-left: 97%" href="javascript:void(0)"
+                   onclick="document.getElementById('envelope').style.display='none';document.getElementById('fade').style.display='none'">Закрыть</a>
+                <div class="heading-section heading-section-white ftco-animate mb-5">
+                    <h2 class="mb-4">Добавить тег</h2>
+                </div>
+                <form method="post" action="/profile" class="appointment-form ftco-animate" id="new_tag">
+                    <div class="d-md-flex">
+                        <input name="tag" type="text" class="form-control" placeholder="Введите тег">
+                    </div>
+                    <div class="d-md-flex" style="margin-top: 20px;">
+                        <div class="form-group">
+                            <input type="button" onclick="sendAjaxForm()" value="Добавить"
+                                   class="btn btn-secondary py-3 px-4">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <#include "parts/header.ftlh">
 <div id="colorlib-page">
     <div class="container">
@@ -41,13 +100,13 @@
                                                         <div class="row">
                                                             <div style="text-align: center; width: 100%">
                                                                 <input type="submit" value="Добавить" class="btn btn-secondary py-3 px-4 show-btn"
-                                                                       href="javascript:void(0)"
+                                                                       href="javascript:void(0)" onclick="document.getElementById('envelope').style.display='block';document.getElementById('fade').style.display='block'"
                                                                        style="margin-top: 20px; margin-bottom: 20px; width: 90%">
                                                             </div>
                                                             <#list tags as tag>
                                                                 <div class="col-md-4 course d-lg-flex ftco-animate" style="margin-top: 20px; ">
                                                                     <div class="text bg-light p-4 ">
-                                                                        <h3><a href="#">${tag.name}</a></h3>
+                                                                        <h3 onclick="deleteTag(${tag.id})"><a href="#">${tag.name}</a></h3>
                                                                     </div>
                                                                 </div>
                                                             </#list>
@@ -68,5 +127,7 @@
 </div><!-- END COLORLIB-PAGE -->
 
 <#include "parts/footer.ftlh">
+<div id="fade" class="black-overlay"></div>
+
 </body>
 </html>

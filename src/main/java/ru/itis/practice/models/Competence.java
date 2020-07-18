@@ -24,7 +24,7 @@ public class Competence {
     @ManyToOne
     private Teacher confirmedBy;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     private List<Tag> tags;
 
     @Column(nullable = false)

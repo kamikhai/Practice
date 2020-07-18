@@ -5,6 +5,7 @@ import org.springframework.beans.factory.parsing.EmptyReaderEventListener;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import ru.itis.practice.dto.TeacherProfileInfo;
+import ru.itis.practice.models.Student;
 import ru.itis.practice.models.Teacher;
 import ru.itis.practice.models.User;
 import ru.itis.practice.repositories.TeacherRepository;
@@ -44,5 +45,40 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public Teacher save(Teacher teacher) {
         return teacherRepository.save(teacher);
+    }
+
+    @Override
+    public void updateLink(Long userId, String text) {
+        Optional<Teacher> teacherCandidate = teacherRepository.findById(userId);
+        if (teacherCandidate.isPresent()) {
+            Teacher teacher = teacherCandidate.get();
+            teacher.setLink(text);
+            teacherRepository.save(teacher);
+        }
+    }
+
+    @Override
+    public void updatePosition(Long userId, String text) {
+        Optional<Teacher> teacherCandidate = teacherRepository.findById(userId);
+        if (teacherCandidate.isPresent()) {
+            Teacher teacher = teacherCandidate.get();
+            teacher.setPosition(text);
+            teacherRepository.save(teacher);
+        }
+    }
+
+    @Override
+    public void updateInformation(Long userId, String text) {
+        Optional<Teacher> teacherCandidate = teacherRepository.findById(userId);
+        if (teacherCandidate.isPresent()) {
+            Teacher teacher = teacherCandidate.get();
+            teacher.setInformation(text);
+            teacherRepository.save(teacher);
+        }
+    }
+
+    @Override
+    public Optional<Teacher> findById(Long id) {
+        return teacherRepository.findById(id);
     }
 }

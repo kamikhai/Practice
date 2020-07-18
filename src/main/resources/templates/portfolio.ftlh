@@ -35,7 +35,6 @@
                 dataType: "html",
                 data: $("#new_project").serialize(),
                 complete: function (response) {
-                    alert("Новая запись успешно добавлена");
                     location.reload();
                 },
                 error: function (response) {
@@ -69,10 +68,10 @@
                 </div>
                 <form method="post" class="appointment-form ftco-animate" id="new_project">
                     <div class="d-md-flex">
-                        <input type="text" class="form-control" placeholder="Заголовок">
+                        <input id="title" name="title" type="text" class="form-control" placeholder="Заголовок">
                     </div>
                     <div class="d-md-flex">
-                        <textarea name="" id="" cols="30" rows="4" class="form-control" placeholder="Описание"
+                        <textarea name="description" id="description" cols="30" rows="4" class="form-control" placeholder="Описание"
                                   style="background-color: rgba(30,170,241,0.78) !important;"></textarea>
                     </div>
                     <div class="d-md-flex">
@@ -125,7 +124,7 @@
                     <div class="hero-wrap" style="background-color: #fff ! important">
                         <div class="overlay"></div>
                         <div class="d-flex align-items-center ">
-                            <div class="author-info text p-3 p-md-5">
+                            <div class="author-info text p-3 p-md-5" style="width: 100%">
                                 <div class="desc">
                                     <div style="text-align: center">
                                         <h1 class="big-letter center">Мои портфолио</h1>
@@ -135,7 +134,7 @@
 
                                             <div class="row">
 
-                                                <section class="ftco-section" style="padding: 0 0 ! important">
+                                                <section class="ftco-section" style="padding: 0 0 ! important; width: 100%">
                                                     <div class="container">
                                                         <div class="row">
                                                             <#if userInfo.isOwnProfile == true>
@@ -150,9 +149,15 @@
                                                             <#list projects>
                                                                 <#items as proj>
                                                                     <div class="col-md-12 course d-lg-flex ftco-animate">
-                                                                        <div class="text bg-light p-4">
+                                                                        <div class="text bg-light p-4" style="width: 100%">
                                                                             <h3><a href="/project/${proj.projectId}">${proj.title}</a></h3>
-                                                                            <p>${proj.description?no_esc}</p>
+                                                                                <#list proj.tags>
+                                                                                    <div class="mb-4">
+                                                                                        <#items as tag>
+                                                                                            <span style="color: #000; margin-right: 10px">#${tag.name}</span>
+                                                                                        </#items>
+                                                                                    </div>
+                                                                                </#list>
                                                                         </div>
                                                                     </div>
                                                                 </#items>

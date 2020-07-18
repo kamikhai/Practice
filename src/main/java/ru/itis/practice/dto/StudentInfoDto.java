@@ -21,6 +21,7 @@ public class StudentInfoDto {
     private String description;
     private List<String> tags;
 
+
     public static StudentInfoDto from(Student student, Set<Tag> tags) {
         return builder()
                 .id(student.getId())

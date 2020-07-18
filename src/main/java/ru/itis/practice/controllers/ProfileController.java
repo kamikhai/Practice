@@ -20,6 +20,7 @@ import ru.itis.practice.security.details.UserDetailsImpl;
 import ru.itis.practice.services.*;
 
 import java.util.Arrays;
+import java.util.Set;
 import java.util.TreeSet;
 
 @Controller
@@ -43,6 +44,7 @@ public class ProfileController {
         User user = userService.getUserById(id);
         model.addAttribute("isOwnProfile", false);
         model.addAttribute("tags", tagService.getAll());
+        model.addAttribute("groups", groupService.getAllGroups());
         if (userDetails != null) {
             model.addAttribute("token", tokenService.getToken(userDetails.getUser()));
         } else {
@@ -57,10 +59,15 @@ public class ProfileController {
             model.addAttribute("profileInfo", studentService.getProfileInfoByUser(user));
             return "profile";
         } else if (user.getRole().equals(User.Role.TEACHER)) {
+            if (userDetails != null) {
+                model.addAttribute("isAdmin", userDetails.getUser().getRole().equals(User.Role.ADMIN) ? true : false);
+            } else {
+                model.addAttribute("isAdmin", false);
+            }
             model.addAttribute("profileInfo", teacherService.getProfileInfoByUser(user));
             return "teacher";
         } else {
-            return "admin";
+            return "error";
         }
     }
 
@@ -72,10 +79,12 @@ public class ProfileController {
         model.addAttribute("tags", tagService.getAll());
         model.addAttribute("token", tokenService.getToken(userDetails.getUser()));
         model.addAttribute("isOwnProfile", true);
+        model.addAttribute("groups", groupService.getAllGroups());
         if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("STUDENT"))) {
             model.addAttribute("profileInfo", studentService.getProfileInfoByUser(userDetails.getUser()));
             return "profile";
         } else if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("TEACHER"))) {
+            model.addAttribute("isAdmin", false);
             model.addAttribute("profileInfo", teacherService.getProfileInfoByUser(userDetails.getUser()));
             return "teacher";
         } else {
@@ -84,18 +93,21 @@ public class ProfileController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/competence")
     @PreAuthorize(value = "hasAuthority('STUDENT')")
-    public String confirmCompetence(@RequestParam("result") String result) {
+    public ResponseEntity addCompetence(@AuthenticationPrincipal UserDetailsImpl userDetails,
+                                @RequestParam("result") String result,
+                                @RequestParam("competenceName") String competenceName) {
         System.out.println(result);
-        // чтоб убрались повторяющиеся (да, как это предотвратить на фронте, не придумала)
-        TreeSet<String> tags = new TreeSet<>(Arrays.asList(result.split(" ")));
-        return "ok";
+        Set<String> tags = new TreeSet<>(Arrays.asList(result.split(" ")));
+        competenceService.save(competenceName, tags, userDetails.getUserId());
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/photo")
     @PreAuthorize(value = "isAuthenticated()")
-    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile multipartFile,
+                                             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         System.out.println(123);
         imageService.save(multipartFile, userDetails.getUserId());
         return ResponseEntity.ok().body("Ваше фото успешно загружено");

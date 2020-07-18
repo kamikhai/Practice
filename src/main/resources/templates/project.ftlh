@@ -6,6 +6,17 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script>
+        function deleteProject() {
+            $.ajax({
+                    url: "/project/${info.projectId}",
+                    method: "POST",
+                    data: {"userId": ${info.userId}},
+                });
+            alert("Запись успешно удалена");
+            location = "/portfolio/${info.userId}";
+        }
+    </script>
 </head>
 <body>
 
@@ -55,13 +66,19 @@
                 </nav>
             </aside> <!-- END COLORLIB-ASIDE -->
             <div id="colorlib-main">
-                <section class="ftco-section-no-padding bg-light">
+                <section class="ftco-section-no-padding bg-light" style="height: 100%">
                     <div class="hero-wrap" style="background-color: #fff ! important">
-<#--                        <div class="overlay" style="z-index: 1"></div>-->
-                        <div class="d-flex align-items-center ">
-                            <div class="author-info text p-3 p-md-5" style="background-color: rgba(30,170,241,0.3); color: rgba(0,0,0,0.3)">
+                        <#--                        <div class="overlay" style="z-index: 1"></div>-->
+                        <div class="d-flex align-items-center " style="height: 100%">
+                            <div class="author-info text p-3 p-md-5"
+                                 style="width: 100%; height: 100%;background-color: rgba(30,170,241,0.3); color: rgba(0,0,0,0.3)">
                                 <div class="desc">
-                                    <h1 class="big-letter">${info.title}</h1>
+                                    <div class="d-md-flex">
+                                        <h1 class="big-letter">${info.title}</h1>
+                                        <#if isAccessible == true>
+                                            <a onclick="deleteProject()"><span class="icon-delete"></span></a>
+                                        </#if>
+                                    </div>
                                     <hr style="height:1px;border-width:0; width: 70%; color:#1eaaf1;background-color:gray;">
                                     <div style="margin-top: 15px">
                                         <h2>Описание</h2>

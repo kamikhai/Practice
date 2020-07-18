@@ -15,7 +15,7 @@
             <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
             <aside id="colorlib-aside" role="complementary" class="text-center">
                 <h1 id="colorlib-logo"><a href="index.html"><span class="img"
-                                                                  style="background-image: url(img/teacher-1.jpg);"></span></a>
+                                                                  style="background-image: url(${photo});"></span></a>
                 </h1>
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
