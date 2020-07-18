@@ -2,6 +2,7 @@ package ru.itis.practice.security.jwt.provider;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
@@ -14,7 +15,8 @@ import ru.itis.practice.security.jwt.authentication.JwtAuthentication;
 @Component
 public class JwtAuthenticationProvider implements AuthenticationProvider {
 	// секретный ключ, которым мы подписываем токен
-	private String secret = "qwerty007";
+	@Value("${jwt.secret}")
+	private String secret;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
