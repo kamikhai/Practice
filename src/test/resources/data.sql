@@ -107,13 +107,13 @@ INSERT INTO public.teacher_curated_groups (teacher_user_id, curated_groups_id) V
 INSERT INTO public.teacher_curated_groups (teacher_user_id, curated_groups_id) VALUES (25, 5);
 INSERT INTO public.teacher_curated_groups (teacher_user_id, curated_groups_id) VALUES (32, 8);
 INSERT INTO public.competence (id, description, confirmed_by_user_id, student_user_id) VALUES (6, 'Могу добавить компетенции и теги к ним', null, 3);
-INSERT INTO public.competence (id, description, confirmed_by_user_id, student_user_id) VALUES (1, 'Умею писать hello, world! на Java', 25, 3);
+INSERT INTO public.competence (id, description, confirmed_by_user_id, student_user_id) VALUES (3, 'Умею писать hello, world! на Java', 25, 3);
 INSERT INTO public.competence (id, description, confirmed_by_user_id, student_user_id) VALUES (18, 'Много чего умею', null, 3);
 INSERT INTO public.competence (id, description, confirmed_by_user_id, student_user_id) VALUES (19, 'Компетенция', 25, 3);
 INSERT INTO public.competence (id, description, confirmed_by_user_id, student_user_id) VALUES (20, 'Новая', 25, 3);
 INSERT INTO public.competence (id, description, confirmed_by_user_id, student_user_id) VALUES (2, 'Слышал про Spring (переводится "весна")', 25, 3);
 INSERT INTO public.competence_tags (competence_id, tags_id) VALUES (2, 7);
-INSERT INTO public.competence_tags (competence_id, tags_id) VALUES (1, 1);
+INSERT INTO public.competence_tags (competence_id, tags_id) VALUES (3, 1);
 INSERT INTO public.competence_tags (competence_id, tags_id) VALUES (2, 1);
 INSERT INTO public.competence_tags (competence_id, tags_id) VALUES (6, 1);
 INSERT INTO public.competence_tags (competence_id, tags_id) VALUES (6, 14);
