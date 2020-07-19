@@ -38,15 +38,24 @@
 			headers: {
 				"Authorization": "${token}"
 			},
-			dataType: "json",
-			contentType: "application/json",
-			complete: function (response) {
+			success: function (response) {
 				document.getElementById('position1').style.display = 'block';
 				document.getElementById('position2').style.display = 'none';
 				document.getElementById('position1').innerText = text;
+                var x = document.getElementById("snackbar");
+                x.innerText = response;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
 			},
 			error: function (response) {
-				alert(response.responseText);
+                var x = document.getElementById("snackbar");
+                x.innerText = response.responseText;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
 			}
 		});
 	}
@@ -58,15 +67,24 @@
 			headers: {
 				"Authorization": "${token}"
 			},
-			dataType: "json",
-			contentType: "application/json",
-			complete: function (response) {
+			success: function (response) {
 				document.getElementById('info1').style.display = 'block';
 				document.getElementById('info2').style.display = 'none';
 				document.getElementById('info1').innerText = text;
+                var x = document.getElementById("snackbar");
+                x.innerText = response;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
 			},
 			error: function (response) {
-				alert(response.responseText);
+                var x = document.getElementById("snackbar");
+                x.innerText = response.responseText;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
 			}
 		});
 	}
@@ -81,13 +99,24 @@
 			},
 			dataType: "json",
 			contentType: "application/json",
-			complete: function (response) {
+			success: function (response) {
 				document.getElementById('link1').style.display = 'block';
 				document.getElementById('link2').style.display = 'none';
 				document.getElementById('link1').href = text;
+                var x = document.getElementById("snackbar");
+                x.innerText = response;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
 			},
 			error: function (response) {
-				alert(response.responseText);
+                var x = document.getElementById("snackbar");
+                x.innerText = response.responseText;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
 			}
 		});
 	}

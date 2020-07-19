@@ -36,7 +36,7 @@ public class TeacherGroupsController {
     private String getStudents(@RequestParam(value = "g", required = false) Long groupId,
                                ModelMap map, @AuthenticationPrincipal UserDetailsImpl userDetails){
         if (userDetails != null){
-            map.put("admin", userDetails.getUser().getRole().equals(User.Role.ADMIN) ? true : false);
+            map.put("admin", userDetails.getUser().getRole().equals(User.Role.ADMIN));
             map.put("token", tokenService.getToken(userDetails.getUser()));
 
         } else {

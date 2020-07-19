@@ -14,12 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 public class ErrorController {
 
     @GetMapping("/error")
-    public String handleError(HttpServletRequest request, Model model) {
-//        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-//        if (status != null) {
-//            Integer statusCode = Integer.valueOf(status.toString());
-//            model.addAttribute("error", statusCode.intValue());
-//        }
+    public String handleError() {
         return "error";
     }
 }
