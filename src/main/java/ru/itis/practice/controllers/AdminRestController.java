@@ -28,9 +28,7 @@ public class AdminRestController {
     private TeacherService teacherService;
 
     @DeleteMapping("/group/{id}")
-    public ResponseEntity<String> deleteProject(@PathVariable Long id) {
-        System.out.println(id);
-        System.out.println(groupService);
+    public ResponseEntity<String> deleteGroup(@PathVariable Long id) {
         Group group = groupService.findById(id).get();
         groupService.delete(group);
         return ResponseEntity.ok().build();
