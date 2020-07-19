@@ -19,7 +19,7 @@ public class Teacher {
     @MapsId
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Group> curatedGroups;
 
     private String position;

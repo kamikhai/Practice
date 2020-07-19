@@ -52,7 +52,7 @@ class AdminPageRestControllerTest {
 
     @Test
     void deleteTag() throws Exception {
-        mockMvc.perform(delete("/api/admin/tags/54").header("Authorization", adminToken))
+        mockMvc.perform(delete("/api/admin/tags/57").header("Authorization", adminToken))
                 .andExpect(status().isOk());
     }
 
@@ -64,7 +64,7 @@ class AdminPageRestControllerTest {
 
     @Test
     void deleteJob() throws Exception {
-        mockMvc.perform(delete("/api/admin/job/27").header("Authorization", adminToken))
+        mockMvc.perform(delete("/api/admin/job/30").header("Authorization", adminToken))
                 .andExpect(status().isOk());
     }
 
