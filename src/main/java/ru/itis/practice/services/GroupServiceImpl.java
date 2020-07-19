@@ -1,5 +1,6 @@
 package ru.itis.practice.services;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.itis.practice.dto.GroupInfo;
@@ -10,9 +11,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class GroupServiceImpl implements GroupService {
 
-    @Autowired
     private GroupRepository groupRepository;
 
     @Override
