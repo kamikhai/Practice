@@ -29,17 +29,6 @@ class JobProfileControllerTest {
     private JobProfileController jobProfileController;
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private TokenService tokenService;
-    private User admin;
-
-
-    @BeforeEach
-    void init() {
-        User admin = userService.findByEmail("kamilla.hairul@gmail.com").get();
-    }
 
     @Test
     void getProfile() throws Exception {
