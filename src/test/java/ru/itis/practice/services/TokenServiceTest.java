@@ -4,15 +4,21 @@ import lombok.AllArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import ru.itis.practice.models.User;
+import ru.itis.practice.services.config.CommonConfiguration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@DataJpaTest
+@ContextConfiguration(classes = CommonConfiguration.class)
 public class TokenServiceTest {
 
     @Autowired
+    @Qualifier("testTokenService")
     private TokenService tokenService;
     private User user;
 
