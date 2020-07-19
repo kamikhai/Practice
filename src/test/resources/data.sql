@@ -126,7 +126,7 @@ INSERT INTO public.project (id, description, student_user_id, title) VALUES (12,
 Ну и ссылки на авторов:
 https://github.com/kamikhai/Practice
 https://github.com/DaniilBogomolov', 3, 'ЦСКА ВСЕГДА БУДЕТ ПЕРВЫМ');
-INSERT INTO public.project (id, description, student_user_id, title) VALUES (21, 'https://media.giphy.com/media/l49K0pPIf3YYv5yMg/giphy.gif', 3, 'Гифка');
+INSERT INTO public.project (id, description, student_user_id, title) VALUES (21, 'https://media.giphy.com/media/l49K0pPIf3YYv5yMg/giphy.gif "aaa"', 3, 'Гифка');
 INSERT INTO public.project (id, description, student_user_id, title) VALUES (22, 'https://upload.wikimedia.org/wikipedia/commons/8/82/SARS-CoV-2_without_background.png', 3, 'fdfdf');
 INSERT INTO public.project (id, description, student_user_id, title) VALUES (23, 'https://www.youtube.com/watch?v=9_XrF7UFwDI', 3, 'Поперечный');
 INSERT INTO public.project (id, description, student_user_id, title) VALUES (29, '<script>alert(1);
