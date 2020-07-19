@@ -15,7 +15,7 @@ public class TeachersController {
     private TeacherService teacherService;
 
     @GetMapping("/teachers")
-    @PreAuthorize(value = "isAuthenticated()")
+    @PreAuthorize(value = "hasAuthority('ADMIN')")
     public String getTeachers(Model model){
         System.out.println(model);
         System.out.println(teacherService);

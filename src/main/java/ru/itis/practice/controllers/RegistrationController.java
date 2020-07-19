@@ -26,6 +26,7 @@ import java.util.ArrayList;
 
 @Controller
 @AllArgsConstructor
+@PreAuthorize("hasAuthority('ADMIN')")
 public class RegistrationController {
 
     private UserService userService;
