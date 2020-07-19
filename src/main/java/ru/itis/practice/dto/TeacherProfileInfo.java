@@ -1,9 +1,6 @@
 package ru.itis.practice.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.itis.practice.models.Teacher;
 import ru.itis.practice.models.User;
 
@@ -11,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
