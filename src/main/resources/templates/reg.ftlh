@@ -6,9 +6,41 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script>
+        function sendAjaxForm() {
+            $.ajax({
+                url: "/user_registration",
+                type: "POST",
+                dataType: "html",
+                data: $("#user").serialize(),
+                success : function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
+                },
+                error: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
+                }
+            });
+        }
+
+    </script>
 </head>
 <body>
 <#include "parts/header.ftlh">
+<div id="snackbar" style="z-index: 1002"></div>
+
 <div id="colorlib-page">
     <div class="container">
         <div class="row">
@@ -49,7 +81,7 @@
 
                                                     <!-- Tab content -->
                                                     <div id="User" class="tabcontent">
-                                                        <form method="post" action="/user_registration" class="appointment-form ftco-animate" style="margin-top: 30px">
+                                                        <form id="user" class="appointment-form ftco-animate" style="margin-top: 30px">
                                                             <div class="d-md-flex">
                                                                 <input type="email" class="form-control" placeholder="Почта" name="email">
                                                             </div>
@@ -68,27 +100,16 @@
                                                             </div>
                                                             <div class="d-md-flex" style="margin-top: 20px;">
                                                                 <div class="form-group">
-                                                                    <input type="submit" value="Добавить" class="btn btn-secondary py-3 px-4">
+                                                                    <input type="button" onclick="sendAjaxForm()" value="Добавить" class="btn btn-secondary py-3 px-4">
                                                                 </div>
                                                             </div>
                                                         </form>
                                                     </div>
 
                                                     <div id="Group" class="tabcontent">
-                                                        <form method="post" action="/group_registration" class="appointment-form ftco-animate" style="margin-top: 30px" enctype="multipart/form-data">
+                                                        <form id="group" method="post" action="/group_registration" class="appointment-form ftco-animate" style="margin-top: 30px" enctype="multipart/form-data">
                                                             <div class="d-md-flex">
                                                                 <input type="text" class="form-control" placeholder="Группа" name="group">
-                                                            </div>
-                                                            <div class="d-md-flex">
-                                                                <select name="course" class="form-control">
-                                                                    <option value="" style="color: #1eaaf1" selected disabled>Выберите курс</option>
-                                                                    <option value="1" style="color: #1eaaf1">1 (бакалавриат)</option>
-                                                                    <option value="2" style="color: #1eaaf1">2 (бакалавриат)</option>
-                                                                    <option value="3" style="color: #1eaaf1">3 (бакалавриат)</option>
-                                                                    <option value="4" style="color: #1eaaf1">4 (бакалавриат)</option>
-                                                                    <option value="5" style="color: #1eaaf1">1 (магистратура)</option>
-                                                                    <option value="6" style="color: #1eaaf1">2 (магистратура)</option>
-                                                                </select>
                                                             </div>
                                                             <div class="example-2" style="margin-top: 20px">
                                                                 <div class="d-md-flex">

@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class GroupDto {
-    private Long group;
+public class IdDto {
+    private Long id;
 }

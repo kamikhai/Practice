@@ -1,6 +1,7 @@
 package ru.itis.practice.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -35,9 +36,9 @@ public class PortfolioController {
 
     @PostMapping("/portfolio")
     @PreAuthorize(value = "hasAuthority('STUDENT')")
-    public String confirmCompetence(NewProjectDto dto,
+    public ResponseEntity<String> confirmCompetence(NewProjectDto dto,
                                     @AuthenticationPrincipal UserDetailsImpl userDetails) {
         projectService.save(dto, userDetails.getUser());
-        return "ok";
+        return ResponseEntity.ok("Запись успешно добавлена");
     }
 }

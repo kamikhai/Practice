@@ -43,7 +43,7 @@ class AdminPageRestControllerTest {
 
     @Test
     void deleteGroup() throws Exception {
-        mockMvc.perform(delete("/api/admin/group/40").header("Authorization", adminToken))
+        mockMvc.perform(delete("/api/admin/id/40").header("Authorization", adminToken))
                 .andExpect(status().isOk());
     }
 
@@ -73,7 +73,7 @@ class AdminPageRestControllerTest {
 
     @Test
     void addGroup() throws Exception {
-        mockMvc.perform(post("/api/admin/teacher/25").contentType(MediaType.APPLICATION_JSON).content("{\"group\":12}").header("Authorization", adminToken))
+        mockMvc.perform(post("/api/admin/teacher/25").contentType(MediaType.APPLICATION_JSON).content("{\"id\":12}").header("Authorization", adminToken))
                 .andExpect(status().isOk());
     }
 

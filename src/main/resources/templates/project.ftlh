@@ -12,9 +12,26 @@
                 url: "/project/${info.projectId}",
                 method: "POST",
                 data: {"userId": ${info.userId}},
+                success: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
+                    setTimeout(function () {
+                        location = "/portfolio/${info.userId}";
+                    }, 1500);
+                },
+                error: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
+                }
             });
-            alert("Запись успешно удалена");
-            location = "/portfolio/${info.userId}";
         }
     </script>
 </head>
@@ -104,6 +121,7 @@
 <div id="fade" class="black-overlay"></div>
 
 <#include "parts/footer.ftlh">
+<div id="snackbar" style="z-index: 1002"></div>
 
 </body>
 </html>

@@ -23,7 +23,7 @@
                         x.className = x.className.replace("show", "");
                     }, 3000);
                     setTimeout(function () {
-                    location.reload();
+                        location.reload();
                     }, 1500);
                 },
                 error: function (data) {
@@ -154,11 +154,24 @@
                 type: "POST",
                 dataType: "html",
                 data: $("#new_competence").serialize(),
-                complete: function (response) {
-                    alert("Компетенция успешно добавлена");
-                    location.reload();
+                success: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
                 },
                 error: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
                 }
             });
         }
@@ -190,14 +203,60 @@
                 contentType: false
             })
                 .done(function (response) {
-                    alert(response);
-                    location.reload();
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
                 })
                 .fail(function () {
-                    alert('Error')
+                    var x = document.getElementById("snackbar");
+                    x.innerText = "Ошибка загрузки";
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
                 });
         }
 
+        function sendJobProfile() {
+            var e = document.getElementById("job");
+            var value = e.options[e.selectedIndex].value;
+            console.log(value);
+            var data = {id: value}
+            $.ajax({
+                url: "/api/student/jobprofile",
+                type: "POST",
+                data: JSON.stringify(data),
+                headers: {
+                    "Authorization": "${token}"
+                },
+                contentType: "application/json",
+                success: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
+                },
+                error: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -273,8 +332,36 @@
         </div>
     </div>
 </div>
+<div id="envelope3" class="envelope">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 py-5 px-md-5 bg-primary" style="margin-top: 25px; ">
+                <a class="close-btn" style="margin-left: 97%" href="javascript:void(0)"
+                   onclick="document.getElementById('envelope3').style.display='none';document.getElementById('fade').style.display='none'">Закрыть</a>
+                <div class="heading-section heading-section-white ftco-animate mb-5">
+                    <h2 class="mb-4">Выбрать профиль работы</h2>
+                </div>
+                <form method="post" class="appointment-form ftco-animate" id="new_job">
+                    <div class="d-md-flex">
+                        <select name="group" id="job" class="form-control">
+                            <option value="" style="color: #1eaaf1" selected disabled>Выберите профиль работы</option>
+                            <#list jobs as job>
+                                <option value="${job.id}" style="color: #1eaaf1">${job.title}</option>
+                            </#list>
+                        </select>
+                    </div>
+                    <div class="d-md-flex" style="margin-top: 20px;">
+                        <div class="form-group">
+                            <input type="button" onclick="sendJobProfile()" value="Добавить"
+                                   class="btn btn-secondary py-3 px-4">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <#include "parts/header.ftlh">
-<div id="snackbar"></div>
 <div id="colorlib-page">
     <div class="container">
         <div class="row">
@@ -309,7 +396,15 @@
                                  style="background-color: rgba(30,170,241,0.3); color: rgba(0,0,0,0.3); width: 100%">
                                 <div class="desc">
                                     <h1 class="big-letter">${profileInfo.fullName}</h1>
-                                    <h3 class="" style="color: #1eaaf1">${profileInfo.jobProfileTitle}</h3>
+                                    <div class="d-md-flex">
+                                        <h3 class=""
+                                            style="color: #1eaaf1">${profileInfo.jobProfileTitle!"Профиль работы не выбран"}</h3>
+                                        <#if isOwnProfile == true>
+                                            <a href="javascript:void(0)"
+                                               onclick="document.getElementById('envelope3').style.display='block';document.getElementById('fade').style.display='block'"><span
+                                                        class="icon-pencil" style="margin-left: 5px"></span></a>
+                                        </#if>
+                                    </div>
                                     <span class="subheading">группа ${profileInfo.groupNumeric}</span>
                                     <hr style="height:1px;border-width:0; width: 70%; color:#1eaaf1;background-color:gray;">
                                     <div style="margin-top: 15px">
@@ -434,6 +529,7 @@
     })();
 </script>
 <div id="fade" class="black-overlay"></div>
+<div id="snackbar" style="z-index: 1002"></div>
 
 </body>
 </html>

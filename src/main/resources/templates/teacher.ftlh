@@ -23,11 +23,23 @@
 			contentType: false
 		})
 			.done(function (response) {
-				alert(response);
-				location.reload();
+                var x = document.getElementById("snackbar");
+                x.innerText = response;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
 			})
 			.fail(function () {
-				alert('Error')
+                var x = document.getElementById("snackbar");
+                x.innerText = "Ошибка загрузки";
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
 			});
 	}
 
@@ -125,7 +137,7 @@
         var e = document.getElementById("group");
         var value = e.options[e.selectedIndex].value;
         console.log(value);
-        var data = {group: value}
+        var data = {id: value}
         $.ajax({
             url: "/api/admin/teacher/${profileInfo.id}",
             type: "POST",
@@ -134,12 +146,24 @@
                 "Authorization": "${token}"
             },
             contentType: "application/json",
-            dataType: "json",
-            complete: function (response) {
-                alert("Группа успешно добавлена");
-                location.reload();
+            success: function (response) {
+                var x = document.getElementById("snackbar");
+                x.innerText = response;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
             },
             error: function (response) {
+                var x = document.getElementById("snackbar");
+                x.innerText = response.responseText;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
             }
         });
     }
@@ -205,6 +229,8 @@
     </div>
 </div>
 <#include "parts/header.ftlh">
+<div id="snackbar" style="z-index: 1002"></div>
+
 <div id="colorlib-page">
     <div class="container">
         <div class="row">
@@ -319,6 +345,24 @@
 
 <#include "parts/footer.ftlh">
 <div id="fade" class="black-overlay"></div>
+<script>
+    (function () {
 
+        'use strict';
+
+        $('.input-file').each(function () {
+            var $input = $(this),
+                $label = $input.next('.js-labelFile'),
+                labelVal = $label.html();
+
+            $input.on('change', function (element) {
+                var fileName = '';
+                if (element.target.value) fileName = element.target.value.split('\\').pop();
+                fileName ? $label.addClass('has-file').find('.js-fileName').html(fileName) : $label.removeClass('has-file').html(labelVal);
+            });
+        });
+
+    })();
+</script>
 </body>
 </html>

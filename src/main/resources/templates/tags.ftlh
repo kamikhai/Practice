@@ -16,11 +16,24 @@
                     "Authorization": "${token}"
                 },
                 data: $("#new_tag").serialize(),
-                complete: function (response) {
-                    alert("Тег успешно добавлен");
-                    location.reload();
+                success: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
                 },
                 error: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
                 }
             });
         }
@@ -32,11 +45,24 @@
                 headers: {
                     "Authorization": "${token}"
                 },
-                complete: function (response) {
-                    alert("Тег успешно удален");
-                    location.reload();
+                success: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
                 },
                 error: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
                 }
             });
         }
@@ -68,6 +94,7 @@
     </div>
 </div>
 <#include "parts/header.ftlh">
+<div id="snackbar" style="z-index: 1002"></div>
 <div id="colorlib-page">
     <div class="container">
         <div class="row">

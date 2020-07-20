@@ -36,6 +36,7 @@ public class ProfileController {
     private TagService tagService;
     private TokenService tokenService;
     private ImageService imageService;
+    private JobProfileService jobProfileService;
 
 
     @GetMapping("/{id}")
@@ -45,6 +46,7 @@ public class ProfileController {
         model.addAttribute("isOwnProfile", userDetails != null && userDetails.getUserId().equals(id));
         model.addAttribute("tags", tagService.getAll());
         model.addAttribute("groups", groupService.getAllGroups());
+        model.addAttribute("jobs", jobProfileService.getAll());
         if (userDetails != null) {
             model.addAttribute("token", tokenService.getToken(userDetails.getUser()));
         } else {
@@ -80,6 +82,7 @@ public class ProfileController {
         model.addAttribute("token", tokenService.getToken(userDetails.getUser()));
         model.addAttribute("isOwnProfile", true);
         model.addAttribute("groups", groupService.getAllGroups());
+        model.addAttribute("jobs", jobProfileService.getAll());
         if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("STUDENT"))) {
             model.addAttribute("profileInfo", studentService.getProfileInfoByUser(userDetails.getUser()));
             return "profile";
@@ -95,13 +98,13 @@ public class ProfileController {
 
     @PostMapping("/competence")
     @PreAuthorize(value = "hasAuthority('STUDENT')")
-    public ResponseEntity addCompetence(@AuthenticationPrincipal UserDetailsImpl userDetails,
+    public ResponseEntity<String> addCompetence(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                 @RequestParam("result") String result,
                                 @RequestParam("competenceName") String competenceName) {
         System.out.println(result);
         Set<String> tags = new TreeSet<>(Arrays.asList(result.split(" ")));
         competenceService.save(competenceName, tags, userDetails.getUserId());
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Компетенция успешно добавлена");
     }
 
     @PostMapping("/photo")

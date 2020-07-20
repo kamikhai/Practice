@@ -14,9 +14,16 @@
                 headers: {
                     "Authorization": "${token}"
                 },
-                complete: function (response) {
-                    alert("Группа успешно удалена");
-                    location = "/profile";
+                success: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
+                    setTimeout(function () {
+                        location = "/profile";
+                    }, 1500);
                 }
             });
         }
@@ -24,6 +31,8 @@
 </head>
 <body>
 <#include "parts/header.ftlh">
+<div id="snackbar" style="z-index: 1002"></div>
+
 <div id="colorlib-page">
     <div class="container">
         <div class="row">

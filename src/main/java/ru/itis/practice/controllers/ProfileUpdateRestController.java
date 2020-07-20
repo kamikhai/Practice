@@ -7,12 +7,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.ui.Model;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import ru.itis.practice.models.Competence;
-import ru.itis.practice.models.Teacher;
+import ru.itis.practice.dto.IdDto;
+import ru.itis.practice.models.*;
 import ru.itis.practice.security.details.UserDetailsImpl;
 import ru.itis.practice.services.CompetenceService;
+import ru.itis.practice.services.JobProfileService;
 import ru.itis.practice.services.StudentService;
 import ru.itis.practice.services.TeacherService;
 
@@ -26,6 +27,7 @@ public class ProfileUpdateRestController {
     private StudentService studentService;
     private CompetenceService competenceService;
     private TeacherService teacherService;
+    private JobProfileService jobProfileService;
 
 
     @PostMapping("/student/about")
@@ -93,6 +95,18 @@ public class ProfileUpdateRestController {
     public ResponseEntity<String> changeTeacherInformation(@RequestParam("text") String text) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         teacherService.updateInformation(((UserDetailsImpl) authentication.getDetails()).getUserId(), text);
+        return ResponseEntity.ok("Информация успешно обновлена");
+    }
+
+    @PostMapping("/student/jobprofile")
+    @PreAuthorize(value = "hasAuthority('STUDENT')")
+    public ResponseEntity<String> addGroup(@RequestBody IdDto dto) {
+        JobProfile jobProfile = jobProfileService.findById(dto.getId()).get();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getDetails();
+        Student student = studentService.findByEmail(userDetails.getUser().getEmail());
+        student.setJobProfile(jobProfile);
+        studentService.save(student);
         return ResponseEntity.ok("Информация успешно обновлена");
     }
 }

@@ -34,10 +34,24 @@
                 type: "POST",
                 dataType: "html",
                 data: $("#new_project").serialize(),
-                complete: function (response) {
-                    location.reload();
+                success: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
                 },
                 error: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
                 }
             });
         }
@@ -179,7 +193,7 @@
     </div><!-- END COLORLIB-MAIN -->
 </div><!-- END COLORLIB-PAGE -->
 <div id="fade" class="black-overlay"></div>
-
+<div id="snackbar" style="z-index: 1002"></div>
 <#include "parts/footer.ftlh">
 </body>
 </html>
