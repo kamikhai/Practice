@@ -2,19 +2,22 @@ package ru.itis.practice.services;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 import ru.itis.practice.models.User;
-import ru.itis.practice.services.config.CommonConfiguration;
+import ru.itis.practice.SanityCheck;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
-@ContextConfiguration(classes = CommonConfiguration.class)
+@SpringBootTest
+@Transactional
+@AutoConfigureTestEntityManager
 class UserServiceTest {
 
     @Autowired
@@ -30,14 +33,14 @@ class UserServiceTest {
 
     @Test
     void testFindByEmailShouldNotBeEmpty() {
-        assertNotEquals(Optional.empty(), userService.findByEmail("123@gmail.com"));
+        assertNotEquals(Optional.empty(), userService.findByEmail("test@test.test"));
     }
 
     @Test
     void testIsValidReturnEmpty() {
         User user = User.builder()
-                .email("123@gmail.com")
-                .passHash("$2a$10$75w2gTDCENzcTcgtytWQFuc52WYU26j6EYGXbcgR5JpbdUQ6xgJTe")
+                .email("test@test.test")
+                .passHash("incorrect password")
                 .build();
         assertEquals(Optional.empty(), userService.isValid(user));
     }
@@ -45,8 +48,8 @@ class UserServiceTest {
     @Test
     void testIsValidOnCorrectData() {
         User user = User.builder()
-                .email("123@gmail.com")
-                .passHash("qwerty007")
+                .email("test@test.test")
+                .passHash("test")
                 .build();
         assertNotEquals(Optional.empty(), userService.isValid(user));
     }

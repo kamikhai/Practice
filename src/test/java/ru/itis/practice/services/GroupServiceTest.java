@@ -2,19 +2,19 @@ package ru.itis.practice.services;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import ru.itis.practice.models.Group;
-import ru.itis.practice.services.config.CommonConfiguration;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
-@ContextConfiguration(classes = CommonConfiguration.class)
+@SpringBootTest
+@Transactional
+@AutoConfigureTestEntityManager
 class GroupServiceTest {
 
     @Autowired
@@ -33,11 +33,10 @@ class GroupServiceTest {
     @Test
     void testSaveOnExistingGroup() {
         int beforeSave = getDatabaseSize();
-        Group group = entityManager.getEntityManager()
-                .find(Group.class, 1L);
+        Group group = entityManager.getEntityManager().find(Group.class, 1L);
+
         groupService.saveIfNotExist(group);
-        int afterSave = getDatabaseSize();
-        assertEquals(beforeSave, afterSave);
+        assertEquals(beforeSave, getDatabaseSize());
     }
 
     @Test
@@ -45,10 +44,11 @@ class GroupServiceTest {
         Group group = Group.builder()
                 .numeric("1234231")
                 .build();
+
         int beforeSave = getDatabaseSize();
         groupService.saveIfNotExist(group);
-        int afterSave = getDatabaseSize();
-        assertEquals(beforeSave + 1, afterSave);
+
+        assertEquals(beforeSave + 1, getDatabaseSize());
     }
 
     @Test
@@ -62,10 +62,11 @@ class GroupServiceTest {
         Group newGroup = Group.builder()
                 .numeric("21433241")
                 .build();
+
         newGroup.setId(entityManager.persistAndGetId(newGroup, Long.class));
         groupService.delete(newGroup);
-        int after = getDatabaseSize();
-        assertEquals(before, after);
+
+        assertEquals(before, getDatabaseSize());
     }
 
     @Test
@@ -73,15 +74,16 @@ class GroupServiceTest {
         Group group = Group.builder()
                 .numeric("4231315")
                 .build();
+
         int before = getDatabaseSize();
         groupService.delete(group);
-        int after = getDatabaseSize();
-        assertEquals(before, after);
+
+        assertEquals(before, getDatabaseSize());
     }
 
     @Test
     void testFindByIDShouldReturnEmpty() {
-        assertEquals(Optional.empty(), groupService.findById(2005L));
+        assertEquals(Optional.empty(), groupService.findById(999L));
     }
 
     @Test
@@ -91,7 +93,7 @@ class GroupServiceTest {
 
     @Test
     void testFindByNumericShouldReturnEmpty() {
-        assertEquals(Optional.empty(), groupService.findByNumeric("1234"));
+        assertEquals(Optional.empty(), groupService.findByNumeric("test"));
     }
 
     @Test

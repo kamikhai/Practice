@@ -2,19 +2,19 @@ package ru.itis.practice.services;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import ru.itis.practice.models.Tag;
-import ru.itis.practice.services.config.CommonConfiguration;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
-@ContextConfiguration(classes = CommonConfiguration.class)
+@SpringBootTest
+@Transactional
+@AutoConfigureTestEntityManager
 class TagServiceTest {
 
     @Autowired
@@ -48,8 +48,7 @@ class TagServiceTest {
     @Test
     void testSave() {
         int before = getDatabaseSize();
-        Tag tag = Tag.builder()
-                .name("test tag").build();
+        Tag tag = Tag.builder().name("test tag").build();
         tagService.save(tag);
         int after = getDatabaseSize();
         assertEquals(before + 1, after);
@@ -57,7 +56,7 @@ class TagServiceTest {
 
     @Test
     void testFindByIdShouldBeEmpty() {
-        assertEquals(Optional.empty(), tagService.findById(2005L));
+        assertEquals(Optional.empty(), tagService.findById(999L));
     }
 
     @Test
@@ -68,9 +67,7 @@ class TagServiceTest {
     @Test
     void testDelete() {
         int before = getDatabaseSize();
-        Tag tag = Tag.builder()
-                .name("test Tag")
-                .build();
+        Tag tag = Tag.builder().name("test Tag").build();
         tag.setId(entityManager.persistAndGetId(tag, Long.class));
         tagService.delete(tag);
         int after = getDatabaseSize();

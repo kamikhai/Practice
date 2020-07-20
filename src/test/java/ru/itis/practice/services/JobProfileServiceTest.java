@@ -2,20 +2,20 @@ package ru.itis.practice.services;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.ContextConfiguration;
-import ru.itis.practice.models.Group;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 import ru.itis.practice.models.JobProfile;
-import ru.itis.practice.services.config.CommonConfiguration;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-@DataJpaTest
-@ContextConfiguration(classes = CommonConfiguration.class)
+@SpringBootTest
+@Transactional
+@AutoConfigureTestEntityManager
 class JobProfileServiceTest {
 
     @Autowired
@@ -49,7 +49,7 @@ class JobProfileServiceTest {
 
     @Test
     void testFindByIdShouldReturnEmpty() {
-        assertEquals(Optional.empty(), jobProfileService.findById(2005L));
+        assertEquals(Optional.empty(), jobProfileService.findById(999L));
     }
 
     @Test
@@ -61,7 +61,7 @@ class JobProfileServiceTest {
     void testDeleteOnExistingEntity() {
         int before = getDatabaseSize();
         JobProfile jobProfile = JobProfile.builder()
-                .title("Java")
+                .title("Ява")
                 .build();
         jobProfile.setId(entityManager.persistAndGetId(jobProfile, Long.class));
         jobProfileService.delete(jobProfile);
