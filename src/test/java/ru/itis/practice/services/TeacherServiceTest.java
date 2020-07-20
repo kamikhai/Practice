@@ -2,22 +2,26 @@ package ru.itis.practice.services;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 import ru.itis.practice.dto.TeacherProfileInfo;
 import ru.itis.practice.models.Group;
 import ru.itis.practice.models.Teacher;
 import ru.itis.practice.models.User;
-import ru.itis.practice.TestConfiguration;
+import ru.itis.practice.SanityCheck;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
-@ContextConfiguration(classes = TestConfiguration.class)
+@SpringBootTest
+@Transactional
+@AutoConfigureTestEntityManager
 class TeacherServiceTest {
 
     @Autowired
@@ -39,36 +43,37 @@ class TeacherServiceTest {
 
     @Test
     void testFindByEmailOnCorrectData() {
-        assertEquals(25L, teacherService.findByEmail("marsel@gmail.com").getId());
+        assertEquals(3L, teacherService.findByEmail("test@123.test").getId());
     }
 
     @Test
     void testProfileInfoByUser() {
         List<Group> groups = new ArrayList<>();
         groups.add(Group.builder()
-                .numeric("11-801")
+                .numeric("11-802")
                 .id(1L)
                 .build());
         groups.add(Group.builder()
-                .numeric("11-805")
-                .id(5L)
+                .numeric("11-803")
+                .id(2L)
                 .build());
+
         Teacher teacher = Teacher.builder()
-                .id(25L)
-                .information("2015-2018 высшее образование: Казанский (Приволжский) Федеральный Университет,Квалификация: Магистр2011-2015 высшее образование: Казанский (Приволжский) Федеральный Университет,Квалификация: Бакалавр")
-                .position("ассистент, б.с., КФУ / Высшая школа информационных технологий и интеллектуальных систем / Кафедра программной инженерии (основной работник)")
-                .link("https://vk.com/marsel.sidikov")
+                .id(3L)
+                .information("закончил 9 классов")
+                .position("хуй с горы")
+                .link("https://vk.com/id0")
                 .user(User.builder()
-                        .email("marsel@gmail.com")
-                        .id(25L)
-                        .fullName("Сидиков Марсель Рафаэлевич")
-                        .passHash("$2a$10$75w2gTDCENzcTcgtytWQFuc52WYU26j6EYGXbcgR5JpbdUQ6xgJTe")
-                        .photoPath("/img/teacher-1.jpg")
+                        .email("test@123.test")
+                        .id(3L)
+                        .fullName("Тестовый препод")
+                        .passHash("$2y$10$3iKuQFwLBC/8XS7k7jr5secLLhK.IGdjymk1jgSEdRtBhcWeWnytS")
+                        .photoPath("/img/empty_user.jpg")
                         .role(User.Role.TEACHER)
                         .build())
                 .curatedGroups(groups)
                 .build();
-        assertEquals(TeacherProfileInfo.from(teacher), teacherService.getProfileInfoByUser(User.builder().email("marsel@gmail.com").build()));
+        assertEquals(TeacherProfileInfo.from(teacher), teacherService.getProfileInfoByUser(User.builder().email("test@123.test").build()));
     }
 
     @Test
@@ -97,10 +102,10 @@ class TeacherServiceTest {
     @Test
     void testUpdateLink() {
         String newLink = "newLink";
-        teacherService.updateLink(25L, newLink);
+        teacherService.updateLink(3L, newLink);
         Teacher teacher = entityManager.getEntityManager()
                 .createQuery("from Teacher teacher where teacher.id=:id", Teacher.class)
-                .setParameter("id", 25L)
+                .setParameter("id", 3L)
                 .getSingleResult();
         assertEquals(newLink, teacher.getLink());
     }
@@ -108,10 +113,10 @@ class TeacherServiceTest {
     @Test
     void testUpdatePosition() {
         String newPosition = "newPosition";
-        teacherService.updatePosition(25L, newPosition);
+        teacherService.updatePosition(3L, newPosition);
         Teacher teacher = entityManager.getEntityManager()
                 .createQuery("from Teacher teacher where teacher.id=:id", Teacher.class)
-                .setParameter("id", 25L)
+                .setParameter("id", 3L)
                 .getSingleResult();
         assertEquals(newPosition, teacher.getPosition());
     }
@@ -119,10 +124,10 @@ class TeacherServiceTest {
     @Test
     void testUpdateInformation() {
         String newInfo = "newInfo";
-        teacherService.updateInformation(25L, newInfo);
+        teacherService.updateInformation(3L, newInfo);
         Teacher teacher = entityManager.getEntityManager()
                 .createQuery("from Teacher teacher where teacher.id=:id", Teacher.class)
-                .setParameter("id", 25L)
+                .setParameter("id", 3L)
                 .getSingleResult();
         assertEquals(newInfo, teacher.getInformation());
     }

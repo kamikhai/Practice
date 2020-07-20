@@ -1,6 +1,7 @@
 INSERT INTO public.academic_group (numeric)
 VALUES ('11-802'),
-       ('11-803');
+       ('11-803'),
+       ('11-899');
 
 INSERT INTO public.app_user (email, full_name, role, photo_path, pass_hash)
 VALUES ('test@test.test', 'Тест Тестович', 'STUDENT', '/img/empty_user.jpg', '$2y$10$3iKuQFwLBC/8XS7k7jr5secLLhK.IGdjymk1jgSEdRtBhcWeWnytS'),
@@ -41,8 +42,10 @@ VALUES (1, 1),
        (4, 3);
 
 INSERT INTO public.project (title, student_user_id, description)
-VALUES ('классный стартап', 1, 'какое-то говно'),
-       ('крутейший проект', 2, 'какое-то говно');
+VALUES ('Шутка 15-летней давности', 1, 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'),
+       ('Святая святых', 1, 'https://stackoverflow.com/'),
+       ('Прям в душу смотрит', 2, 'http://www.goatse.cc/img/hello.jpg'),
+       ('C00L H4CK3R', 2, '<script>alert("your gayyyyyy");</script>');
 
 INSERT INTO public.project_tags (project_id, tags_id)
 VALUES (1, 2),

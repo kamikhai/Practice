@@ -22,6 +22,7 @@ public class CompetenceServiceTest {
 
     @Autowired
     private TestEntityManager entityManager;
+
     @Autowired
     private CompetenceService competenceService;
 
