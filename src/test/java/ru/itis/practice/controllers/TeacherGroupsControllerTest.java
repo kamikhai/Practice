@@ -27,8 +27,8 @@ class TeacherGroupsControllerTest {
     @Test
     void getStudents() throws Exception {
         mockMvc.perform(get("/students_group?g=2"))
-                .andExpect(MockMvcResultMatchers.view().name("id"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("id"))
+                .andExpect(MockMvcResultMatchers.view().name("group"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("group"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("students"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("admin"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("token"));

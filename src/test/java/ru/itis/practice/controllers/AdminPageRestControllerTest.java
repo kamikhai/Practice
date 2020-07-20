@@ -43,7 +43,7 @@ class AdminPageRestControllerTest {
 
     @Test
     void deleteGroup() throws Exception {
-        mockMvc.perform(delete("/api/admin/id/40").header("Authorization", adminToken))
+        mockMvc.perform(delete("/api/admin/group/40").header("Authorization", adminToken))
                 .andExpect(status().isOk());
     }
 
