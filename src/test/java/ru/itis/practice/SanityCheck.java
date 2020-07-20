@@ -9,7 +9,7 @@ import ru.itis.practice.repositories.UserRepository;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class TestConfiguration {
+public class SanityCheck {
 
     @Autowired
     private Environment env;

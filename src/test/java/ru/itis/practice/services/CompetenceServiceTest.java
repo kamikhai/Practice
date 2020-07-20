@@ -29,7 +29,7 @@ public class CompetenceServiceTest {
 
     @BeforeEach
     public void init() {
-        teacher = entityManager.getEntityManager().find(Teacher.class, 4L);
+        teacher = entityManager.getEntityManager().find(Teacher.class, 3L);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class CompetenceServiceTest {
                 .getResultList()
                 .size();
 
-        competenceService.save("test", Collections.emptySet(), 2L);
+        competenceService.save("test", Collections.emptySet(), 1L);
 
         int afterSave = entityManager.getEntityManager()
                 .createQuery("from Competence")
@@ -56,7 +56,7 @@ public class CompetenceServiceTest {
 
     @Test
     void testConfirmOnPresentId() {
-        Competence result = competenceService.confirm(2L, teacher);
+        Competence result = competenceService.confirm(1L, teacher);
         assertEquals(teacher, result.getConfirmedBy());
     }
 
@@ -67,6 +67,6 @@ public class CompetenceServiceTest {
 
     @Test
     void testFindByIdShouldReturnNonEmpty() {
-        assertNotEquals(Optional.empty(), competenceService.findById(2L));
+        assertNotEquals(Optional.empty(), competenceService.findById(1L));
     }
 }
