@@ -10,7 +10,6 @@ import ru.itis.practice.repositories.*;
 import ru.itis.practice.services.*;
 
 @TestConfiguration
-@TestPropertySource("classpath:values.properties")
 public class CommonConfiguration {
 
     @Bean(name = "testCompetenceService")
@@ -25,7 +24,7 @@ public class CommonConfiguration {
                                      @Qualifier("testGroupService") GroupService gS,
                                      @Qualifier("testStudentService") StudentService sS,
                                      @Value("${storage.path}") String path) {
-        return new ExcelServiceImpl(uS, gS, sS, path);
+        return new ExcelServiceImpl();
     }
 
     @Bean(name = "testGroupService")
@@ -37,7 +36,7 @@ public class CommonConfiguration {
     public ImageService imageService(@Qualifier("testUserService") UserService uS,
                                      @Value("${storage.path}") String path,
                                      @Value("${project.url}") String url) {
-        return new ImageServiceImpl(uS, path, url);
+        return new ImageServiceImpl();
     }
 
     @Bean(name = "testJobProfileService")

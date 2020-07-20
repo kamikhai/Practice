@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TokenServiceTest {
 
     @Autowired
-    @Qualifier("testTokenService")
     private TokenService tokenService;
     private User user;
 

@@ -20,12 +20,13 @@ import java.util.Iterator;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
 public class ExcelServiceImpl implements ExcelService {
 
-
+    @Autowired
     private UserService userService;
+    @Autowired
     private GroupService groupService;
+    @Autowired
     private StudentService studentService;
     @Value("${storage.path}")
     private String path;

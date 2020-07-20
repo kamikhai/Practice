@@ -21,7 +21,6 @@ class GroupServiceTest {
     private TestEntityManager entityManager;
 
     @Autowired
-    @Qualifier("testGroupService")
     private GroupService groupService;
 
     private int getDatabaseSize() {

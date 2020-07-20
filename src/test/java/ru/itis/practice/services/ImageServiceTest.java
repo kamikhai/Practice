@@ -26,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = CommonConfiguration.class)
 class ImageServiceTest {
 
-    @Qualifier("testImageService")
     @Autowired
     private ImageService imageService;
 

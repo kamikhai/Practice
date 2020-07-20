@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = CommonConfiguration.class)
 class TagServiceTest {
 
-    @Qualifier("testTagService")
     @Autowired
     private TagService tagService;
 

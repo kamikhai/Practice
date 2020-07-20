@@ -4,21 +4,26 @@ import org.junit.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import ru.itis.practice.models.*;
 import ru.itis.practice.repositories.CompetenceRepository;
 import ru.itis.practice.repositories.StudentRepository;
 import ru.itis.practice.repositories.TagRepository;
 import ru.itis.practice.services.config.CommonConfiguration;
+//import ru.itis.practice.services.config.CommonConfiguration;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@RunWith(SpringRunner.class)
 @DataJpaTest
 @ContextConfiguration(classes = CommonConfiguration.class)
 class CompetenceServiceTest {
@@ -27,7 +32,8 @@ class CompetenceServiceTest {
     private TestEntityManager entityManager;
     @Autowired
     private CompetenceRepository competenceRepository;
-    @Qualifier("testCompetenceService")
+
+//    @Qualifier("testCompetenceService")
     @Autowired
     private CompetenceService competenceService;
 

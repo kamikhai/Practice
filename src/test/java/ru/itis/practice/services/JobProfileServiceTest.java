@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = CommonConfiguration.class)
 class JobProfileServiceTest {
 
-    @Qualifier("testJobProfileService")
     @Autowired
     private JobProfileService jobProfileService;
 

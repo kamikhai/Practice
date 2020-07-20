@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class ProjectServiceTest {
 
     @Autowired
-    @Qualifier("testProjectService")
     private ProjectService projectService;
 
     @Autowired

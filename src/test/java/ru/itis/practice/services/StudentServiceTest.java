@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class StudentServiceTest {
 
     @Autowired
-    @Qualifier("testStudentService")
     private StudentService studentService;
 
     @Autowired

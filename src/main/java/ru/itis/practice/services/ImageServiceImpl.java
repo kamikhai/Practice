@@ -15,9 +15,9 @@ import java.io.File;
 import java.io.IOException;
 
 @Component
-@AllArgsConstructor
 public class ImageServiceImpl implements ImageService {
 
+    @Autowired
     private UserService userService;
     @Value("${storage.path}")
     private String path;
