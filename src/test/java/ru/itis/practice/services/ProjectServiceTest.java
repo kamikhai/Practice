@@ -2,23 +2,18 @@ package ru.itis.practice.services;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ContextConfiguration;
 import ru.itis.practice.dto.NewProjectDto;
-import ru.itis.practice.dto.ProjectPageInfo;
-import ru.itis.practice.models.Project;
 import ru.itis.practice.models.User;
 import ru.itis.practice.security.details.UserDetailsImpl;
-import ru.itis.practice.services.config.CommonConfiguration;
-
-import java.util.ArrayList;
+import ru.itis.practice.TestConfiguration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@ContextConfiguration(classes = CommonConfiguration.class)
+@ContextConfiguration(classes = TestConfiguration.class)
 class ProjectServiceTest {
 
     @Autowired

@@ -2,19 +2,18 @@ package ru.itis.practice.services;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ContextConfiguration;
 import ru.itis.practice.models.Tag;
-import ru.itis.practice.services.config.CommonConfiguration;
+import ru.itis.practice.TestConfiguration;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@ContextConfiguration(classes = CommonConfiguration.class)
+@ContextConfiguration(classes = TestConfiguration.class)
 class TagServiceTest {
 
     @Autowired
