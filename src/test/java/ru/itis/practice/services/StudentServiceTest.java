@@ -121,14 +121,6 @@ class StudentServiceTest {
     }
 
     @Test
-    void testGetAllNonEmpty() {
-        List<Long> tags = new ArrayList<>();
-        tags.add(1L);
-
-        assertEquals(1, studentService.getAll(tags, Collections.emptyList()).size());
-    }
-
-    @Test
     void testPortfolioInfoShouldThrowException() {
         assertThrows(RuntimeException.class, () -> studentService.getPortfolioInfo(999L, null));
     }

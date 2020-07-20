@@ -3,7 +3,6 @@ package ru.itis.practice.controllers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -12,7 +11,6 @@ import ru.itis.practice.models.User;
 import ru.itis.practice.services.TokenService;
 import ru.itis.practice.services.UserService;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,42 +18,33 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 class AdminPageRestControllerTest {
+
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
-    private AdminRestController adminRestController;
-    @Autowired
-    @Qualifier("userServiceImpl")
-    private UserService userService;
-    @Autowired
-    @Qualifier("tokenServiceImpl")
-    private TokenService tokenService;
-    private String adminToken;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private TokenService tokenService;
+
+    private String adminToken;
 
     @BeforeEach
     void init() {
-        User admin = userService.findByEmail("kamilla.hairul@gmail.com").get();
+        User admin = userService.findByEmail("test@test.123").get();
         adminToken = tokenService.getToken(admin);
-    }
-
-
-
-    @Test
-    void deleteGroup() throws Exception {
-        mockMvc.perform(delete("/api/admin/group/40").header("Authorization", adminToken))
-                .andExpect(status().isOk());
     }
 
     @Test
     void addTag() throws Exception {
-        mockMvc.perform(post("/api/admin/tags?tag=Pascal").header("Authorization", adminToken))
+        mockMvc.perform(post("/api/admin/tags?tag=Rust").header("Authorization", adminToken))
                 .andExpect(status().isOk());
     }
 
     @Test
     void deleteTag() throws Exception {
-        mockMvc.perform(delete("/api/admin/tags/57").header("Authorization", adminToken))
+        mockMvc.perform(delete("/api/admin/tags/4").header("Authorization", adminToken))
                 .andExpect(status().isOk());
     }
 
@@ -67,13 +56,13 @@ class AdminPageRestControllerTest {
 
     @Test
     void deleteJob() throws Exception {
-        mockMvc.perform(delete("/api/admin/job/30").header("Authorization", adminToken))
+        mockMvc.perform(delete("/api/admin/job/3").header("Authorization", adminToken))
                 .andExpect(status().isOk());
     }
 
     @Test
     void addGroup() throws Exception {
-        mockMvc.perform(post("/api/admin/teacher/25").contentType(MediaType.APPLICATION_JSON).content("{\"group\":12}").header("Authorization", adminToken))
+        mockMvc.perform(post("/api/admin/teacher/3").contentType(MediaType.APPLICATION_JSON).content("{\"group\":3}").header("Authorization", adminToken))
                 .andExpect(status().isOk());
     }
 

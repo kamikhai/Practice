@@ -47,36 +47,6 @@ class TeacherServiceTest {
     }
 
     @Test
-    void testProfileInfoByUser() {
-        List<Group> groups = new ArrayList<>();
-        groups.add(Group.builder()
-                .numeric("11-802")
-                .id(1L)
-                .build());
-        groups.add(Group.builder()
-                .numeric("11-803")
-                .id(2L)
-                .build());
-
-        Teacher teacher = Teacher.builder()
-                .id(3L)
-                .information("закончил 9 классов")
-                .position("хуй с горы")
-                .link("https://vk.com/id0")
-                .user(User.builder()
-                        .email("test@123.test")
-                        .id(3L)
-                        .fullName("Тестовый препод")
-                        .passHash("$2y$10$3iKuQFwLBC/8XS7k7jr5secLLhK.IGdjymk1jgSEdRtBhcWeWnytS")
-                        .photoPath("/img/empty_user.jpg")
-                        .role(User.Role.TEACHER)
-                        .build())
-                .curatedGroups(groups)
-                .build();
-        assertEquals(TeacherProfileInfo.from(teacher), teacherService.getProfileInfoByUser(User.builder().email("test@123.test").build()));
-    }
-
-    @Test
     void testAllTeachersSize() {
         assertEquals(size(), teacherService.getAllTeachers().size());
     }

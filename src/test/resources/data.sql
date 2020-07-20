@@ -1,7 +1,8 @@
 INSERT INTO public.academic_group (numeric)
 VALUES ('11-802'),
        ('11-803'),
-       ('11-899');
+       ('11-899'),
+       ('чисто на удаление');
 
 INSERT INTO public.app_user (email, full_name, role, photo_path, pass_hash)
 VALUES ('test@test.test', 'Тест Тестович', 'STUDENT', '/img/empty_user.jpg', '$2y$10$3iKuQFwLBC/8XS7k7jr5secLLhK.IGdjymk1jgSEdRtBhcWeWnytS'),
@@ -11,7 +12,8 @@ VALUES ('test@test.test', 'Тест Тестович', 'STUDENT', '/img/empty_us
 
 INSERT INTO public.job_profile (title)
 VALUES ('Java-разработчик'),
-       ('Web-вёрстка');
+       ('Web-вёрстка'),
+       ('Коксакер');
 
 INSERT INTO public.student (description, user_id, group_id, job_profile_id, work_experience, link)
 VALUES ('я первый', 1, 1, 1, '-', 'https://vk.com/id0'),
@@ -27,7 +29,8 @@ VALUES (3, 1),
 INSERT INTO public.tag (name)
 VALUES ('Java'),
        ('Spring'),
-       ('Javascript');
+       ('Javascript'),
+       ('На удаление');
 
 INSERT INTO public.competence (description, confirmed_by_user_id, student_user_id)
 VALUES ('я знаю яву', 3, 1),
