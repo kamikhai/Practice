@@ -101,7 +101,6 @@ public class ProfileController {
     public ResponseEntity<String> addCompetence(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                 @RequestParam("result") String result,
                                 @RequestParam("competenceName") String competenceName) {
-        System.out.println(result);
         Set<String> tags = new TreeSet<>(Arrays.asList(result.split(" ")));
         competenceService.save(competenceName, tags, userDetails.getUserId());
         return ResponseEntity.ok("Компетенция успешно добавлена");

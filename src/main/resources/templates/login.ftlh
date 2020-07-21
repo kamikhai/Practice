@@ -20,12 +20,19 @@
                 </div>
                 <form class="appointment-form ftco-animate" method="post">
                     <div class="d-md-flex">
-                        <input type="email" name="email" class="form-control" placeholder="Почта" >
+                        <input type="email" name="email" class="form-control" placeholder="Почта">
                     </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
                     <div class="d-md-flex">
                         <input type="password" name="password" class="form-control" placeholder="Пароль">
                     </div>
                     <input type="hidden" name="_csrf" value="{_csrf.token}">
+                    <div class="d-md-flex" style="margin-top: 20px">
+                        <div class="checkbox">
+                            <input type="checkbox" class="custom-checkbox" id="exampleCheck1" name="remember-me">
+                            <label class="form-check-label" for="exampleCheck1" style="color: white">Запомни меня</label>
+                        </div>
+                    </div>
                     <div class="d-md-flex" style="margin-top: 20px;">
                         <div class="form-group">
                             <input type="submit" value="Войти" class="btn btn-secondary py-3 px-4">

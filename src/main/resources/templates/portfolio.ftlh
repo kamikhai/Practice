@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -29,10 +31,14 @@
 
         function sendAjaxForm() {
             document.getElementById("result").value += result;
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
             $.ajax({
                 url: "/portfolio",
                 type: "POST",
                 dataType: "html",
+                beforeSend: function(request) {
+                    request.setRequestHeader(header, token);},
                 data: $("#new_project").serialize(),
                 success: function (response) {
                     var x = document.getElementById("snackbar");

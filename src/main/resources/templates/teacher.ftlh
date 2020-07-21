@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -14,10 +16,14 @@
 		[].forEach.call(files, function (file, i, files) {
 			formData.append("file", file);
 		});
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
 			type: "POST",
 			enctype: 'multipart/form-data',
 			url: "/profile/photo",
+            beforeSend: function(request) {
+                request.setRequestHeader(header, token);},
 			data: formData,
 			processData: false,
 			contentType: false
@@ -44,22 +50,26 @@
 	}
 
 	function updatePosition(text) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
 			url: "/api/teacher/position?text=" + text,
 			method: "POST",
 			headers: {
 				"Authorization": "${token}"
 			},
+            beforeSend: function(request) {
+                request.setRequestHeader(header, token);},
 			success: function (response) {
-				document.getElementById('position1').style.display = 'block';
-				document.getElementById('position2').style.display = 'none';
-				document.getElementById('position1').innerText = text;
                 var x = document.getElementById("snackbar");
                 x.innerText = response;
                 x.className = "show";
                 setTimeout(function () {
                     x.className = x.className.replace("show", "");
                 }, 3000);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
 			},
 			error: function (response) {
                 var x = document.getElementById("snackbar");
@@ -73,22 +83,26 @@
 	}
 
 	function updateInformation(text) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
 			url: "/api/teacher/information?text=" + text,
 			method: "POST",
 			headers: {
 				"Authorization": "${token}"
 			},
+            beforeSend: function(request) {
+                request.setRequestHeader(header, token);},
 			success: function (response) {
-				document.getElementById('info1').style.display = 'block';
-				document.getElementById('info2').style.display = 'none';
-				document.getElementById('info1').innerText = text;
                 var x = document.getElementById("snackbar");
                 x.innerText = response;
                 x.className = "show";
                 setTimeout(function () {
                     x.className = x.className.replace("show", "");
                 }, 3000);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
 			},
 			error: function (response) {
                 var x = document.getElementById("snackbar");
@@ -103,24 +117,26 @@
 
 
 	function updateLink(text) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
 			url: "/api/teacher/link?text=" + text,
 			method: "POST",
+            beforeSend: function(request) {
+                request.setRequestHeader(header, token);},
 			headers: {
 				"Authorization": "${token}"
 			},
-			dataType: "json",
-			contentType: "application/json",
 			success: function (response) {
-				document.getElementById('link1').style.display = 'block';
-				document.getElementById('link2').style.display = 'none';
-				document.getElementById('link1').href = text;
                 var x = document.getElementById("snackbar");
                 x.innerText = response;
                 x.className = "show";
                 setTimeout(function () {
                     x.className = x.className.replace("show", "");
                 }, 3000);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
 			},
 			error: function (response) {
                 var x = document.getElementById("snackbar");
@@ -134,6 +150,8 @@
 	}
 
     function sendAjaxForm() {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
         var e = document.getElementById("group");
         var value = e.options[e.selectedIndex].value;
         console.log(value);
@@ -145,6 +163,8 @@
             headers: {
                 "Authorization": "${token}"
             },
+            beforeSend: function(request) {
+                request.setRequestHeader(header, token);},
             contentType: "application/json",
             success: function (response) {
                 var x = document.getElementById("snackbar");

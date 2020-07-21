@@ -16,10 +16,7 @@ import ru.itis.practice.services.TeacherService;
 import ru.itis.practice.services.UserService;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -73,8 +70,9 @@ public class RegistrationController {
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
             try {
-                Files.copy(f, response.getOutputStream());
-                response.getOutputStream().flush();
+                OutputStream outputStream = response.getOutputStream();
+                Files.copy(f, outputStream);
+                outputStream.flush();
             } catch (IOException e) {
                 System.out.println("Error writing file to output stream. Filename was '{}'" + f.getFileName());
                 throw new RuntimeException("IOError writing file to output stream");

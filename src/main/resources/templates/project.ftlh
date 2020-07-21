@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -8,9 +10,13 @@
     <title>Document</title>
     <script>
         function deleteProject() {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
             $.ajax({
                 url: "/project/${info.projectId}",
                 method: "POST",
+                beforeSend: function(request) {
+                    request.setRequestHeader(header, token);},
                 data: {"userId": ${info.userId}},
                 success: function (response) {
                     var x = document.getElementById("snackbar");

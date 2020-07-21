@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -8,6 +10,8 @@
     <title>Document</title>
     <script>
         function confirm(id) {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
             $.ajax({
                 url:
                     "/api/student/competence?c=" + id,
@@ -15,6 +19,8 @@
                 headers: {
                     "Authorization": "${token}"
                 },
+                beforeSend: function(request) {
+                    request.setRequestHeader(header, token);},
                 success: function (response) {
                     var x = document.getElementById("snackbar");
                     x.innerText = response;
@@ -41,22 +47,26 @@
     <title>Document</title>
     <script>
         function updateDescription(text) {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
             $.ajax({
                 url: "/api/student/about?text=" + text,
                 method: "POST",
                 headers: {
                     "Authorization": "${token}"
                 },
+                beforeSend: function(request) {
+                    request.setRequestHeader(header, token);},
                 success: function (response) {
-                    document.getElementById('info1').style.display = 'block';
-                    document.getElementById('info2').style.display = 'none';
-                    document.getElementById('info1').innerText = text;
                     var x = document.getElementById("snackbar");
                     x.innerText = response;
                     x.className = "show";
                     setTimeout(function () {
                         x.className = x.className.replace("show", "");
                     }, 3000);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
                 },
                 error: function (response) {
                     var x = document.getElementById("snackbar");
@@ -70,22 +80,26 @@
         }
 
         function updateWorkExperience(text) {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
             $.ajax({
                 url: "/api/student/experience?text=" + text,
                 method: "POST",
                 headers: {
                     "Authorization": "${token}"
                 },
+                beforeSend: function(request) {
+                    request.setRequestHeader(header, token);},
                 success: function (response) {
-                    document.getElementById('experience1').style.display = 'block';
-                    document.getElementById('experience2').style.display = 'none';
-                    document.getElementById('experience1').innerText = text;
                     var x = document.getElementById("snackbar");
                     x.innerText = response;
                     x.className = "show";
                     setTimeout(function () {
                         x.className = x.className.replace("show", "");
                     }, 3000);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
                 },
                 error: function (response) {
                     var x = document.getElementById("snackbar");
@@ -99,22 +113,26 @@
         }
 
         function updateLink(text) {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
             $.ajax({
                 url: "/api/student/link?text=" + text,
                 method: "POST",
                 headers: {
                     "Authorization": "${token}"
                 },
+                beforeSend: function(request) {
+                    request.setRequestHeader(header, token);},
                 success: function (response) {
-                    document.getElementById('link1').style.display = 'block';
-                    document.getElementById('link2').style.display = 'none';
-                    document.getElementById('link').href = text;
                     var x = document.getElementById("snackbar");
                     x.innerText = response;
                     x.className = "show";
                     setTimeout(function () {
                         x.className = x.className.replace("show", "");
                     }, 3000);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
                 },
                 error: function (response) {
                     var x = document.getElementById("snackbar");
@@ -148,11 +166,15 @@
         }
 
         function sendAjaxForm() {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
             document.getElementById("result").value += result;
             $.ajax({
                 url: "/profile/competence",
                 type: "POST",
                 dataType: "html",
+                beforeSend: function(request) {
+                    request.setRequestHeader(header, token);},
                 data: $("#new_competence").serialize(),
                 success: function (response) {
                     var x = document.getElementById("snackbar");
@@ -194,11 +216,15 @@
             [].forEach.call(files, function (file, i, files) {
                 formData.append("file", file);
             });
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
             $.ajax({
                 type: "POST",
                 enctype: 'multipart/form-data',
                 url: "/profile/photo",
                 data: formData,
+                beforeSend: function(request) {
+                    request.setRequestHeader(header, token);},
                 processData: false,
                 contentType: false
             })
@@ -224,6 +250,8 @@
         }
 
         function sendJobProfile() {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
             var e = document.getElementById("job");
             var value = e.options[e.selectedIndex].value;
             console.log(value);
@@ -231,6 +259,8 @@
             $.ajax({
                 url: "/api/student/jobprofile",
                 type: "POST",
+                beforeSend: function(request) {
+                    request.setRequestHeader(header, token);},
                 data: JSON.stringify(data),
                 headers: {
                     "Authorization": "${token}"
