@@ -88,7 +88,7 @@ public class ProjectServiceImpl implements ProjectService {
     private Project parseProjectDescription(Project project) {
         project.setDescription(escapeCharacters(project.getDescription()));
         project.setDescription(addYoutubePlayer(project.getDescription(), ""));
-        project.setDescription(addImagesTags(project.getDescription()));
+        project.setDescription(addImagesTags(project.getDescription(), ""));
         project.setDescription(addOtherLinks(project.getDescription()));
         return project;
     }
@@ -113,12 +113,16 @@ public class ProjectServiceImpl implements ProjectService {
         return result.toString();
     }
 
-    private String addImagesTags(String string) {
+    private String addImagesTags(String string, String result) {
         Matcher matcher = IMAGE_PATTERN.matcher(string);
-        if (matcher.find())
-            return matcher.replaceAll("<br><img src=\"" + matcher.group() + "\"/><br>");
-        else
-            return string;
+        if (matcher.find()) {
+            String newString = string.substring(0, matcher.end()).replace(matcher.group(), "<br><img src=\"" + matcher.group() + "\"/><br>");
+            return addImagesTags(string.substring(matcher.end()),
+                    result.concat(newString));
+        } else {
+            if (string.equals("")) return result;
+            else return result.concat(string);
+        }
     }
 
     private String addYoutubePlayer(String string, String result) {
