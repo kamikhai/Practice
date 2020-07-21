@@ -10,6 +10,7 @@ import ru.itis.practice.models.User;
 import ru.itis.practice.services.TokenService;
 import ru.itis.practice.services.UserService;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,25 +39,25 @@ class AdminPageRestControllerTest {
 
     @Test
     void addTag() throws Exception {
-        mockMvc.perform(post("/api/admin/tags?tag=Rust").header("Authorization", adminToken))
+        mockMvc.perform(post("/api/admin/tags?tag=Rust").with(csrf()).header("Authorization", adminToken))
                 .andExpect(status().isOk());
     }
 
     @Test
     void deleteTag() throws Exception {
-        mockMvc.perform(delete("/api/admin/tags/4").header("Authorization", adminToken))
+        mockMvc.perform(delete("/api/admin/tags/4").with(csrf()).header("Authorization", adminToken))
                 .andExpect(status().isOk());
     }
 
     @Test
     void addJob() throws Exception {
-        mockMvc.perform(post("/api/admin/job?job=Android-разработчик").header("Authorization", adminToken))
+        mockMvc.perform(post("/api/admin/job?job=Android-разработчик").with(csrf()).header("Authorization", adminToken))
                 .andExpect(status().isOk());
     }
 
     @Test
     void deleteJob() throws Exception {
-        mockMvc.perform(delete("/api/admin/job/3").header("Authorization", adminToken))
+        mockMvc.perform(delete("/api/admin/job/3").with(csrf()).header("Authorization", adminToken))
                 .andExpect(status().isOk());
     }
 }

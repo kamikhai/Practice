@@ -11,6 +11,7 @@ import ru.itis.practice.models.User;
 import ru.itis.practice.services.TokenService;
 import ru.itis.practice.services.UserService;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,49 +41,49 @@ class ProfileUpdateRestControllerTest {
 
     @Test
     void changeStudentAboutMe() throws Exception {
-        mockMvc.perform(post("/api/student/about?text=-").header("Authorization", studentToken))
+        mockMvc.perform(post("/api/student/about?text=-").with(csrf()).header("Authorization", studentToken))
                 .andExpect(status().isOk());
     }
 
     @Test
     void changeStudentWorkExperience() throws Exception {
-        mockMvc.perform(post("/api/student/experience?text=-").header("Authorization", studentToken))
+        mockMvc.perform(post("/api/student/experience?text=-").with(csrf()).header("Authorization", studentToken))
                 .andExpect(status().isOk());
     }
 
     @Test
     void changeStudentLink() throws Exception {
-        mockMvc.perform(post("/api/student/link?text=https://vk.com/id0").header("Authorization", studentToken))
+        mockMvc.perform(post("/api/student/link?text=https://vk.com/id0").with(csrf()).header("Authorization", studentToken))
                 .andExpect(status().isOk());
     }
 
     @Test
     void confirmCompetence() throws Exception {
-        mockMvc.perform(post("/api/student/competence?c=3").header("Authorization", teacherToken))
+        mockMvc.perform(post("/api/student/competence?c=2").with(csrf()).header("Authorization", teacherToken))
                 .andExpect(status().isOk());
     }
 
     @Test
     void confirmCompetenceNotFound() throws Exception {
-        mockMvc.perform(post("/api/student/competence?c=999").header("Authorization", teacherToken))
+        mockMvc.perform(post("/api/student/competence?c=999").with(csrf()).header("Authorization", teacherToken))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     void changeTeacherLink() throws Exception {
-        mockMvc.perform(post("/api/teacher/link?text=https://vk.com/id0").header("Authorization", teacherToken))
+        mockMvc.perform(post("/api/teacher/link?text=https://vk.com/id0").with(csrf()).header("Authorization", teacherToken))
                 .andExpect(status().isOk());
     }
 
     @Test
     void changeTeacherPosition() throws Exception {
-        mockMvc.perform(post("/api/teacher/information?text=-").header("Authorization", teacherToken))
+        mockMvc.perform(post("/api/teacher/information?text=-").with(csrf()).header("Authorization", teacherToken))
                 .andExpect(status().isOk());
     }
 
     @Test
     void changeTeacherInformation() throws Exception {
-        mockMvc.perform(post("/api/teacher/position?text=").header("Authorization", teacherToken))
+        mockMvc.perform(post("/api/teacher/position?text=").with(csrf()).header("Authorization", teacherToken))
                 .andExpect(status().isOk());
     }
 }

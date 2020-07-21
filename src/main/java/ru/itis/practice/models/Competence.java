@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Competence {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(optional = false)
