@@ -324,14 +324,19 @@
                                             </#if>
                                         </div>
                                         <ul class="ftco-social mt-1" id="link1">
-                                            <li class="ftco-animate"><a href="${profileInfo.link}"><span
-                                                            class="icon-chrome"></span></a>
-                                            </li>
+                                            <#if profileInfo.link??>
+                                                <li class="ftco-animate"><a id="link"
+                                                                            href="${profileInfo.link!'#'}"><span
+                                                                class="icon-chrome"></span></a>
+                                                </li>
+                                            <#else>
+                                                <li class="ftco-animate">Способ связи не указан</li>
+                                            </#if>
                                         </ul>
                                         <div class="mb-4" style="display: none" id="link2">
                                             <form method="post">
                                                 <input type="text" class="form-control"
-                                                       value="${profileInfo.link}"
+                                                       value="${profileInfo.link!''}"
                                                        style="margin-bottom: 20px; background-color: rgba(219,235,243,0.78) !important;" id="linkForm">
                                                 <input type="button" value="Обновить" class="btn btn-secondary" onclick="updateLink($('#linkForm').val())">
                                             </form>

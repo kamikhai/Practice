@@ -439,26 +439,26 @@
                                             </#if>
                                         </div>
                                         <div class="mb-4">
-                                            <#list profileInfo.competenceList>
-                                                <ul>
-                                                    <#items as comp>
-                                                        <li><input type="button" value="${comp.description}"
-                                                                   style="margin-bottom: 10px; margin-right: 10px"
-                                                                   <#if comp.confirmed == false>class="btn btn-secondary disabled butd"
-                                                                    <#if user! == 'TEACHER'> onclick = "confirm(${comp.id})"</#if>
-                                                                    <#else> class="btn btn-secondary disabled but"
-                                                                        onclick="window.location.href = '/profile/${comp.confirmedBy.user.id}'"
-                                                                    </#if>
-                                                            >
-                                                            <#if comp.tags??>
-                                                                <#list comp.tags as tag>
-                                                                    <span style="color: #000; margin-right: 10px">#${tag.name}</span>
-                                                                </#list>
-                                                            </#if>
-                                                        </li>
-                                                    </#items>
-                                                </ul>
-                                            </#list>
+                                                <#list profileInfo.competenceList>
+                                                    <ul>
+                                                        <#items as comp>
+                                                            <li><input type="button" value="${comp.description}"
+                                                                       style="margin-bottom: 10px; margin-right: 10px"
+                                                                       <#if comp.confirmed == false>class="btn btn-secondary disabled butd"
+                                                                        <#if user! == 'TEACHER'> onclick = "confirm(${comp.id})"</#if>
+                                                                        <#else> class="btn btn-secondary disabled but"
+                                                                            onclick="window.location.href = '/profile/${comp.confirmedBy.user.id}'"
+                                                                        </#if>
+                                                                >
+                                                                <#if comp.tags??>
+                                                                    <#list comp.tags as tag>
+                                                                        <span style="color: #000; margin-right: 10px">#${tag.name}</span>
+                                                                    </#list>
+                                                                </#if>
+                                                            </li>
+                                                        </#items>
+                                                    </ul>
+                                                </#list>
                                         </div>
                                         <div class="d-md-flex">
                                             <h2>Опыт работы</h2>
@@ -468,12 +468,13 @@
                                                             class="icon-pencil" style="margin-left: 5px"></span></a>
                                             </#if>
                                         </div>
-                                        <p class="mb-4" id="experience1">${profileInfo.workExperience}</p>
+                                        <p class="mb-4"
+                                           id="experience1">${profileInfo.workExperience!'Нет информации'}</p>
                                         <div class="mb-4" style="display: none" id="experience2">
                                             <form method="post">
                                         <textarea name="" cols="30" rows="4" class="form-control"
                                                   id="workExperienceForm"
-                                                  style="background-color: rgba(219,235,243,0.78) !important; margin-bottom: 20px">${profileInfo.workExperience}</textarea>
+                                                  style="background-color: rgba(219,235,243,0.78) !important; margin-bottom: 20px">${profileInfo.workExperience!'Нет информации'}</textarea>
                                                 <input type="button" value="Обновить"
                                                        onclick="updateWorkExperience($('#workExperienceForm').val())"
                                                        class="btn btn-secondary">
@@ -488,14 +489,19 @@
                                             </#if>
                                         </div>
                                         <ul class="ftco-social mt-3" id="link1">
-                                            <li class="ftco-animate"><a id="link" href="${profileInfo.link}"><span
-                                                            class="icon-chrome"></span></a>
-                                            </li>
+                                            <#if profileInfo.link??>
+                                                <li class="ftco-animate"><a id="link"
+                                                                            href="${profileInfo.link!'#'}"><span
+                                                                class="icon-chrome"></span></a>
+                                                </li>
+                                            <#else>
+                                                <li class="ftco-animate">Способ связи не указан</li>
+                                            </#if>
                                         </ul>
                                         <div class="mb-4" style="display: none" id="link2">
                                             <form method="post">
                                                 <input type="text" class="form-control" id="linkForm"
-                                                       value="${profileInfo.link}"
+                                                       value="${profileInfo.link!''}"
                                                        style="margin-bottom: 20px; background-color: rgba(219,235,243,0.78) !important;">
                                                 <input type="button" value="Обновить"
                                                        onclick="updateLink($('#linkForm').val())"

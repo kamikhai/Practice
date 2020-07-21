@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.itis.practice.models.Competence;
+import ru.itis.practice.models.JobProfile;
 import ru.itis.practice.models.Student;
 import ru.itis.practice.models.User;
 
@@ -28,10 +29,11 @@ public class StudentProfileInfo {
 
     public static StudentProfileInfo from(Student student, List<Competence> competences) {
         User user = student.getUser();
+        JobProfile jobProfile = student.getJobProfile();
         StudentProfileInfo info =  StudentProfileInfo.builder()
                 .photoPath(user.getPhotoPath())
                 .fullName(user.getFullName())
-                .jobProfileTitle(student.getJobProfile().getTitle())
+                .jobProfileTitle(jobProfile != null ? jobProfile.getTitle() : null)
                 .description(student.getDescription())
                 .competenceList(new ArrayList<>())
                 .groupNumeric(student.getGroup().getNumeric())
