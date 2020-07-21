@@ -20,6 +20,7 @@ public class StudentInfoDto {
     private String fullName;
     private String description;
     private List<String> tags;
+    private String group;
 
 
     public static StudentInfoDto from(Student student, Set<Tag> tags) {
@@ -29,6 +30,7 @@ public class StudentInfoDto {
                 .fullName(student.getUser().getFullName())
                 .description(student.getDescription())
                 .tags(tags.stream().map(Tag::getName).sorted().collect(Collectors.toList()))
+                .group(student.getGroup().getNumeric())
                 .build();
     }
 }

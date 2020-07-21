@@ -19,8 +19,12 @@
                 </h1>
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
-                        <li><a href="/profile">Обо мне</a></li>
-                        <li class="colorlib-active"><a href="/my_students">Мои студенты</a></li>
+                        <#if isOwnProfile>
+                            <li><a href="/profile">Обо мне</a></li>
+                        <#else>
+                            <li><a href="/profile/${id}">Обо мне</a></li>
+                        </#if>
+                        <li class="colorlib-active"><a href="/my_students/${id}">Мои студенты</a></li>
                     </ul>
                 </nav>
             </aside> <!-- END COLORLIB-ASIDE -->
