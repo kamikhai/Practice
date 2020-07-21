@@ -54,7 +54,7 @@
 
                                             <div class="row">
 
-                                                <section class="ftco-section" style="padding: 0 0 ! important">
+                                                <section class="ftco-section" style="padding: 0 0 ! important; width: 100%">
                                                     <div class="container">
                                                         <div class="row">
                                                             <#list students as student>

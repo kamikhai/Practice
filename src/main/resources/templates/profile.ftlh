@@ -383,7 +383,11 @@
                 </h1>
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
-                        <li class="colorlib-active"><a href="/profile">Обо мне</a></li>
+                        <#if isOwnProfile>
+                            <li class="colorlib-active"><a href="/profile">Обо мне</a></li>
+                        <#else>
+                            <li class="colorlib-active"><a href="/profile/${id}">Обо мне</a></li>
+                        </#if>
                         <li><a href="/portfolio/${id}">Портфолио</a></li>
                     </ul>
                 </nav>

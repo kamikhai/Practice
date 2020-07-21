@@ -171,22 +171,24 @@
                                 <div class="row">
                                     <#list students as student>
                                         <div id="student-${student.id}" class="col-12 d-flex flex-column course ftco-animate" style="margin-top: 20px;">
-                                            <div class="d-flex" style="min-height: 200px; max-height: 200px;">
+                                            <div class="d-flex" style="min-height: 230px; max-height: 230px;">
                                                 <div class="img" style="background-image: url(${student.imgUrl!"img/empty_user.jpg"});"></div>
                                                 <div class="text bg-light p-4">
                                                     <h4><a href="/profile/${student.id}">${student.fullName}</a></h4>
-                                                    <p style="min-height: 115px; max-height: 115px; overflow-y: auto">
+                                                    <h6 style="color: #1eaaf1">Группа ${student.group}</h6>
+                                                    <p style="min-height: 0px; max-height: 80px; overflow-y: auto">
                                                         ${student.description}
                                                     </p>
+                                                    <#list student.tags>
+                                                        <div class="ml-auto">
+                                                            <#items as tag>
+                                                                <span class="badge badge-pill badge-primary badge-tag" style="padding: 5px 7px;">${tag}</span>
+                                                            </#items>
+                                                        </div>
+                                                    </#list>
                                                 </div>
                                             </div>
-                                            <#list student.tags>
-                                                <div class="ml-auto">
-                                                 <#items as tag>
-                                                    <span class="badge badge-pill badge-primary badge-tag" style="padding: 5px 7px;">${tag}</span>
-                                                 </#items>
-                                                </div>
-                                            </#list>
+
                                         </div>
                                     </#list>
                                 </div>
