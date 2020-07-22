@@ -47,7 +47,7 @@ public class SecurityConfig {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.csrf().disable();
+//			http.csrf().disable();
 			http.formLogin().disable();
 			http.antMatcher("/api/**");
 			http.httpBasic().disable();
@@ -71,7 +71,6 @@ public class SecurityConfig {
 		private UserDetailsService userDetailsService;
 		@Autowired
 		private PasswordEncoder passwordEncoder;
-		private DataSource dataSource;
 
 		@Autowired
 		@Override
@@ -81,22 +80,24 @@ public class SecurityConfig {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.csrf().disable();
 			http.authorizeRequests().and()
 					.rememberMe().rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository());
 			http.antMatcher("/**");
 			http.formLogin()
 					.loginPage("/login")
+					.passwordParameter("password")
 					.usernameParameter("email")
 					.defaultSuccessUrl("/main")
 					.failureUrl("/login")
 					.permitAll();
-			http.addFilter(new AnonymousAuthenticationFilter("anonymous"));
 			http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 					.logoutSuccessUrl("/login")
 					.deleteCookies("SESSION", "remember-me")
 					.invalidateHttpSession(true);
 		}
+
+		@Autowired
+		private DataSource dataSource;
 
 		@Bean
 		public PersistentTokenRepository persistentTokenRepository() {

@@ -33,6 +33,6 @@ public class ProjectController {
                                         @RequestParam Long userId,
                                         @AuthenticationPrincipal UserDetailsImpl userDetails) {
         projectService.remove(id, userId, userDetails.getUser());
-        return ResponseEntity.ok(200);
+        return ResponseEntity.ok("Проект успешно удален");
     }
 }

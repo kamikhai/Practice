@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -29,15 +31,33 @@
 
         function sendAjaxForm() {
             document.getElementById("result").value += result;
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
             $.ajax({
                 url: "/portfolio",
                 type: "POST",
                 dataType: "html",
+                beforeSend: function(request) {
+                    request.setRequestHeader(header, token);},
                 data: $("#new_project").serialize(),
-                complete: function (response) {
-                    location.reload();
+                success: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1500);
                 },
                 error: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
                 }
             });
         }
@@ -179,7 +199,7 @@
     </div><!-- END COLORLIB-MAIN -->
 </div><!-- END COLORLIB-PAGE -->
 <div id="fade" class="black-overlay"></div>
-
+<div id="snackbar" style="z-index: 1002"></div>
 <#include "parts/footer.ftlh">
 </body>
 </html>

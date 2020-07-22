@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -8,15 +10,26 @@
     <title>Document</title>
     <script>
         function deleteGroup(group) {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
             $.ajax({
                 url: "/api/admin/group/${group.id}",
                 method: "DELETE",
                 headers: {
                     "Authorization": "${token}"
                 },
-                complete: function (response) {
-                    alert("Группа успешно удалена");
-                    location = "/profile";
+                beforeSend: function(request) {
+                    request.setRequestHeader(header, token);},
+                success: function (response) {
+                    var x = document.getElementById("snackbar");
+                    x.innerText = response;
+                    x.className = "show";
+                    setTimeout(function () {
+                        x.className = x.className.replace("show", "");
+                    }, 3000);
+                    setTimeout(function () {
+                        location = "/profile";
+                    }, 1500);
                 }
             });
         }
@@ -24,6 +37,8 @@
 </head>
 <body>
 <#include "parts/header.ftlh">
+<div id="snackbar" style="z-index: 1002"></div>
+
 <div id="colorlib-page">
     <div class="container">
         <div class="row">
@@ -45,7 +60,7 @@
 
                                             <div class="row">
 
-                                                <section class="ftco-section" style="padding: 0 0 ! important">
+                                                <section class="ftco-section" style="padding: 0 0 ! important; width: 100%">
                                                     <div class="container">
                                                         <div class="row">
                                                             <#list students as student>

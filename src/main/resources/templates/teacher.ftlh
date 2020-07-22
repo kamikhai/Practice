@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -14,89 +16,146 @@
 		[].forEach.call(files, function (file, i, files) {
 			formData.append("file", file);
 		});
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
 			type: "POST",
 			enctype: 'multipart/form-data',
 			url: "/profile/photo",
+            beforeSend: function(request) {
+                request.setRequestHeader(header, token);},
 			data: formData,
 			processData: false,
 			contentType: false
 		})
 			.done(function (response) {
-				alert(response);
-				location.reload();
+                var x = document.getElementById("snackbar");
+                x.innerText = response;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
 			})
 			.fail(function () {
-				alert('Error')
+                var x = document.getElementById("snackbar");
+                x.innerText = "Ошибка загрузки";
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
 			});
 	}
 
 	function updatePosition(text) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
 			url: "/api/teacher/position?text=" + text,
 			method: "POST",
 			headers: {
 				"Authorization": "${token}"
 			},
-			dataType: "json",
-			contentType: "application/json",
-			complete: function (response) {
-				document.getElementById('position1').style.display = 'block';
-				document.getElementById('position2').style.display = 'none';
-				document.getElementById('position1').innerText = text;
+            beforeSend: function(request) {
+                request.setRequestHeader(header, token);},
+			success: function (response) {
+                var x = document.getElementById("snackbar");
+                x.innerText = response;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
 			},
 			error: function (response) {
-				alert(response.responseText);
+                var x = document.getElementById("snackbar");
+                x.innerText = response.responseText;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
 			}
 		});
 	}
 
 	function updateInformation(text) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
 			url: "/api/teacher/information?text=" + text,
 			method: "POST",
 			headers: {
 				"Authorization": "${token}"
 			},
-			dataType: "json",
-			contentType: "application/json",
-			complete: function (response) {
-				document.getElementById('info1').style.display = 'block';
-				document.getElementById('info2').style.display = 'none';
-				document.getElementById('info1').innerText = text;
+            beforeSend: function(request) {
+                request.setRequestHeader(header, token);},
+			success: function (response) {
+                var x = document.getElementById("snackbar");
+                x.innerText = response;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
 			},
 			error: function (response) {
-				alert(response.responseText);
+                var x = document.getElementById("snackbar");
+                x.innerText = response.responseText;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
 			}
 		});
 	}
 
 
 	function updateLink(text) {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajax({
 			url: "/api/teacher/link?text=" + text,
 			method: "POST",
+            beforeSend: function(request) {
+                request.setRequestHeader(header, token);},
 			headers: {
 				"Authorization": "${token}"
 			},
-			dataType: "json",
-			contentType: "application/json",
-			complete: function (response) {
-				document.getElementById('link1').style.display = 'block';
-				document.getElementById('link2').style.display = 'none';
-				document.getElementById('link1').href = text;
+			success: function (response) {
+                var x = document.getElementById("snackbar");
+                x.innerText = response;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
 			},
 			error: function (response) {
-				alert(response.responseText);
+                var x = document.getElementById("snackbar");
+                x.innerText = response.responseText;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
 			}
 		});
 	}
 
     function sendAjaxForm() {
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
         var e = document.getElementById("group");
         var value = e.options[e.selectedIndex].value;
         console.log(value);
-        var data = {group: value}
+        var data = {id: value}
         $.ajax({
             url: "/api/admin/teacher/${profileInfo.id}",
             type: "POST",
@@ -104,13 +163,27 @@
             headers: {
                 "Authorization": "${token}"
             },
+            beforeSend: function(request) {
+                request.setRequestHeader(header, token);},
             contentType: "application/json",
-            dataType: "json",
-            complete: function (response) {
-                alert("Группа успешно добавлена");
-                location.reload();
+            success: function (response) {
+                var x = document.getElementById("snackbar");
+                x.innerText = response;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
+                setTimeout(function () {
+                    location.reload();
+                }, 1500);
             },
             error: function (response) {
+                var x = document.getElementById("snackbar");
+                x.innerText = response.responseText;
+                x.className = "show";
+                setTimeout(function () {
+                    x.className = x.className.replace("show", "");
+                }, 3000);
             }
         });
     }
@@ -176,6 +249,8 @@
     </div>
 </div>
 <#include "parts/header.ftlh">
+<div id="snackbar" style="z-index: 1002"></div>
+
 <div id="colorlib-page">
     <div class="container">
         <div class="row">
@@ -196,7 +271,11 @@
                 </h1>
                 <nav id="colorlib-main-menu" role="navigation">
                     <ul>
-                        <li class="colorlib-active"><a href="/profile">Обо мне</a></li>
+                        <#if isOwnProfile>
+                            <li class="colorlib-active"><a href="/profile">Обо мне</a></li>
+                        <#else>
+                            <li class="colorlib-active"><a href="/profile/${id}">Обо мне</a></li>
+                        </#if>
                         <li><a href="/my_students/${id}">Мои студенты</a></li>
                     </ul>
                 </nav>
@@ -265,14 +344,19 @@
                                             </#if>
                                         </div>
                                         <ul class="ftco-social mt-1" id="link1">
-                                            <li class="ftco-animate"><a href="${profileInfo.link}"><span
-                                                            class="icon-chrome"></span></a>
-                                            </li>
+                                            <#if profileInfo.link??>
+                                                <li class="ftco-animate"><a id="link"
+                                                                            href="${profileInfo.link!'#'}"><span
+                                                                class="icon-chrome"></span></a>
+                                                </li>
+                                            <#else>
+                                                <li class="ftco-animate">Способ связи не указан</li>
+                                            </#if>
                                         </ul>
                                         <div class="mb-4" style="display: none" id="link2">
                                             <form method="post">
                                                 <input type="text" class="form-control"
-                                                       value="${profileInfo.link}"
+                                                       value="${profileInfo.link!''}"
                                                        style="margin-bottom: 20px; background-color: rgba(219,235,243,0.78) !important;" id="linkForm">
                                                 <input type="button" value="Обновить" class="btn btn-secondary" onclick="updateLink($('#linkForm').val())">
                                             </form>
@@ -290,6 +374,24 @@
 
 <#include "parts/footer.ftlh">
 <div id="fade" class="black-overlay"></div>
+<script>
+    (function () {
 
+        'use strict';
+
+        $('.input-file').each(function () {
+            var $input = $(this),
+                $label = $input.next('.js-labelFile'),
+                labelVal = $label.html();
+
+            $input.on('change', function (element) {
+                var fileName = '';
+                if (element.target.value) fileName = element.target.value.split('\\').pop();
+                fileName ? $label.addClass('has-file').find('.js-fileName').html(fileName) : $label.removeClass('has-file').html(labelVal);
+            });
+        });
+
+    })();
+</script>
 </body>
 </html>

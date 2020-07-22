@@ -1,10 +1,7 @@
 package ru.itis.practice.services;
 
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.env.Environment;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
@@ -16,12 +13,12 @@ import java.io.IOException;
 
 @Component
 public class ImageServiceImpl implements ImageService {
+
     @Autowired
     private UserService userService;
     @Value("${storage.path}")
     private String path;
-    @Value("${project.url}")
-    private String url;
+
     private final int length = 40;
 
     @Override
@@ -36,7 +33,7 @@ public class ImageServiceImpl implements ImageService {
             throw new IllegalStateException(e);
         }
         User user = userService.getUserById(id);
-        user.setPhotoPath("http://" + url + "/profile/photo/" + dbName + type);
+        user.setPhotoPath("/profile/photo/" + dbName + type);
         userService.update(user);
         return dbName + type;
     }

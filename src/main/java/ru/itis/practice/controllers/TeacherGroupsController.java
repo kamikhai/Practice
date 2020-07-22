@@ -25,18 +25,25 @@ public class TeacherGroupsController {
     private TokenService tokenService;
 
     @GetMapping("/my_students/{id}")
-    private String getStudents(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model,@PathVariable Long id){
+    private String getStudents(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model, @PathVariable Long id) {
         TeacherProfileInfo teacherProfileInfo = teacherService.getProfileInfoByUser(userService.getUserById(id));
-            model.addAttribute("groups", teacherProfileInfo.getGroups());
-            model.addAttribute("photo", teacherProfileInfo.getPhotoPath());
-            return "teachergroups";
+        if (userDetails != null) {
+            model.addAttribute("isOwnProfile", userDetails.getUser().getId().equals(id));
+        } else {
+            model.addAttribute("isOwnProfile", false);
+
+        }
+        model.addAttribute("id", id);
+        model.addAttribute("groups", teacherProfileInfo.getGroups());
+        model.addAttribute("photo", teacherProfileInfo.getPhotoPath());
+        return "teachergroups";
     }
 
     @GetMapping("/students_group")
     private String getStudents(@RequestParam(value = "g", required = false) Long groupId,
-                               ModelMap map, @AuthenticationPrincipal UserDetailsImpl userDetails){
-        if (userDetails != null){
-            map.put("admin", userDetails.getUser().getRole().equals(User.Role.ADMIN) ? true : false);
+                               ModelMap map, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        if (userDetails != null) {
+            map.put("admin", userDetails.getUser().getRole().equals(User.Role.ADMIN));
             map.put("token", tokenService.getToken(userDetails.getUser()));
 
         } else {

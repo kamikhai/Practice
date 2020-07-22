@@ -3,6 +3,7 @@ package ru.itis.practice.controllers;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -15,10 +16,7 @@ import ru.itis.practice.services.TeacherService;
 import ru.itis.practice.services.UserService;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,6 +24,7 @@ import java.util.ArrayList;
 
 @Controller
 @AllArgsConstructor
+@PreAuthorize("hasAuthority('ADMIN')")
 public class RegistrationController {
 
     private UserService userService;
@@ -38,7 +37,7 @@ public class RegistrationController {
     }
 
     @PostMapping("/user_registration")
-    public String register(@RequestParam String email, @RequestParam String name,
+    public ResponseEntity<String> register(@RequestParam String email, @RequestParam String name,
                            @RequestParam String password, @RequestParam String role) {
         User user = User.builder()
                 .email(email)
@@ -57,12 +56,11 @@ public class RegistrationController {
                     .build();
             teacherService.save(teacher);
         }
-        return "reg";
+        return ResponseEntity.ok("Пользователь успешно зарегистрирован");
     }
 
     @PostMapping("/group_registration")
-    public @ResponseBody
-    String handleFileUpload(@RequestParam("file") MultipartFile file, HttpServletResponse response,
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, HttpServletResponse response,
                             @RequestParam String group) {
         File answer = excelService.add(file, group);
 
@@ -72,8 +70,9 @@ public class RegistrationController {
             response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
 
             try {
-                Files.copy(f, response.getOutputStream());
-                response.getOutputStream().flush();
+                OutputStream outputStream = response.getOutputStream();
+                Files.copy(f, outputStream);
+                outputStream.flush();
             } catch (IOException e) {
                 System.out.println("Error writing file to output stream. Filename was '{}'" + f.getFileName());
                 throw new RuntimeException("IOError writing file to output stream");

@@ -1,5 +1,6 @@
 package ru.itis.practice.services;
 
+import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -28,7 +29,7 @@ public class ExcelServiceImpl implements ExcelService {
     @Autowired
     private StudentService studentService;
     @Value("${storage.path}")
-    String path;
+    private String path;
 
     @Override
     public File add(MultipartFile file, String group) {
